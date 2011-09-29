@@ -14,6 +14,12 @@
 		1662572E1434BAA4006CA328 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662572D1434BAA4006CA328 /* main.m */; };
 		166257321434BAA4006CA328 /* TipCalculatorAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */; };
 		166257351434BAA4006CA328 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257331434BAA4006CA328 /* MainWindow.xib */; };
+		1662574A1434C364006CA328 /* ContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257491434C364006CA328 /* ContentController.m */; };
+		166257541434CBB0006CA328 /* Content.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257531434CBB0006CA328 /* Content.xib */; };
+		166257581434D624006CA328 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257561434D624006CA328 /* SummaryViewController.m */; };
+		166257591434D624006CA328 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257571434D624006CA328 /* SummaryViewController.xib */; };
+		1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662575B1434D66C006CA328 /* AdjustmentsViewController.m */; };
+		1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,13 +27,22 @@
 		166257211434BAA4006CA328 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		166257231434BAA4006CA328 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		166257251434BAA4006CA328 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		166257291434BAA4006CA328 /* TipCalculator-Info.plist */ = {isa = PBXFileReference; path = "TipCalculator-Info.plist"; sourceTree = "<group>"; };
+		166257291434BAA4006CA328 /* TipCalculator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TipCalculator-Info.plist"; sourceTree = "<group>"; };
 		1662572B1434BAA4006CA328 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1662572D1434BAA4006CA328 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1662572F1434BAA4006CA328 /* TipCalculator-Prefix.pch */ = {isa = PBXFileReference; path = "TipCalculator-Prefix.pch"; sourceTree = "<group>"; };
-		166257301434BAA4006CA328 /* TipCalculatorAppDelegate.h */ = {isa = PBXFileReference; path = TipCalculatorAppDelegate.h; sourceTree = "<group>"; };
+		1662572F1434BAA4006CA328 /* TipCalculator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TipCalculator-Prefix.pch"; sourceTree = "<group>"; };
+		166257301434BAA4006CA328 /* TipCalculatorAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TipCalculatorAppDelegate.h; sourceTree = "<group>"; };
 		166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TipCalculatorAppDelegate.m; sourceTree = "<group>"; };
 		166257341434BAA4006CA328 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		166257481434C364006CA328 /* ContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentController.h; sourceTree = "<group>"; };
+		166257491434C364006CA328 /* ContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentController.m; sourceTree = "<group>"; };
+		166257531434CBB0006CA328 /* Content.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Content.xib; sourceTree = "<group>"; };
+		166257551434D624006CA328 /* SummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryViewController.h; sourceTree = "<group>"; };
+		166257561434D624006CA328 /* SummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryViewController.m; sourceTree = "<group>"; };
+		166257571434D624006CA328 /* SummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SummaryViewController.xib; sourceTree = "<group>"; };
+		1662575A1434D66C006CA328 /* AdjustmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentsViewController.h; sourceTree = "<group>"; };
+		1662575B1434D66C006CA328 /* AdjustmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentsViewController.m; sourceTree = "<group>"; };
+		1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +91,11 @@
 			children = (
 				166257301434BAA4006CA328 /* TipCalculatorAppDelegate.h */,
 				166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */,
-				166257331434BAA4006CA328 /* MainWindow.xib */,
+				166257481434C364006CA328 /* ContentController.h */,
+				166257491434C364006CA328 /* ContentController.m */,
+				1662573C1434BAD0006CA328 /* View Controllers */,
+				1662573D1434BADE006CA328 /* Model + Data */,
+				1662573B1434BAB3006CA328 /* Views */,
 				166257281434BAA4006CA328 /* Supporting Files */,
 			);
 			path = TipCalculator;
@@ -91,6 +110,35 @@
 				1662572F1434BAA4006CA328 /* TipCalculator-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1662573B1434BAB3006CA328 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				166257331434BAA4006CA328 /* MainWindow.xib */,
+				166257531434CBB0006CA328 /* Content.xib */,
+				166257571434D624006CA328 /* SummaryViewController.xib */,
+				1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		1662573C1434BAD0006CA328 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				166257551434D624006CA328 /* SummaryViewController.h */,
+				166257561434D624006CA328 /* SummaryViewController.m */,
+				1662575A1434D66C006CA328 /* AdjustmentsViewController.h */,
+				1662575B1434D66C006CA328 /* AdjustmentsViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		1662573D1434BADE006CA328 /* Model + Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Model + Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +190,9 @@
 			files = (
 				1662572C1434BAA4006CA328 /* InfoPlist.strings in Resources */,
 				166257351434BAA4006CA328 /* MainWindow.xib in Resources */,
+				166257541434CBB0006CA328 /* Content.xib in Resources */,
+				166257591434D624006CA328 /* SummaryViewController.xib in Resources */,
+				1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +205,9 @@
 			files = (
 				1662572E1434BAA4006CA328 /* main.m in Sources */,
 				166257321434BAA4006CA328 /* TipCalculatorAppDelegate.m in Sources */,
+				1662574A1434C364006CA328 /* ContentController.m in Sources */,
+				166257581434D624006CA328 /* SummaryViewController.m in Sources */,
+				1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

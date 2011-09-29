@@ -7,14 +7,17 @@
 //
 
 #import "TipCalculatorAppDelegate.h"
+#import "ContentController.h"
 
 @implementation TipCalculatorAppDelegate
 
 @synthesize window = _window;
+@synthesize contentController = _contentController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [[NSBundle mainBundle] loadNibNamed:@"Content" owner:self options:nil];
+    [self.window addSubview:self.contentController.view];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -61,6 +64,7 @@
 - (void)dealloc
 {
     [_window release];
+    [_contentController release];
     [super dealloc];
 }
 

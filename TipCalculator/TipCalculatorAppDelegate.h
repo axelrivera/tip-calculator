@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class ContentController;
+
 @interface TipCalculatorAppDelegate : NSObject <UIApplicationDelegate>
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, retain) IBOutlet ContentController *contentController;
 
 @end
