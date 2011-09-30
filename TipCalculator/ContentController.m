@@ -102,17 +102,12 @@ static NSUInteger kNumberOfPages = 2;
     if ((NSNull *)controller == [NSNull null])
     {
         if (page == 0) {
-            controller = [[SummaryViewController alloc] init];
+            controller = (SummaryViewController *)[[SummaryViewController alloc] init];
         } else {
             controller = (AdjustmentsViewController *)[[AdjustmentsViewController alloc] init];
         }
         [viewControllers_ replaceObjectAtIndex:page withObject:controller];
-    } else {
-        if (page == 0) {
-            controller = (SummaryViewController *)controller;
-        } else {
-            controller = (AdjustmentsViewController *)controller;
-        }
+        [controller release];
     }
     
     // add the controller's view to the content view
@@ -124,7 +119,6 @@ static NSUInteger kNumberOfPages = 2;
         controller.view.frame = frame;
         [scrollView_ addSubview:controller.view];
     }
-    [controller release];
 }
 
 #pragma mark - UIScrollView Delegate Methods

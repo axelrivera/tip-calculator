@@ -50,27 +50,29 @@
 					<object class="IBUIScrollView" id="221458327">
 						<reference key="NSNextResponder" ref="355077521"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{0, 20}, {320, 442}}</string>
+						<object class="NSMutableArray" key="NSSubviews">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBUIView" id="856536580">
+								<reference key="NSNextResponder" ref="221458327"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{0, 432}, {320, 28}}</string>
+								<reference key="NSSuperview" ref="221458327"/>
+								<reference key="NSWindow"/>
+								<object class="NSColor" key="IBUIBackgroundColor" id="212186878">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwAA</bytes>
+								</object>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+						</object>
+						<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="355077521"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="856536580"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-					</object>
-					<object class="IBUIView" id="856536580">
-						<reference key="NSNextResponder" ref="355077521"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 462}, {320, 18}}</string>
-						<reference key="NSSuperview" ref="355077521"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</object>
@@ -4467,10 +4469,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								</object>
 							</object>
 						</object>
-						<object class="NSColor" key="NSColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MCAwAA</bytes>
-						</object>
+						<reference key="NSColor" ref="212186878"/>
 					</object>
 					<string key="IBUIColorCocoaTouchKeyPath">scrollViewTexturedBackgroundColor</string>
 				</object>
@@ -4562,7 +4561,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="221458327"/>
-							<reference ref="856536580"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -4577,13 +4575,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="object" ref="221458327"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="856536580"/>
 						</object>
 						<reference key="parent" ref="355077521"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
 						<reference key="object" ref="856536580"/>
-						<reference key="parent" ref="355077521"/>
+						<reference key="parent" ref="221458327"/>
 					</object>
 				</object>
 			</object>
@@ -4617,7 +4616,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="IBUserGuide">
 							<reference key="view" ref="355077521"/>
-							<double key="location">444</double>
+							<double key="location">379</double>
 							<int key="affinity">1</int>
 						</object>
 					</object>

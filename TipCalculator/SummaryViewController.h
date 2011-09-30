@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingsViewController.h"
 
-@interface SummaryViewController : UIViewController
+@interface SummaryViewController : UIViewController <SettingsViewControllerDelegate>
+
+@property (nonatomic, retain) IBOutlet UITableView *summaryTable;
+@property (nonatomic, retain) IBOutlet UIButton *infoButton;
+
+- (IBAction)infoButtonAction:(id)sender;
 
 @end

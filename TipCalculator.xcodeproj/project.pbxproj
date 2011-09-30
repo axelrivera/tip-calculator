@@ -20,6 +20,8 @@
 		166257591434D624006CA328 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257571434D624006CA328 /* SummaryViewController.xib */; };
 		1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662575B1434D66C006CA328 /* AdjustmentsViewController.m */; };
 		1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */; };
+		16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
+		16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,9 @@
 		1662575A1434D66C006CA328 /* AdjustmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentsViewController.h; sourceTree = "<group>"; };
 		1662575B1434D66C006CA328 /* AdjustmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentsViewController.m; sourceTree = "<group>"; };
 		1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentsViewController.xib; sourceTree = "<group>"; };
+		16E6AEB71435EB5800D47637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		16E6AEB81435EB5800D47637 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		16E6AEB91435EB5800D47637 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +124,7 @@
 				166257531434CBB0006CA328 /* Content.xib */,
 				166257571434D624006CA328 /* SummaryViewController.xib */,
 				1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */,
+				16E6AEB91435EB5800D47637 /* SettingsViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -130,6 +136,8 @@
 				166257561434D624006CA328 /* SummaryViewController.m */,
 				1662575A1434D66C006CA328 /* AdjustmentsViewController.h */,
 				1662575B1434D66C006CA328 /* AdjustmentsViewController.m */,
+				16E6AEB71435EB5800D47637 /* SettingsViewController.h */,
+				16E6AEB81435EB5800D47637 /* SettingsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -193,6 +201,7 @@
 				166257541434CBB0006CA328 /* Content.xib in Resources */,
 				166257591434D624006CA328 /* SummaryViewController.xib in Resources */,
 				1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */,
+				16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +217,7 @@
 				1662574A1434C364006CA328 /* ContentController.m in Sources */,
 				166257581434D624006CA328 /* SummaryViewController.m in Sources */,
 				1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */,
+				16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +327,7 @@
 				1662573A1434BAA4006CA328 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

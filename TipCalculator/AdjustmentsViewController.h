@@ -10,4 +10,6 @@
 
 @interface AdjustmentsViewController : UIViewController
 
+@property (nonatomic, assign) IBOutlet UITableView *adjusmentsTable;
+
 @end
