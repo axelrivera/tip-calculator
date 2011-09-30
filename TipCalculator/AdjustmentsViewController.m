@@ -11,6 +11,7 @@
 @implementation AdjustmentsViewController
 
 @synthesize adjusmentsTable = adjustmentsTable_;
+@synthesize contentViewController = contentViewController_;
 
 - (id)init
 {

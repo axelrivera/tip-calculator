@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Rivera Labs Tip Calculator";
+    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -54,6 +56,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

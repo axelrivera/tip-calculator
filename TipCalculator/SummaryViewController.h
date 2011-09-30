@@ -7,13 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SettingsViewController.h"
 
-@interface SummaryViewController : UIViewController <SettingsViewControllerDelegate>
+@class Check;
+
+typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPercent } SummaryViewControllerPickerType;
+
+@interface SummaryViewController : UIViewController <UIPickerViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UITableView *summaryTable;
-@property (nonatomic, retain) IBOutlet UIButton *infoButton;
+@property (nonatomic, retain) NSArray *summaryDataSource;
 
-- (IBAction)infoButtonAction:(id)sender;
+@property (nonatomic, retain) UIPickerView *pickerView;
+@property (nonatomic, retain) NSArray *splitDataSource;
+@property (nonatomic, retain) NSArray *tipPercentDataSource;
+@property (nonatomic, assign) NSArray *currentPickerDataSource;
+@property (nonatomic, assign) SummaryViewControllerPickerType pickerType;
+
+@property (nonatomic, retain) Check *currentCheck;
+
+@property (nonatomic, assign) UIViewController *contentViewController;
 
 @end
