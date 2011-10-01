@@ -8,6 +8,7 @@
 
 #import "SummaryViewController.h"
 #import "Check.h"
+#import "RLButton.h"
 
 #define kTextLabelKey @"TextLabelKey"
 #define kDetailTextLabelKey @"DetailTextLabelKey"
@@ -15,6 +16,8 @@
 @interface SummaryViewController (Private)
 
 - (void)createPicker;
+- (void)showPicker;
+- (void)hidePicker;
 
 - (NSArray *)checkInputArray;
 - (NSArray *)checkSummaryArray;
@@ -128,8 +131,20 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
+
     if (indexPath.section == 0 && indexPath.row <= 1) {
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        RLButton *button = [[[RLButton alloc] init] autorelease];
+        button.inputView = pickerView_;
+        if (indexPath.row == 0) {
+            [button addTarget:self
+                       action:@selector(splitAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [button addTarget:self
+                       action:@selector(percentAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+        }
+        cell.accessoryView = button;
     }
     
     cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
@@ -139,6 +154,7 @@
 }
 
 #pragma mark - UITableView Delegate Methods
+
 
 #pragma mark - UIPickerView Delegate Methods
 
@@ -180,6 +196,36 @@
     pickerView.showsSelectionIndicator = YES;
     self.pickerView = pickerView;
     [pickerView release];
+}
+
+- (void)splitAction:(id)sender
+{
+    pickerType_ = SummaryViewControllerPickerSplit;
+    currentPickerDataSource_ = splitDataSource_;
+    [pickerView_ reloadAllComponents];
+    
+    RLButton *button = sender;
+    if ([button isFirstResponder]) {
+        [button resignFirstResponder];
+        button.highlighted = YES;
+    } else {
+        [button becomeFirstResponder];
+        button.highlighted = NO;
+    }
+}
+
+- (void)percentAction:(id)sender
+{
+    pickerType_ = SummaryViewControllerPickerPercent;
+    currentPickerDataSource_ = tipPercentDataSource_;
+    [pickerView_ reloadAllComponents];
+    
+    RLButton *button = sender;
+    if ([button isFirstResponder]) {
+        [button resignFirstResponder];
+    } else {
+        [button becomeFirstResponder];
+    }
 }
 
 - (NSArray *)checkInputArray
