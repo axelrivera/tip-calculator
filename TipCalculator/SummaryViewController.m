@@ -19,6 +19,8 @@
 - (void)showPicker;
 - (void)hidePicker;
 
+- (void)createTextField;
+
 - (NSArray *)checkInputArray;
 - (NSArray *)checkSummaryArray;
 
@@ -33,6 +35,7 @@
 @synthesize tipPercentDataSource = tipPercentDataSource_;
 @synthesize currentPickerDataSource = currentPickerDataSource_;
 @synthesize pickerType = pickerType_;
+@synthesize billTotalTextField  = billTotalTextfield_;
 @synthesize currentCheck = currentCheck_;
 @synthesize contentViewController = contentViewController_;
 
@@ -76,6 +79,7 @@
     [pickerView_ release];
     [splitDataSource_ release];
     [tipPercentDataSource_ release];
+    [billTotalTextfield_ release];
     [currentCheck_ release];
     [super dealloc];
 }
@@ -96,6 +100,7 @@
                               nil];
     
     [self createPicker];
+    [self createTextField];
 }
 
 - (void)viewDidUnload
@@ -105,6 +110,7 @@
     // e.g. self.myOutlet = nil;
     self.summaryTable = nil;
     self.pickerView = nil;
+    self.billTotalTextField = nil;
 }
 
 #pragma mark - UITableView Datasource Methods
@@ -132,6 +138,9 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryNone;
 
+    cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
+    cell.detailTextLabel.text = [dictionary objectForKey:kDetailTextLabelKey];
+
     if (indexPath.section == 0 && indexPath.row <= 1) {
         RLButton *button = [[[RLButton alloc] init] autorelease];
         button.inputView = pickerView_;
@@ -145,11 +154,11 @@
              forControlEvents:UIControlEventTouchUpInside];
         }
         cell.accessoryView = button;
+    } else if (indexPath.section == 0 && indexPath.row == 2) {
+        cell.accessoryView = billTotalTextfield_;
+        cell.detailTextLabel.text = nil;
     }
     
-    cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
-    cell.detailTextLabel.text = [dictionary objectForKey:kDetailTextLabelKey];
-        
     return cell;
 }
 
@@ -196,6 +205,20 @@
     pickerView.showsSelectionIndicator = YES;
     self.pickerView = pickerView;
     [pickerView release];
+}
+
+- (void)createTextField
+{
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0.0, 7.0, 150.0, 30.0)];
+	textField.font = [UIFont systemFontOfSize:16.0];
+	textField.adjustsFontSizeToFitWidth = YES;
+	textField.placeholder = @"$0.00";
+	textField.keyboardType = UIKeyboardTypeDecimalPad;
+	textField.textAlignment = UITextAlignmentRight;
+	textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	textField.delegate = self;
+    self.billTotalTextField = textField;
+    [textField release];
 }
 
 - (void)splitAction:(id)sender

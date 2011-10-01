@@ -12,7 +12,7 @@
 
 typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPercent } SummaryViewControllerPickerType;
 
-@interface SummaryViewController : UIViewController <UIPickerViewDelegate>
+@interface SummaryViewController : UIViewController <UIPickerViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, retain) IBOutlet UITableView *summaryTable;
 @property (nonatomic, retain) NSArray *summaryDataSource;
@@ -22,6 +22,8 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
 @property (nonatomic, retain) NSArray *tipPercentDataSource;
 @property (nonatomic, assign) NSArray *currentPickerDataSource;
 @property (nonatomic, assign) SummaryViewControllerPickerType pickerType;
+
+@property (nonatomic, retain) UITextField *billTotalTextField;
 
 @property (nonatomic, retain) Check *currentCheck;
 
