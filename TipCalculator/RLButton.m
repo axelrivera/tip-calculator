@@ -19,7 +19,7 @@
         [self setImage:[UIImage imageNamed:@"button.png"]
               forState:UIControlStateNormal];
         [self setImage:[UIImage imageNamed:@"button_pressed.png"]
-              forState:(UIControlStateDisabled|UIControlStateSelected|UIControlStateHighlighted)];
+              forState:UIControlStateHighlighted];
     }
     return self;
 }

@@ -52,7 +52,7 @@
         
         NSMutableArray *tips = [[NSMutableArray alloc] initWithCapacity:51];
         for (NSInteger i = 0; i <= 50; i++) {
-            NSString *string = [[[NSString alloc] initWithFormat:@"%f %", i * 0.01] autorelease];
+            NSString *string = [[[NSString alloc] initWithFormat:@"%d %%", i] autorelease];
             [tips addObject:string];
         }
         self.tipPercentDataSource = tips;
@@ -207,10 +207,9 @@
     RLButton *button = sender;
     if ([button isFirstResponder]) {
         [button resignFirstResponder];
-        button.highlighted = YES;
+        
     } else {
         [button becomeFirstResponder];
-        button.highlighted = NO;
     }
 }
 
