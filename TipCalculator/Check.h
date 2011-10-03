@@ -14,6 +14,9 @@
 @property (nonatomic, copy) NSDecimalNumber *tipPercentage;
 @property (nonatomic, copy) NSDecimalNumber *checkAmount;
 
++ (NSArray *)numberOfSplitsArray;
++ (NSArray *)tipPercentagesArray;
+
 - (NSDecimalNumber *)totalTip;
 - (NSDecimalNumber *)totalToPay;
 - (NSDecimalNumber *)totalPerPerson;
@@ -24,5 +27,11 @@
 - (NSString *)stringForTotalTip;
 - (NSString *)stringForTotalToPay;
 - (NSString *)stringForTotalPerPerson;
+
+- (NSString *)stringForNumberOfSplitsWithDecimalNumber:(NSDecimalNumber *)number;
+- (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number;
+
+- (NSInteger)rowForCurrentNumberOfSplits;
+- (NSInteger)rowForCurrentTipPercentage;
 
 @end

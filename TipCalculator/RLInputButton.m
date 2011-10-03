@@ -6,15 +6,15 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "RLButton.h"
+#import "RLInputButton.h"
 
-@implementation RLButton
+@implementation RLInputButton
 
 @synthesize inputView, inputAccessoryView;
 
 - (id)init
 {
-    self = [[RLButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 24.0, 24.0)];
+    self = [[RLInputButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 24.0, 24.0)];
     if (self) {
         [self setImage:[UIImage imageNamed:@"button.png"]
               forState:UIControlStateNormal];

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		164794551436936B0095C658 /* RLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 164794541436936B0095C658 /* RLButton.m */; };
+		16165364143A350200BA2DCB /* CheckData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16165363143A350200BA2DCB /* CheckData.m */; };
+		164794551436936B0095C658 /* RLInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 164794541436936B0095C658 /* RLInputButton.m */; };
 		1647946F1436A1130095C658 /* button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946B1436A1130095C658 /* button_pressed.png */; };
 		164794701436A1130095C658 /* button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946C1436A1130095C658 /* button_pressed@2x.png */; };
 		164794711436A1130095C658 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946D1436A1130095C658 /* button.png */; };
@@ -32,8 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		164794531436936B0095C658 /* RLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLButton.h; sourceTree = "<group>"; };
-		164794541436936B0095C658 /* RLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLButton.m; sourceTree = "<group>"; };
+		16165362143A350100BA2DCB /* CheckData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckData.h; sourceTree = "<group>"; };
+		16165363143A350200BA2DCB /* CheckData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckData.m; sourceTree = "<group>"; };
+		164794531436936B0095C658 /* RLInputButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLInputButton.h; sourceTree = "<group>"; };
+		164794541436936B0095C658 /* RLInputButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputButton.m; sourceTree = "<group>"; };
 		1647946B1436A1130095C658 /* button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pressed.png; sourceTree = "<group>"; };
 		1647946C1436A1130095C658 /* button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_pressed@2x.png"; sourceTree = "<group>"; };
 		1647946D1436A1130095C658 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
@@ -83,8 +86,8 @@
 		16479452143692DE0095C658 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				164794531436936B0095C658 /* RLButton.h */,
-				164794541436936B0095C658 /* RLButton.m */,
+				164794531436936B0095C658 /* RLInputButton.h */,
+				164794541436936B0095C658 /* RLInputButton.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -130,11 +133,11 @@
 		166257271434BAA4006CA328 /* TipCalculator */ = {
 			isa = PBXGroup;
 			children = (
-				16479452143692DE0095C658 /* Custom Views */,
 				166257301434BAA4006CA328 /* TipCalculatorAppDelegate.h */,
 				166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */,
 				1662573C1434BAD0006CA328 /* View Controllers */,
 				1662573D1434BADE006CA328 /* Model + Data */,
+				16479452143692DE0095C658 /* Custom Views */,
 				1662573B1434BAB3006CA328 /* Views */,
 				166257281434BAA4006CA328 /* Supporting Files */,
 			);
@@ -186,6 +189,8 @@
 			children = (
 				16E6AECD14362FD000D47637 /* Check.h */,
 				16E6AECE14362FD100D47637 /* Check.m */,
+				16165362143A350100BA2DCB /* CheckData.h */,
+				16165363143A350200BA2DCB /* CheckData.m */,
 			);
 			name = "Model + Data";
 			sourceTree = "<group>";
@@ -265,7 +270,8 @@
 				16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */,
 				16E6AEC81436067F00D47637 /* ContentViewController.m in Sources */,
 				16E6AECF14362FD100D47637 /* Check.m in Sources */,
-				164794551436936B0095C658 /* RLButton.m in Sources */,
+				164794551436936B0095C658 /* RLInputButton.m in Sources */,
+				16165364143A350200BA2DCB /* CheckData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

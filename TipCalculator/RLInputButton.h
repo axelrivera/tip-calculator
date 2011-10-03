@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RLButton : UIButton
+@interface RLInputButton : UIButton
 
 @property (readwrite, retain) UIView *inputView;
 @property (readwrite, retain) UIView *inputAccessoryView;
