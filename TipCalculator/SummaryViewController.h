@@ -14,32 +14,29 @@
 
 typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPercent } SummaryViewControllerPickerType;
 
-@interface SummaryViewController : UIViewController <UIPickerViewDelegate, UITextFieldDelegate>
+@interface SummaryViewController : UIViewController
 {
     CheckData *checkData_;
-    NSInteger pickerSplitIndex_;
-    NSInteger pickerPercentIndex_;
+    NSNumberFormatter *formatter_;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *summaryTable;
+@property (nonatomic, retain) IBOutlet RLInputButton *splitButton;
+@property (nonatomic, retain) IBOutlet RLInputButton *tipButton;
+@property (nonatomic, retain) IBOutlet RLInputButton *amountButton;
+@property (nonatomic, retain) IBOutlet UILabel *splitLabel;
+@property (nonatomic, retain) IBOutlet UILabel *tipPercentageLabel;
+@property (nonatomic, retain) IBOutlet UITextField *billAmountTextField;
+@property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
 
-@property (nonatomic, retain) NSString *numberOfSplitStr;
-@property (nonatomic, retain) NSString *tipPercentageStr;
-@property (nonatomic, retain) NSString *amountStr;
-@property (nonatomic, retain) NSString *totalTipStr;
-@property (nonatomic, retain) NSString *totalToPayStr;
-@property (nonatomic, retain) NSString *totalPerPersonStr;
-
-@property (nonatomic, retain) RLInputButton *splitButton;
-@property (nonatomic, retain) RLInputButton *tipButton;
-@property (nonatomic, retain) RLInputButton *amountButton;
-
-@property (nonatomic, retain) UIPickerView *pickerView;
 @property (nonatomic, assign) NSArray *currentPickerDataSource;
 @property (nonatomic, assign) SummaryViewControllerPickerType pickerType;
 
-@property (nonatomic, retain) UITextField *billTotalTextField;
+@property (nonatomic, copy) NSString *enteredDigits;
 
 @property (nonatomic, assign) UIViewController *contentViewController;
+
+- (IBAction)splitAction:(id)sender;
+- (IBAction)tipAction:(id)sender;
+- (IBAction)amountAction:(id)sender;
 
 @end

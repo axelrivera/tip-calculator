@@ -144,7 +144,7 @@ static NSDictionary *tipPercentagesDictionary;
 {
     NSString *string = nil;
     if ([number floatValue] == 0.0) {
-        string = @"No Tip (Included in Bill)";
+        string = @"No Tip (Included)";
     } else {
         string = [self percentageStringForNumber:number];
     }
@@ -159,7 +159,8 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (NSInteger)rowForCurrentTipPercentage
 {
-    NSString *key = [tipPercentage_ stringValue];
+    NSDecimalNumber *decimal = [tipPercentage_ decimalNumberByMultiplyingByPowerOf10:abs(kTipPercentageFactor)];
+    NSString *key = [decimal stringValue];
     return [[[Check tipPercentagesDictionary] objectForKey:key] integerValue];
 }
 
@@ -184,12 +185,13 @@ static NSDictionary *tipPercentagesDictionary;
 
 + (NSDictionary *)tipPercentagesDictionary
 {
-    if (tipPercentagesDictionary) {
+    if (tipPercentagesDictionary == nil) {
         NSArray *tipArray = [Check tipPercentagesArray];
         NSInteger total = [tipArray count];
         NSMutableDictionary *tipDictionary = [[NSMutableDictionary alloc] initWithCapacity:total];
         for ( NSInteger i = 0; i < total; i++) {
-            NSString *key = [[tipArray objectAtIndex:i] stringValue];
+            NSDecimalNumber *decimal = [tipArray objectAtIndex:i];
+            NSString *key = [[decimal decimalNumberByMultiplyingByPowerOf10:abs(kTipPercentageFactor)] stringValue];
             NSNumber *number = [NSNumber numberWithInteger:i];
             [tipDictionary setObject:number forKey:key];
         }

@@ -12,18 +12,6 @@
 
 @synthesize inputView, inputAccessoryView;
 
-- (id)init
-{
-    self = [[RLInputButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 24.0, 24.0)];
-    if (self) {
-        [self setImage:[UIImage imageNamed:@"button.png"]
-              forState:UIControlStateNormal];
-        [self setImage:[UIImage imageNamed:@"button_pressed.png"]
-              forState:UIControlStateHighlighted];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [inputView release];
@@ -33,6 +21,20 @@
 
 - (BOOL) canBecomeFirstResponder
 {
+    return YES;
+}
+
+- (BOOL)becomeFirstResponder
+{
+    [super becomeFirstResponder];
+    self.selected = YES;
+    return YES;
+}
+
+- (BOOL)resignFirstResponder
+{
+    [super resignFirstResponder];
+    self.selected = NO;
     return YES;
 }
 
