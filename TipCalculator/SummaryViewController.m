@@ -28,6 +28,10 @@
 @synthesize splitLabel = splitLabel_;
 @synthesize tipPercentageLabel = tipPercentageLabel_;
 @synthesize billAmountTextField  = billAmountTextField_;
+@synthesize checkSummaryView = checkSummaryView_;
+@synthesize totalTipLabel = totalTipLabel_;
+@synthesize totalToPayLabel = totalToPayLabel_;
+@synthesize totalPerPersonLabel = totalPerPersonLabel_;
 @synthesize pickerView = pickerView_;
 @synthesize currentPickerDataSource = currentPickerDataSource_;
 @synthesize pickerType = pickerType_;
@@ -63,6 +67,10 @@
     [splitLabel_ release];
     [tipPercentageLabel_ release];
     [billAmountTextField_ release];
+    [checkSummaryView_ release];
+    [totalTipLabel_ release];
+    [totalToPayLabel_ release];
+    [totalPerPersonLabel_ release];
     [pickerView_ release];
     [enteredDigits_ release];
     [super dealloc];
@@ -92,6 +100,10 @@
     self.splitLabel = nil;
     self.tipPercentageLabel = nil;
     self.billAmountTextField = nil;
+    self.checkSummaryView = nil;
+    self.totalTipLabel = nil;
+    self.totalToPayLabel = nil;
+    self.totalPerPersonLabel = nil;
     self.pickerView = nil;
 }
 
@@ -166,7 +178,16 @@
 
 - (void)reloadCheckSummary
 {
- 
+    CGFloat total = [checkData_.currentCheck.checkAmount floatValue];
+    if (total > 0.00) {
+        checkSummaryView_.hidden = NO;
+        totalTipLabel_.text = [checkData_.currentCheck stringForTotalTip];
+        totalToPayLabel_.text = [checkData_.currentCheck stringForTotalToPay];
+        totalPerPersonLabel_.text = [checkData_.currentCheck stringForTotalPerPerson];
+        [checkData_.currentCheck splitAdjustmentsEvenly];
+    } else {
+        checkSummaryView_.hidden = YES;
+    }
 }
 
 #pragma mark - UIPickerView Delegate Methods
@@ -231,6 +252,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     amountButton_.selected = NO;
+    [self reloadCheckSummary];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

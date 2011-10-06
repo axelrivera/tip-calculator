@@ -26,6 +26,12 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
 @property (nonatomic, retain) IBOutlet UILabel *splitLabel;
 @property (nonatomic, retain) IBOutlet UILabel *tipPercentageLabel;
 @property (nonatomic, retain) IBOutlet UITextField *billAmountTextField;
+
+@property (nonatomic, retain) IBOutlet UIView *checkSummaryView;
+@property (nonatomic, retain) IBOutlet UILabel *totalTipLabel;
+@property (nonatomic, retain) IBOutlet UILabel *totalToPayLabel;
+@property (nonatomic, retain) IBOutlet UILabel *totalPerPersonLabel;
+
 @property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
 
 @property (nonatomic, assign) NSArray *currentPickerDataSource;

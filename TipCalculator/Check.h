@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface Check : NSObject
+{
+    NSMutableArray *splitAdjustments_;
+}
 
-@property (nonatomic, copy) NSDecimalNumber *numberOfSplits;
-@property (nonatomic, copy) NSDecimalNumber *tipPercentage;
-@property (nonatomic, copy) NSDecimalNumber *checkAmount;
+@property (nonatomic, retain) NSDecimalNumber *numberOfSplits;
+@property (nonatomic, retain) NSDecimalNumber *tipPercentage;
+@property (nonatomic, retain) NSDecimalNumber *checkAmount;
+@property (nonatomic, retain, readonly) NSArray *splitAdjustments;
 
 + (NSArray *)numberOfSplitsArray;
 + (NSArray *)tipPercentagesArray;
@@ -33,5 +37,7 @@
 
 - (NSInteger)rowForCurrentNumberOfSplits;
 - (NSInteger)rowForCurrentTipPercentage;
+
+- (void)splitAdjustmentsEvenly;
 
 @end

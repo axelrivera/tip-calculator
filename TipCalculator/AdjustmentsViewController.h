@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class CheckData;
+
 @interface AdjustmentsViewController : UIViewController
+{
+    CheckData *checkData_;
+}
 
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
+@property (nonatomic, retain) IBOutlet UILabel *totalLabel;
+
 @property (nonatomic, assign) UIViewController *contentViewController;
 
 @end
