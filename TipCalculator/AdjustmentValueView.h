@@ -10,10 +10,11 @@
 
 @interface AdjustmentValueView : UIView
 
-@property (nonatomic, retain) IBOutlet UIView *view;
-@property (nonatomic, retain) IBOutlet UILabel *title;
-@property (nonatomic, retain) IBOutlet UIButton *leftButton;
-@property (nonatomic, retain) IBOutlet UIButton *rightButton;
-@property (nonatomic, retain) IBOutlet UISlider *slider;
+@property (nonatomic, retain, readonly) UILabel *titleLabel;
+@property (nonatomic, retain, readonly) UIButton *leftButton;
+@property (nonatomic, retain, readonly) UIButton *rightButton;
+@property (nonatomic, retain, readonly) UISlider *slider;
+
++ (AdjustmentValueView *)adjustmentViewForCellWithTag:(NSInteger)tag;
 
 @end

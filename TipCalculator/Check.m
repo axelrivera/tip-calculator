@@ -16,9 +16,9 @@
 #define kMaximumTipPercentage 50
 #define kTipPercentageFactor -2
 
-#define kDefaultNumberOfSplits @"1"
+#define kDefaultNumberOfSplits @"2"
 #define kDefaultTipPercentage  @"0.15"
-#define kDefaultCheckAmount @"0.00"
+#define kDefaultCheckAmount @"100.00"
 
 static NSArray *numberOfSplitsArray;
 static NSArray *tipPercentagesArray;

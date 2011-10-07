@@ -25,6 +25,10 @@
 		166257591434D624006CA328 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257571434D624006CA328 /* SummaryViewController.xib */; };
 		1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662575B1434D66C006CA328 /* AdjustmentsViewController.m */; };
 		1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */; };
+		1670851F143F5BA800FA3B02 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851B143F5BA800FA3B02 /* back.png */; };
+		16708520143F5BA800FA3B02 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851C143F5BA800FA3B02 /* back@2x.png */; };
+		16708521143F5BA800FA3B02 /* scissors.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851D143F5BA800FA3B02 /* scissors.png */; };
+		16708522143F5BA800FA3B02 /* scissors@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851E143F5BA800FA3B02 /* scissors@2x.png */; };
 		16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */; };
 		16BF55BF143E3E9200CC8952 /* AdjustmentValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */; };
 		16CE4CBA143DEEF80075342C /* AdjustmentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* AdjustmentValue.m */; };
@@ -62,6 +66,10 @@
 		1662575A1434D66C006CA328 /* AdjustmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentsViewController.h; sourceTree = "<group>"; };
 		1662575B1434D66C006CA328 /* AdjustmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentsViewController.m; sourceTree = "<group>"; };
 		1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentsViewController.xib; sourceTree = "<group>"; };
+		1670851B143F5BA800FA3B02 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		1670851C143F5BA800FA3B02 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
+		1670851D143F5BA800FA3B02 /* scissors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scissors.png; sourceTree = "<group>"; };
+		1670851E143F5BA800FA3B02 /* scissors@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scissors@2x.png"; sourceTree = "<group>"; };
 		16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentValueView.xib; sourceTree = "<group>"; };
 		16BF55BD143E3E9200CC8952 /* AdjustmentValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentValueView.h; sourceTree = "<group>"; };
 		16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentValueView.m; sourceTree = "<group>"; };
@@ -105,6 +113,10 @@
 		164794621436A0390095C658 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1670851B143F5BA800FA3B02 /* back.png */,
+				1670851C143F5BA800FA3B02 /* back@2x.png */,
+				1670851D143F5BA800FA3B02 /* scissors.png */,
+				1670851E143F5BA800FA3B02 /* scissors@2x.png */,
 				1647946B1436A1130095C658 /* button_pressed.png */,
 				1647946C1436A1130095C658 /* button_pressed@2x.png */,
 				1647946D1436A1130095C658 /* button.png */,
@@ -270,6 +282,10 @@
 				164794721436A1130095C658 /* button@2x.png in Resources */,
 				1653D3C71437A6E7005E37F2 /* Specification.markdown in Resources */,
 				16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */,
+				1670851F143F5BA800FA3B02 /* back.png in Resources */,
+				16708520143F5BA800FA3B02 /* back@2x.png in Resources */,
+				16708521143F5BA800FA3B02 /* scissors.png in Resources */,
+				16708522143F5BA800FA3B02 /* scissors@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

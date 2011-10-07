@@ -46,9 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    adjustmentsTable_.backgroundColor = [UIColor clearColor];
-    adjustmentsTable_.opaque = NO;
-    adjustmentsTable_.backgroundView = nil;
+    adjustmentsTable_.allowsSelection = NO;
 }
 
 - (void)viewDidUnload
@@ -67,7 +65,24 @@
     [adjustmentsTable_ reloadData];
 }
 
-#pragma mark - TableView Datasource Methods
+#pragma mark - Custom Actions
+
+- (void)leftButtonAction:(id)sender
+{
+    NSLog(@"Left Button Action");
+}
+
+- (void)rightButtonAction:(id)sender
+{
+    NSLog(@"Right Button Action");
+}
+
+- (void)sliderAction:(id)sender
+{
+    NSLog(@"Slider Action");
+}
+
+#pragma mark - UITableView Datasource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -92,9 +107,6 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    AdjustmentValueView *adjustmentView = [[[AdjustmentValueView alloc] init] autorelease];
-    cell.accessoryView = adjustmentView;
-        
     AdjustmentValue *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:indexPath.row];
     NSDecimal decimalValue = [adjustment.percentage decimalValue];
     NSDecimalNumber *percentage = [NSDecimalNumber decimalNumberWithDecimal:decimalValue];
@@ -106,12 +118,30 @@
     NSDecimalNumber *person = [[checkData_.currentCheck totalPerPerson] decimalNumberByMultiplyingBy:percentage];
     NSDecimalNumber *tip = [[checkData_.currentCheck totalTip] decimalNumberByMultiplyingBy:percentage];
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ = %@ + %@",
-                                 [formatter stringFromNumber:total],
-                                 [formatter stringFromNumber:person],
-                                 [formatter stringFromNumber:tip]];
+    AdjustmentValueView *adjustmentView = [AdjustmentValueView adjustmentViewForCellWithTag:indexPath.row];
+    
+    [adjustmentView.leftButton addTarget:self action:@selector(leftButtonAction:) forControlEvents:UIControlEventTouchDown];
+    [adjustmentView.rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchDown];
+    
+    adjustmentView.slider.continuous = YES;
+    adjustmentView.slider.value = [percentage floatValue];
+    [adjustmentView.slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+    
+    adjustmentView.titleLabel.text = [NSString stringWithFormat:@"%@ = %@ + tip %@",
+                                      [formatter stringFromNumber:total],
+                                      [formatter stringFromNumber:person],
+                                      [formatter stringFromNumber:tip]];
+    
+    cell.accessoryView = adjustmentView;
     
     return cell;
+}
+
+#pragma mark - UITableView Delegate Methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70.0;
 }
 
 @end
