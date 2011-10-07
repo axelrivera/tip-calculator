@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AdjustmentsViewController.h"
+#import "SettingsViewController.h"
 
 @class CheckData;
 @class Check;
@@ -14,7 +16,7 @@
 
 typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPercent } SummaryViewControllerPickerType;
 
-@interface SummaryViewController : UIViewController
+@interface SummaryViewController : UIViewController <AdjustmentsViewControllerDelegate, SettingsViewControllerDelegate>
 {
     CheckData *checkData_;
     NSNumberFormatter *formatter_;
@@ -39,10 +41,10 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
 
 @property (nonatomic, copy) NSString *enteredDigits;
 
-@property (nonatomic, assign) UIViewController *contentViewController;
-
 - (IBAction)splitAction:(id)sender;
 - (IBAction)tipAction:(id)sender;
 - (IBAction)amountAction:(id)sender;
+- (IBAction)showAdjustmentsAction:(id)sender;
+- (IBAction)showSettingsAction:(id)sender;
 
 @end

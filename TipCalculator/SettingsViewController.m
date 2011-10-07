@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Rivera Labs Tip Calculator";
+    self.title = @"Tip Calculator";
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
@@ -68,7 +68,7 @@
 
 - (void)doneAction:(id)sender
 {
-    [self.delegate settingsViewControllerDidFinish:self];
+    [delegate_ settingsViewControllerDidFinish:self];
 }
 
 #pragma mark - Table view data source

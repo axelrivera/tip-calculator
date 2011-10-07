@@ -10,14 +10,27 @@
 
 @class CheckData;
 
+@protocol AdjustmentsViewControllerDelegate;
+
 @interface AdjustmentsViewController : UIViewController
 {
     CheckData *checkData_;
 }
 
+@property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
 @property (nonatomic, retain) IBOutlet UILabel *totalLabel;
 
-@property (nonatomic, assign) UIViewController *contentViewController;
+@property (nonatomic, retain) NSArray *adjustmentViews;
+
+- (IBAction)backAction:(id)sender;
 
 @end
+
+@protocol AdjustmentsViewControllerDelegate
+
+- (void)adjustmentsViewControllerDidFinish:(AdjustmentsViewController *)controller;
+
+@end
+
+

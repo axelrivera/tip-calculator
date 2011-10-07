@@ -36,7 +36,6 @@
 @synthesize currentPickerDataSource = currentPickerDataSource_;
 @synthesize pickerType = pickerType_;
 @synthesize enteredDigits = enteredDigits_;
-@synthesize contentViewController = contentViewController_;
 
 - (id)init
 {
@@ -81,7 +80,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self setWantsFullScreenLayout:YES];
     splitButton_.inputView = pickerView_;
     [splitButton_ addTarget:self action:@selector(splitAction:) forControlEvents:UIControlEventTouchUpInside];
     tipButton_.inputView = pickerView_;
@@ -124,9 +123,9 @@
     [self reloadCheckSummary];
 }
 
-#pragma mark - Private Methods
+#pragma mark - Custom Actions
 
-- (void)splitAction:(id)sender
+- (IBAction)splitAction:(id)sender
 {
     if ([tipButton_ isFirstResponder])
         [tipButton_ resignFirstResponder];
@@ -144,7 +143,7 @@
     }
 }
 
-- (void)tipAction:(id)sender
+- (IBAction)tipAction:(id)sender
 {
     if ([splitButton_ isFirstResponder])
         [splitButton_ resignFirstResponder];
@@ -162,7 +161,7 @@
     }
 }
 
-- (void)amountAction:(id)sender
+- (IBAction)amountAction:(id)sender
 {
     if ([splitButton_ isFirstResponder])
         [splitButton_ resignFirstResponder];
@@ -176,6 +175,27 @@
     }
 }
 
+- (IBAction)showAdjustmentsAction:(id)sender
+{
+    AdjustmentsViewController *controller = [[AdjustmentsViewController alloc] init];
+    controller.delegate = self;
+    controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	[self presentModalViewController:controller animated:YES];
+	[controller release];
+}
+
+- (IBAction)showSettingsAction:(id)sender
+{
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] init];
+    settingsViewController.delegate = self;
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
+	[settingsViewController release];
+	[self presentModalViewController:navController animated:YES];
+	[navController release];
+}
+
+#pragma mark - Private Methods
+
 - (void)reloadCheckSummary
 {
     CGFloat total = [checkData_.currentCheck.checkAmount floatValue];
@@ -188,6 +208,18 @@
     } else {
         checkSummaryView_.hidden = YES;
     }
+}
+
+#pragma mark - UIViewController Delegate Methods
+
+- (void)adjustmentsViewControllerDidFinish:(AdjustmentsViewController *)controller
+{
+    [controller dismissModalViewControllerAnimated:YES];
+}
+
+- (void)settingsViewControllerDidFinish:(SettingsViewController *)controller
+{
+    [controller dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - UIPickerView Delegate Methods

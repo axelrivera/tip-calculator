@@ -7,7 +7,7 @@
 //
 
 #import "TipCalculatorAppDelegate.h"
-#import "ContentViewController.h"
+#import "SummaryViewController.h"
 
 @implementation TipCalculatorAppDelegate
 
@@ -15,9 +15,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    ContentViewController *contentViewController = [[ContentViewController alloc] init];
-    [self.window setRootViewController:contentViewController];
-    [contentViewController release];
+    SummaryViewController *controller = [[SummaryViewController alloc] init];
+    [self.window setRootViewController:controller];
+    [controller release];
     [self.window makeKeyAndVisible];
     return YES;
 }

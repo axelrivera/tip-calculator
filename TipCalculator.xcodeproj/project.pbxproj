@@ -27,15 +27,15 @@
 		1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */; };
 		1670851F143F5BA800FA3B02 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851B143F5BA800FA3B02 /* back.png */; };
 		16708520143F5BA800FA3B02 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851C143F5BA800FA3B02 /* back@2x.png */; };
-		16708521143F5BA800FA3B02 /* scissors.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851D143F5BA800FA3B02 /* scissors.png */; };
-		16708522143F5BA800FA3B02 /* scissors@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851E143F5BA800FA3B02 /* scissors@2x.png */; };
+		1670852A143F5DCD00FA3B02 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 16708528143F5DCD00FA3B02 /* info.png */; };
+		1670852B143F5DCD00FA3B02 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16708529143F5DCD00FA3B02 /* info@2x.png */; };
+		1670852E143F675600FA3B02 /* adjustment.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852C143F675600FA3B02 /* adjustment.png */; };
+		1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852D143F675600FA3B02 /* adjustment@2x.png */; };
 		16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */; };
 		16BF55BF143E3E9200CC8952 /* AdjustmentValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */; };
 		16CE4CBA143DEEF80075342C /* AdjustmentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* AdjustmentValue.m */; };
 		16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
 		16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
-		16E6AEC81436067F00D47637 /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEC61436067F00D47637 /* ContentViewController.m */; };
-		16E6AEC91436067F00D47637 /* ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEC71436067F00D47637 /* ContentViewController.xib */; };
 		16E6AECF14362FD100D47637 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AECE14362FD100D47637 /* Check.m */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +68,10 @@
 		1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentsViewController.xib; sourceTree = "<group>"; };
 		1670851B143F5BA800FA3B02 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1670851C143F5BA800FA3B02 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
-		1670851D143F5BA800FA3B02 /* scissors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scissors.png; sourceTree = "<group>"; };
-		1670851E143F5BA800FA3B02 /* scissors@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scissors@2x.png"; sourceTree = "<group>"; };
+		16708528143F5DCD00FA3B02 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		16708529143F5DCD00FA3B02 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
+		1670852C143F675600FA3B02 /* adjustment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = adjustment.png; sourceTree = "<group>"; };
+		1670852D143F675600FA3B02 /* adjustment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adjustment@2x.png"; sourceTree = "<group>"; };
 		16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentValueView.xib; sourceTree = "<group>"; };
 		16BF55BD143E3E9200CC8952 /* AdjustmentValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentValueView.h; sourceTree = "<group>"; };
 		16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentValueView.m; sourceTree = "<group>"; };
@@ -78,9 +80,6 @@
 		16E6AEB71435EB5800D47637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		16E6AEB81435EB5800D47637 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		16E6AEB91435EB5800D47637 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
-		16E6AEC51436067F00D47637 /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
-		16E6AEC61436067F00D47637 /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
-		16E6AEC71436067F00D47637 /* ContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentViewController.xib; sourceTree = "<group>"; };
 		16E6AECD14362FD000D47637 /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
 		16E6AECE14362FD100D47637 /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,10 +112,12 @@
 		164794621436A0390095C658 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1670852C143F675600FA3B02 /* adjustment.png */,
+				1670852D143F675600FA3B02 /* adjustment@2x.png */,
+				16708528143F5DCD00FA3B02 /* info.png */,
+				16708529143F5DCD00FA3B02 /* info@2x.png */,
 				1670851B143F5BA800FA3B02 /* back.png */,
 				1670851C143F5BA800FA3B02 /* back@2x.png */,
-				1670851D143F5BA800FA3B02 /* scissors.png */,
-				1670851E143F5BA800FA3B02 /* scissors@2x.png */,
 				1647946B1436A1130095C658 /* button_pressed.png */,
 				1647946C1436A1130095C658 /* button_pressed@2x.png */,
 				1647946D1436A1130095C658 /* button.png */,
@@ -183,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				166257331434BAA4006CA328 /* MainWindow.xib */,
-				16E6AEC71436067F00D47637 /* ContentViewController.xib */,
 				166257571434D624006CA328 /* SummaryViewController.xib */,
 				1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */,
 				16E6AEB91435EB5800D47637 /* SettingsViewController.xib */,
@@ -201,8 +201,6 @@
 				1662575B1434D66C006CA328 /* AdjustmentsViewController.m */,
 				16E6AEB71435EB5800D47637 /* SettingsViewController.h */,
 				16E6AEB81435EB5800D47637 /* SettingsViewController.m */,
-				16E6AEC51436067F00D47637 /* ContentViewController.h */,
-				16E6AEC61436067F00D47637 /* ContentViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -275,7 +273,6 @@
 				166257591434D624006CA328 /* SummaryViewController.xib in Resources */,
 				1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */,
 				16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */,
-				16E6AEC91436067F00D47637 /* ContentViewController.xib in Resources */,
 				1647946F1436A1130095C658 /* button_pressed.png in Resources */,
 				164794701436A1130095C658 /* button_pressed@2x.png in Resources */,
 				164794711436A1130095C658 /* button.png in Resources */,
@@ -284,8 +281,10 @@
 				16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */,
 				1670851F143F5BA800FA3B02 /* back.png in Resources */,
 				16708520143F5BA800FA3B02 /* back@2x.png in Resources */,
-				16708521143F5BA800FA3B02 /* scissors.png in Resources */,
-				16708522143F5BA800FA3B02 /* scissors@2x.png in Resources */,
+				1670852A143F5DCD00FA3B02 /* info.png in Resources */,
+				1670852B143F5DCD00FA3B02 /* info@2x.png in Resources */,
+				1670852E143F675600FA3B02 /* adjustment.png in Resources */,
+				1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +300,6 @@
 				166257581434D624006CA328 /* SummaryViewController.m in Sources */,
 				1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */,
 				16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */,
-				16E6AEC81436067F00D47637 /* ContentViewController.m in Sources */,
 				16E6AECF14362FD100D47637 /* Check.m in Sources */,
 				164794551436936B0095C658 /* RLInputButton.m in Sources */,
 				16165364143A350200BA2DCB /* CheckData.m in Sources */,

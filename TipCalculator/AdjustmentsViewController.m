@@ -11,11 +11,18 @@
 #import "AdjustmentValue.h"
 #import "AdjustmentValueView.h"
 
+@interface AdjustmentsViewController (Private)
+
+- (void)setupAdjustmentViews;
+
+@end
+
 @implementation AdjustmentsViewController
 
+@synthesize delegate = delegate_;
 @synthesize adjusmentsTable = adjustmentsTable_;
 @synthesize totalLabel = totalLabel_;
-@synthesize contentViewController = contentViewController_;
+@synthesize adjustmentViews = adjustmentViews_;
 
 - (id)init
 {
@@ -38,6 +45,7 @@
 {
     [adjustmentsTable_ release];
     [totalLabel_ release];
+    [adjustmentViews_ release];
     [super dealloc];
 }
 
@@ -46,7 +54,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setWantsFullScreenLayout:YES];
     adjustmentsTable_.allowsSelection = NO;
+    [self setupAdjustmentViews];
 }
 
 - (void)viewDidUnload
@@ -56,6 +66,7 @@
     // e.g. self.myOutlet = nil;
     self.adjusmentsTable = nil;
     self.totalLabel = nil;
+    self.adjustmentViews = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -65,11 +76,24 @@
     [adjustmentsTable_ reloadData];
 }
 
-#pragma mark - Custom Actions
+#pragma mark - Custom Action Methods
+
+- (IBAction)backAction:(id)sender
+{
+    [delegate_ adjustmentsViewControllerDidFinish:self];
+}
 
 - (void)leftButtonAction:(id)sender
 {
-    NSLog(@"Left Button Action");
+    NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
+                                                                                              scale:0
+                                                                                   raiseOnExactness:NO
+                                                                                    raiseOnOverflow:NO
+                                                                                   raiseOnUnderflow:NO
+                                                                                raiseOnDivideByZero:NO];
+    NSDecimalNumber *tmpAmount = [checkData_.currentCheck totalPerPerson];
+    NSDecimalNumber *roundedAmount = [[tmpAmount decimalNumberByRoundingAccordingToBehavior:behavior] retain];
+    NSLog(@"%@", roundedAmount);
 }
 
 - (void)rightButtonAction:(id)sender
@@ -80,6 +104,45 @@
 - (void)sliderAction:(id)sender
 {
     NSLog(@"Slider Action");
+}
+
+#pragma mark - Private Methods
+
+- (void)setupAdjustmentViews
+{
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
+    NSInteger totalViews = [checkData_.currentCheck.splitAdjustments count];
+    NSMutableArray *views = [[NSMutableArray alloc] initWithCapacity:totalViews];
+    for (NSInteger i = 0; i < totalViews; i++) {
+        AdjustmentValue *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:i];
+        NSDecimal decimalValue = [adjustment.percentage decimalValue];
+        NSDecimalNumber *percentage = [NSDecimalNumber decimalNumberWithDecimal:decimalValue];
+        
+        
+        NSDecimalNumber *total = [[checkData_.currentCheck totalToPay] decimalNumberByMultiplyingBy:percentage];
+        NSDecimalNumber *person = [[checkData_.currentCheck totalPerPerson] decimalNumberByMultiplyingBy:percentage];
+        NSDecimalNumber *tip = [[checkData_.currentCheck totalTip] decimalNumberByMultiplyingBy:percentage];
+        
+        AdjustmentValueView *adjustmentView = [AdjustmentValueView adjustmentViewForCellWithTag:i];
+        
+        [adjustmentView.leftButton addTarget:self action:@selector(leftButtonAction:) forControlEvents:UIControlEventTouchDown];
+        [adjustmentView.rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchDown];
+        
+        adjustmentView.slider.continuous = YES;
+        adjustmentView.slider.value = [percentage floatValue];
+        [adjustmentView.slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
+        
+        adjustmentView.titleLabel.text = [NSString stringWithFormat:@"%@ = %@ + tip %@",
+                                          [formatter stringFromNumber:total],
+                                          [formatter stringFromNumber:person],
+                                          [formatter stringFromNumber:tip]];
+        [views addObject:adjustmentView];
+    }
+    
+    self.adjustmentViews = views;
+    [formatter release];
 }
 
 #pragma mark - UITableView Datasource Methods
@@ -107,32 +170,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    AdjustmentValue *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:indexPath.row];
-    NSDecimal decimalValue = [adjustment.percentage decimalValue];
-    NSDecimalNumber *percentage = [NSDecimalNumber decimalNumberWithDecimal:decimalValue];
-    
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    
-    NSDecimalNumber *total = [[checkData_.currentCheck totalToPay] decimalNumberByMultiplyingBy:percentage];
-    NSDecimalNumber *person = [[checkData_.currentCheck totalPerPerson] decimalNumberByMultiplyingBy:percentage];
-    NSDecimalNumber *tip = [[checkData_.currentCheck totalTip] decimalNumberByMultiplyingBy:percentage];
-    
-    AdjustmentValueView *adjustmentView = [AdjustmentValueView adjustmentViewForCellWithTag:indexPath.row];
-    
-    [adjustmentView.leftButton addTarget:self action:@selector(leftButtonAction:) forControlEvents:UIControlEventTouchDown];
-    [adjustmentView.rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchDown];
-    
-    adjustmentView.slider.continuous = YES;
-    adjustmentView.slider.value = [percentage floatValue];
-    [adjustmentView.slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-    
-    adjustmentView.titleLabel.text = [NSString stringWithFormat:@"%@ = %@ + tip %@",
-                                      [formatter stringFromNumber:total],
-                                      [formatter stringFromNumber:person],
-                                      [formatter stringFromNumber:tip]];
-    
-    cell.accessoryView = adjustmentView;
+    cell.accessoryView = [adjustmentViews_ objectAtIndex:indexPath.row];
     
     return cell;
 }
