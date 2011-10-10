@@ -38,6 +38,10 @@
 - (NSInteger)rowForCurrentNumberOfSplits;
 - (NSInteger)rowForCurrentTipPercentage;
 
+- (NSArray *)adjustmentsWithCanBeChangedValue:(BOOL)value;
+- (NSDecimalNumber *)adjustmentsSumWithCanBeChangedValue:(BOOL)value;
+
 - (void)splitAdjustmentsEvenly;
+- (void)setAdjustmentAtIndex:(NSInteger)index withPercentage:(NSDecimalNumber *)percentage canChange:(BOOL)canChange;
 
 @end

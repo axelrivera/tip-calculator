@@ -18,12 +18,12 @@
     self = [super init];
     if (self) {
         self.canChange = YES;
-        self.percentage = [NSNumber numberWithFloat:0.0];
+        self.percentage = [NSDecimalNumber zero];
     }
     return self;
 }
 
-- (id)initWithPercentage:(NSNumber *)percentage
+- (id)initWithPercentage:(NSDecimalNumber *)percentage
 {
     self = [self init];
     if (self) {
@@ -36,7 +36,8 @@
 
 - (id)initWithPercentageValue:(CGFloat)percentageValue
 {
-    NSNumber *percentage = [NSNumber numberWithFloat:percentageValue];
+    NSNumber *number = [NSNumber numberWithFloat:percentageValue];
+    NSDecimalNumber *percentage = [NSDecimalNumber decimalNumberWithDecimal:[number decimalValue]];
     self = [self initWithPercentage:percentage];
     return self;
 }

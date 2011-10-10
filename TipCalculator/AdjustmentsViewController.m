@@ -93,6 +93,25 @@
                                                                                 raiseOnDivideByZero:NO];
     NSDecimalNumber *tmpAmount = [checkData_.currentCheck totalPerPerson];
     NSDecimalNumber *roundedAmount = [[tmpAmount decimalNumberByRoundingAccordingToBehavior:behavior] retain];
+    NSDecimalNumber *residualAmount = [tmpAmount decimalNumberBySubtracting:roundedAmount];
+    
+    NSDecimalNumber *decimalOne = [NSDecimalNumber one];
+    
+    NSComparisonResult compare = [decimalOne compare:residualAmount];
+    
+    NSDecimalNumber *totalPerPerson = nil;
+    if (compare == NSOrderedSame) {
+        totalPerPerson = roundedAmount;
+    } else {
+        totalPerPerson = [tmpAmount decimalNumberBySubtracting:decimalOne];
+    }
+    
+    UIButton *currentButton = (UIButton *)sender;
+    NSInteger currentIndex = currentButton.tag;
+    
+    AdjustmentValue *currentAdjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:currentIndex];
+    AdjustmentValueView *currentView = [adjustmentViews_ objectAtIndex:currentIndex];
+    
     NSLog(@"%@", roundedAmount);
 }
 
@@ -117,8 +136,7 @@
     NSMutableArray *views = [[NSMutableArray alloc] initWithCapacity:totalViews];
     for (NSInteger i = 0; i < totalViews; i++) {
         AdjustmentValue *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:i];
-        NSDecimal decimalValue = [adjustment.percentage decimalValue];
-        NSDecimalNumber *percentage = [NSDecimalNumber decimalNumberWithDecimal:decimalValue];
+        NSDecimalNumber *percentage = adjustment.percentage;
         
         
         NSDecimalNumber *total = [[checkData_.currentCheck totalToPay] decimalNumberByMultiplyingBy:percentage];

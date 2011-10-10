@@ -11,9 +11,9 @@
 @interface AdjustmentValue : NSObject
 
 @property (nonatomic, assign) BOOL canChange;
-@property (nonatomic, retain) NSNumber *percentage;
+@property (nonatomic, retain) NSDecimalNumber *percentage;
 
-- (id)initWithPercentage:(NSNumber *)percentage;
+- (id)initWithPercentage:(NSDecimalNumber *)percentage;
 - (id)initWithPercentageValue:(CGFloat)percentageValue;
 
 @end
