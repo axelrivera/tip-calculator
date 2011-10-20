@@ -11,18 +11,14 @@
 @implementation AdjustmentValueView
 
 @synthesize titleLabel = titleLabel_;
-@synthesize leftButton = leftButton_;
-@synthesize rightButton = rightButton_;
-@synthesize slider = slider_;
+@synthesize segmentedControl = segmentedControl_;
 
 + (AdjustmentValueView *)adjustmentViewForCellWithTag:(NSInteger)tag
 {
-    CGRect frame = CGRectMake(0.0, 0.0, 280.0, 50.0);
+    CGRect frame = CGRectMake(0.0, 0.0, 280.0, 44.0);
     AdjustmentValueView *adjustment = [[[[self class] alloc] initWithFrame:frame] autorelease];
     adjustment.titleLabel.tag = tag;
-    adjustment.rightButton.tag = tag;
-    adjustment.leftButton.tag = tag;
-    adjustment.slider.tag = tag;
+    adjustment.segmentedControl.tag = tag;
     return adjustment;
 }
 
@@ -38,16 +34,14 @@
         titleLabel_.lineBreakMode = UILineBreakModeMiddleTruncation;
         [self addSubview:titleLabel_];
         
-        leftButton_ = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-        [leftButton_ setTitle:@"-" forState:UIControlStateNormal];
-        [self addSubview:leftButton_];
-        
-        rightButton_ = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
-        [rightButton_ setTitle:@"+" forState:UIControlStateNormal];
-        [self addSubview:rightButton_];
-        
-        slider_ = [[UISlider alloc] initWithFrame:CGRectZero];
-        [self addSubview:slider_];
+        NSArray *items = [[NSArray alloc] initWithObjects:@"-", @"+", nil];
+        segmentedControl_ = [[UISegmentedControl alloc] initWithItems:items];
+        [segmentedControl_ setWidth:44.0f forSegmentAtIndex:0];
+        [segmentedControl_ setWidth:44.0f forSegmentAtIndex:1];
+        segmentedControl_.segmentedControlStyle = UISegmentedControlStylePlain;
+        segmentedControl_.momentary = YES;
+        [items release];
+        [self addSubview:segmentedControl_];
     }
     return self;
 }
@@ -55,9 +49,7 @@
 - (void)dealloc
 {
     [titleLabel_ release];
-    [leftButton_ release];
-    [rightButton_ release];
-    [slider_ release];
+    [segmentedControl_ release];
     [super dealloc];
 }
 
@@ -65,33 +57,20 @@
 {
     [super layoutSubviews];
     
-    CGRect titleFrame = CGRectMake(0.0,
+#define kXOffset 10.0f
+    
+    CGRect segmentFrame = segmentedControl_.frame;
+    
+    segmentedControl_.frame = CGRectMake(0.0,
+                                         0.0,
+                                         segmentFrame.size.width,
+                                         segmentFrame.size.height);
+    
+    CGRect titleFrame = CGRectMake(segmentFrame.size.width + kXOffset,
                                    0.0,
-                                   self.frame.size.width,
-                                   17.0);
+                                   self.frame.size.width - (segmentFrame.size.width + kXOffset),
+                                   segmentFrame.size.height);
     titleLabel_.frame = titleFrame;
-    
-#define kButtonWidth 34.0
-#define kButtonHeight 28.0
-#define kButtonOffset 10.0
-
-    CGRect leftFrame = CGRectMake(0.0,
-                                   self.frame.size.height - kButtonHeight,
-                                   kButtonWidth,
-                                   kButtonHeight);
-    leftButton_.frame = leftFrame;
-    
-    CGRect sliderFrame = CGRectMake(kButtonWidth + kButtonOffset,
-                                    self.frame.size.height - kButtonHeight,
-                                    self.frame.size.width - (kButtonWidth * 2.0 + kButtonOffset * 2.0),
-                                    kButtonHeight);
-    slider_.frame = sliderFrame;
-    
-    CGRect rightFrame = CGRectMake(kButtonWidth + kButtonOffset + sliderFrame.size.width + kButtonOffset,
-                                   self.frame.size.height - kButtonHeight,
-                                   kButtonWidth,
-                                   kButtonHeight);
-    rightButton_.frame = rightFrame;
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "Check.h"
-#import "AdjustmentValue.h"
+#import "Adjustment.h"
 
 #define kStartNumberOfSplits 1
 #define kMaximumNumberOfSplits 50
@@ -194,7 +194,7 @@ static NSDictionary *tipPercentagesDictionary;
     NSInteger totalAdjustments = [splitAdjustments_ count];
     NSMutableArray *array = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
     for (NSInteger i = 0; i < totalAdjustments; i++) {
-        AdjustmentValue *adjustment = [splitAdjustments_ objectAtIndex:i];
+        Adjustment *adjustment = [splitAdjustments_ objectAtIndex:i];
         if (adjustment.canChange == value) {
             [array addObject:adjustment];
         }
@@ -208,8 +208,8 @@ static NSDictionary *tipPercentagesDictionary;
     NSInteger adjustmentsTotal = [adjustmentsArray count];
     NSDecimalNumber *sumTotal = [NSDecimalNumber zero];
     for (NSInteger i = 0; i < adjustmentsTotal; i++) {
-        AdjustmentValue *adjustment = [adjustmentsArray objectAtIndex:i];
-        sumTotal = [sumTotal decimalNumberByAdding:adjustment.percentage];
+        Adjustment *adjustment = [adjustmentsArray objectAtIndex:i];
+        sumTotal = [sumTotal decimalNumberByAdding:adjustment.adjustmentValue];
     }
     return sumTotal;
 }
@@ -218,18 +218,18 @@ static NSDictionary *tipPercentagesDictionary;
 {
     NSInteger total = [numberOfSplits_ integerValue];
     if (total == 1) {
-        AdjustmentValue *adjustment = [[AdjustmentValue alloc] initWithPercentageValue:1.0];
+        Adjustment *adjustment = [[Adjustment alloc] initWithDecimalNumber:[self totalToPay]];
         adjustment.canChange = NO;
         NSArray *array = [[NSArray alloc] initWithObjects:adjustment, nil];
         [self setSplitAdjustments:array];
         [array release];
     } else {
-        NSDecimalNumber *fullValue = [NSDecimalNumber one];
-        NSDecimalNumber *split = [fullValue decimalNumberByDividingBy:numberOfSplits_];
+        NSDecimalNumber *totalToPay = [self totalToPay];
+        NSDecimalNumber *split = [totalToPay decimalNumberByDividingBy:numberOfSplits_];
         
         NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:total];
         for (NSInteger i = 0; i < total; i++) {
-            AdjustmentValue *adjustment = [[[AdjustmentValue alloc] initWithPercentage:split] autorelease];
+            Adjustment *adjustment = [[[Adjustment alloc] initWithDecimalNumber:split] autorelease];
             [array addObject:adjustment];
         }
         [self setSplitAdjustments:array];
@@ -237,15 +237,15 @@ static NSDictionary *tipPercentagesDictionary;
     }
 }
 
-- (void)setAdjustmentAtIndex:(NSInteger)index withPercentage:(NSDecimalNumber *)percentage canChange:(BOOL)canChange
+- (void)setAdjustmentAtIndex:(NSInteger)index withNumber:(NSDecimalNumber *)number canChange:(BOOL)canChange
 {
-    AdjustmentValue *currentAdjustment = [[AdjustmentValue alloc] initWithPercentage:percentage];
-    currentAdjustment.canChange = NO;
-    [splitAdjustments_ replaceObjectAtIndex:index withObject:currentAdjustment];
-    [currentAdjustment release];
-    
-    NSDecimalNumber *validSum = [self adjustmentsSumWithCanBeChangedValue:YES];
-    NSDecimalNumber *dirtySum = [[NSDecimalNumber one] decimalNumberBySubtracting:validSum];
+//    Adjustment *currentAdjustment = [[Adjustment alloc] initWithDecimalNumber:number];
+//    currentAdjustment.canChange = NO;
+//    [splitAdjustments_ replaceObjectAtIndex:index withObject:currentAdjustment];
+//    [currentAdjustment release];
+//    
+//    NSDecimalNumber *validSum = [self adjustmentsSumWithCanBeChangedValue:YES];
+//    NSDecimalNumber *dirtySum = [[NSDecimalNumber one] decimalNumberBySubtracting:validSum];
 }
 
 #pragma mark - Private Methods

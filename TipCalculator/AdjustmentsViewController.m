@@ -8,12 +8,14 @@
 
 #import "AdjustmentsViewController.h"
 #import "CheckData.h"
-#import "AdjustmentValue.h"
+#import "Adjustment.h"
 #import "AdjustmentValueView.h"
 
 @interface AdjustmentsViewController (Private)
 
 - (void)setupAdjustmentViews;
+- (void)subtractOneToIndex:(NSInteger)index;
+- (void)addOneToIndex:(NSInteger)index;
 
 @end
 
@@ -83,7 +85,50 @@
     [delegate_ adjustmentsViewControllerDidFinish:self];
 }
 
-- (void)leftButtonAction:(id)sender
+- (void)stepperAction:(id)sender
+{
+    UISegmentedControl *segmentedControl = sender;
+    NSInteger tag = segmentedControl.tag;
+    if ([segmentedControl selectedSegmentIndex] == 0) {
+        [self subtractOneToIndex:tag];
+    } else {
+        [self addOneToIndex:tag];
+    }
+}
+
+#pragma mark - Private Methods
+
+- (void)setupAdjustmentViews
+{
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
+    NSInteger totalViews = [checkData_.currentCheck.splitAdjustments count];
+    NSMutableArray *views = [[NSMutableArray alloc] initWithCapacity:totalViews];
+    for (NSInteger i = 0; i < totalViews; i++) {
+        Adjustment *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:i];
+        
+        NSDecimalNumber *total = adjustment.adjustmentValue;
+        NSDecimalNumber *tip = [[checkData_.currentCheck totalTip] decimalNumberByDividingBy:checkData_.currentCheck.numberOfSplits];
+        NSDecimalNumber *person = [total decimalNumberBySubtracting:tip];
+        
+        AdjustmentValueView *adjustmentView = [AdjustmentValueView adjustmentViewForCellWithTag:i];
+        
+        adjustmentView.titleLabel.text = [NSString stringWithFormat:@"%@ = %@ + tip %@",
+                                          [formatter stringFromNumber:total],
+                                          [formatter stringFromNumber:person],
+                                          [formatter stringFromNumber:tip]];
+        
+        [adjustmentView.segmentedControl addTarget:self action:@selector(stepperAction:) forControlEvents:UIControlEventValueChanged];
+        
+        [views addObject:adjustmentView];
+    }
+    
+    self.adjustmentViews = views;
+    [formatter release];
+}
+
+- (void)subtractOneToIndex:(NSInteger)index
 {
     NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
                                                                                               scale:0
@@ -97,70 +142,24 @@
     
     NSDecimalNumber *decimalOne = [NSDecimalNumber one];
     
-    NSComparisonResult compare = [decimalOne compare:residualAmount];
-    
     NSDecimalNumber *totalPerPerson = nil;
+    
+    NSComparisonResult compare = [decimalOne compare:residualAmount];
     if (compare == NSOrderedSame) {
         totalPerPerson = roundedAmount;
     } else {
         totalPerPerson = [tmpAmount decimalNumberBySubtracting:decimalOne];
     }
     
-    UIButton *currentButton = (UIButton *)sender;
-    NSInteger currentIndex = currentButton.tag;
-    
-    AdjustmentValue *currentAdjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:currentIndex];
-    AdjustmentValueView *currentView = [adjustmentViews_ objectAtIndex:currentIndex];
+    Adjustment *currentAdjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:index];
+    AdjustmentValueView *currentView = [adjustmentViews_ objectAtIndex:index];
     
     NSLog(@"%@", roundedAmount);
 }
 
-- (void)rightButtonAction:(id)sender
+- (void)addOneToIndex:(NSInteger)index
 {
     NSLog(@"Right Button Action");
-}
-
-- (void)sliderAction:(id)sender
-{
-    NSLog(@"Slider Action");
-}
-
-#pragma mark - Private Methods
-
-- (void)setupAdjustmentViews
-{
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    
-    NSInteger totalViews = [checkData_.currentCheck.splitAdjustments count];
-    NSMutableArray *views = [[NSMutableArray alloc] initWithCapacity:totalViews];
-    for (NSInteger i = 0; i < totalViews; i++) {
-        AdjustmentValue *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:i];
-        NSDecimalNumber *percentage = adjustment.percentage;
-        
-        
-        NSDecimalNumber *total = [[checkData_.currentCheck totalToPay] decimalNumberByMultiplyingBy:percentage];
-        NSDecimalNumber *person = [[checkData_.currentCheck totalPerPerson] decimalNumberByMultiplyingBy:percentage];
-        NSDecimalNumber *tip = [[checkData_.currentCheck totalTip] decimalNumberByMultiplyingBy:percentage];
-        
-        AdjustmentValueView *adjustmentView = [AdjustmentValueView adjustmentViewForCellWithTag:i];
-        
-        [adjustmentView.leftButton addTarget:self action:@selector(leftButtonAction:) forControlEvents:UIControlEventTouchDown];
-        [adjustmentView.rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchDown];
-        
-        adjustmentView.slider.continuous = YES;
-        adjustmentView.slider.value = [percentage floatValue];
-        [adjustmentView.slider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-        
-        adjustmentView.titleLabel.text = [NSString stringWithFormat:@"%@ = %@ + tip %@",
-                                          [formatter stringFromNumber:total],
-                                          [formatter stringFromNumber:person],
-                                          [formatter stringFromNumber:tip]];
-        [views addObject:adjustmentView];
-    }
-    
-    self.adjustmentViews = views;
-    [formatter release];
 }
 
 #pragma mark - UITableView Datasource Methods
@@ -197,7 +196,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0;
+    return 64.0;
 }
 
 @end

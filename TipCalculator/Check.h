@@ -10,6 +10,7 @@
 
 @interface Check : NSObject
 {
+    @private
     NSMutableArray *splitAdjustments_;
 }
 
@@ -42,6 +43,6 @@
 - (NSDecimalNumber *)adjustmentsSumWithCanBeChangedValue:(BOOL)value;
 
 - (void)splitAdjustmentsEvenly;
-- (void)setAdjustmentAtIndex:(NSInteger)index withPercentage:(NSDecimalNumber *)percentage canChange:(BOOL)canChange;
+- (void)setAdjustmentAtIndex:(NSInteger)index withNumber:(NSDecimalNumber *)number canChange:(BOOL)canChange;
 
 @end

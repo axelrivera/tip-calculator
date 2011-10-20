@@ -33,7 +33,7 @@
 		1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852D143F675600FA3B02 /* adjustment@2x.png */; };
 		16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */; };
 		16BF55BF143E3E9200CC8952 /* AdjustmentValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */; };
-		16CE4CBA143DEEF80075342C /* AdjustmentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* AdjustmentValue.m */; };
+		16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* Adjustment.m */; };
 		16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
 		16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
 		16E6AECF14362FD100D47637 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AECE14362FD100D47637 /* Check.m */; };
@@ -75,8 +75,8 @@
 		16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentValueView.xib; sourceTree = "<group>"; };
 		16BF55BD143E3E9200CC8952 /* AdjustmentValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentValueView.h; sourceTree = "<group>"; };
 		16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentValueView.m; sourceTree = "<group>"; };
-		16CE4CB8143DEEF80075342C /* AdjustmentValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentValue.h; sourceTree = "<group>"; };
-		16CE4CB9143DEEF80075342C /* AdjustmentValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentValue.m; sourceTree = "<group>"; };
+		16CE4CB8143DEEF80075342C /* Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Adjustment.h; sourceTree = "<group>"; };
+		16CE4CB9143DEEF80075342C /* Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjustment.m; sourceTree = "<group>"; };
 		16E6AEB71435EB5800D47637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		16E6AEB81435EB5800D47637 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		16E6AEB91435EB5800D47637 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -212,8 +212,8 @@
 				16E6AECE14362FD100D47637 /* Check.m */,
 				16165362143A350100BA2DCB /* CheckData.h */,
 				16165363143A350200BA2DCB /* CheckData.m */,
-				16CE4CB8143DEEF80075342C /* AdjustmentValue.h */,
-				16CE4CB9143DEEF80075342C /* AdjustmentValue.m */,
+				16CE4CB8143DEEF80075342C /* Adjustment.h */,
+				16CE4CB9143DEEF80075342C /* Adjustment.m */,
 			);
 			name = "Model + Data";
 			sourceTree = "<group>";
@@ -303,7 +303,7 @@
 				16E6AECF14362FD100D47637 /* Check.m in Sources */,
 				164794551436936B0095C658 /* RLInputButton.m in Sources */,
 				16165364143A350200BA2DCB /* CheckData.m in Sources */,
-				16CE4CBA143DEEF80075342C /* AdjustmentValue.m in Sources */,
+				16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */,
 				16BF55BF143E3E9200CC8952 /* AdjustmentValueView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

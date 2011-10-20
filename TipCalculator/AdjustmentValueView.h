@@ -11,9 +11,7 @@
 @interface AdjustmentValueView : UIView
 
 @property (nonatomic, retain, readonly) UILabel *titleLabel;
-@property (nonatomic, retain, readonly) UIButton *leftButton;
-@property (nonatomic, retain, readonly) UIButton *rightButton;
-@property (nonatomic, retain, readonly) UISlider *slider;
+@property (nonatomic, retain, readonly) UISegmentedControl *segmentedControl;
 
 + (AdjustmentValueView *)adjustmentViewForCellWithTag:(NSInteger)tag;
 
