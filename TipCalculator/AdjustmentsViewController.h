@@ -7,23 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class CheckData;
+#import "Check.h"
 
 @protocol AdjustmentsViewControllerDelegate;
 
 @interface AdjustmentsViewController : UIViewController
 {
-    CheckData *checkData_;
+    Check *check_;
 }
 
 @property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
+@property (nonatomic, retain) IBOutlet UITextField *adjustmentTextField;
 @property (nonatomic, retain) IBOutlet UILabel *totalLabel;
 
-@property (nonatomic, retain) NSArray *adjustmentViews;
-
 - (IBAction)backAction:(id)sender;
+- (IBAction)resetAction:(id)sender;
+- (IBAction)addAction:(id)sender;
 
 @end
 

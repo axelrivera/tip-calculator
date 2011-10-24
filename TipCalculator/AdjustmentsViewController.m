@@ -7,15 +7,12 @@
 //
 
 #import "AdjustmentsViewController.h"
+#import "CheckHelper.h"
 #import "CheckData.h"
 #import "Adjustment.h"
-#import "AdjustmentValueView.h"
+#import "NSDecimalNumber+Check.h"
 
 @interface AdjustmentsViewController (Private)
-
-- (void)setupAdjustmentViews;
-- (void)subtractOneToIndex:(NSInteger)index;
-- (void)addOneToIndex:(NSInteger)index;
 
 @end
 
@@ -23,14 +20,14 @@
 
 @synthesize delegate = delegate_;
 @synthesize adjusmentsTable = adjustmentsTable_;
+@synthesize adjustmentTextField = adjustmentTextField_;
 @synthesize totalLabel = totalLabel_;
-@synthesize adjustmentViews = adjustmentViews_;
 
 - (id)init
 {
     self = [super initWithNibName:@"AdjustmentsViewController" bundle:nil];
     if (self) {
-        checkData_ = [CheckData sharedCheckData];
+        check_ = [CheckData sharedCheckData].currentCheck;
     }
     return self;
 }
@@ -45,9 +42,10 @@
 
 - (void)dealloc
 {
+    check_ = nil;
     [adjustmentsTable_ release];
+    [adjustmentTextField_ release];
     [totalLabel_ release];
-    [adjustmentViews_ release];
     [super dealloc];
 }
 
@@ -57,8 +55,6 @@
 {
     [super viewDidLoad];
     [self setWantsFullScreenLayout:YES];
-    adjustmentsTable_.allowsSelection = NO;
-    [self setupAdjustmentViews];
 }
 
 - (void)viewDidUnload
@@ -67,14 +63,14 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     self.adjusmentsTable = nil;
+    self.adjustmentTextField = nil;
     self.totalLabel = nil;
-    self.adjustmentViews = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    totalLabel_.text = [NSString stringWithFormat:@"Total: %@", [checkData_.currentCheck stringForTotalToPay]];
+    totalLabel_.text = [NSString stringWithFormat:@"Total: %@", [[check_ totalToPay] currencyString]];
     [adjustmentsTable_ reloadData];
 }
 
@@ -85,99 +81,74 @@
     [delegate_ adjustmentsViewControllerDidFinish:self];
 }
 
-- (void)stepperAction:(id)sender
+- (IBAction)resetAction:(id)sender
 {
-    UISegmentedControl *segmentedControl = sender;
-    NSInteger tag = segmentedControl.tag;
-    if ([segmentedControl selectedSegmentIndex] == 0) {
-        [self subtractOneToIndex:tag];
-    } else {
-        [self addOneToIndex:tag];
+    
+}
+
+- (IBAction)addAction:(id)sender
+{
+    NSString *stringValue = adjustmentTextField_.text;
+    if (![stringValue isEqualToString:@""]) {
+        NSDecimalNumber *adjustmentValue = [NSDecimalNumber decimalNumberWithString:stringValue];
+        Adjustment *adjustment = [[Adjustment alloc] initWithAmount:adjustmentValue tipRate:check_.tipPercentage];
+        [check_ addSplitAdjustment:adjustment];
+        [adjustment release];
+        
+        [adjustmentsTable_ beginUpdates];
+        [adjustmentsTable_ insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]]
+                                 withRowAnimation:UITableViewRowAnimationFade];
+        [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [adjustmentsTable_ endUpdates];
+        adjustmentTextField_.text = @"";
     }
+    [adjustmentTextField_ resignFirstResponder];
 }
 
 #pragma mark - Private Methods
 
-- (void)setupAdjustmentViews
-{
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    
-    NSInteger totalViews = [checkData_.currentCheck.splitAdjustments count];
-    NSMutableArray *views = [[NSMutableArray alloc] initWithCapacity:totalViews];
-    for (NSInteger i = 0; i < totalViews; i++) {
-        Adjustment *adjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:i];
-        
-        NSDecimalNumber *total = adjustment.adjustmentValue;
-        NSDecimalNumber *tip = [[checkData_.currentCheck totalTip] decimalNumberByDividingBy:checkData_.currentCheck.numberOfSplits];
-        NSDecimalNumber *person = [total decimalNumberBySubtracting:tip];
-        
-        AdjustmentValueView *adjustmentView = [AdjustmentValueView adjustmentViewForCellWithTag:i];
-        
-        adjustmentView.titleLabel.text = [NSString stringWithFormat:@"%@ = %@ + tip %@",
-                                          [formatter stringFromNumber:total],
-                                          [formatter stringFromNumber:person],
-                                          [formatter stringFromNumber:tip]];
-        
-        [adjustmentView.segmentedControl addTarget:self action:@selector(stepperAction:) forControlEvents:UIControlEventValueChanged];
-        
-        [views addObject:adjustmentView];
-    }
-    
-    self.adjustmentViews = views;
-    [formatter release];
-}
-
-- (void)subtractOneToIndex:(NSInteger)index
-{
-    NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
-                                                                                              scale:0
-                                                                                   raiseOnExactness:NO
-                                                                                    raiseOnOverflow:NO
-                                                                                   raiseOnUnderflow:NO
-                                                                                raiseOnDivideByZero:NO];
-    NSDecimalNumber *tmpAmount = [checkData_.currentCheck totalPerPerson];
-    NSDecimalNumber *roundedAmount = [[tmpAmount decimalNumberByRoundingAccordingToBehavior:behavior] retain];
-    NSDecimalNumber *residualAmount = [tmpAmount decimalNumberBySubtracting:roundedAmount];
-    
-    NSDecimalNumber *decimalOne = [NSDecimalNumber one];
-    
-    NSDecimalNumber *totalPerPerson = nil;
-    
-    NSComparisonResult compare = [decimalOne compare:residualAmount];
-    if (compare == NSOrderedSame) {
-        totalPerPerson = roundedAmount;
-    } else {
-        totalPerPerson = [tmpAmount decimalNumberBySubtracting:decimalOne];
-    }
-    
-    Adjustment *currentAdjustment = [checkData_.currentCheck.splitAdjustments objectAtIndex:index];
-    AdjustmentValueView *currentView = [adjustmentViews_ objectAtIndex:index];
-    
-    NSLog(@"%@", roundedAmount);
-}
-
-- (void)addOneToIndex:(NSInteger)index
-{
-    NSLog(@"Right Button Action");
-}
-
 #pragma mark - UITableView Datasource Methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [checkData_.currentCheck.splitAdjustments count];
+    NSInteger rows = 1;
+    if (section == 1) {
+        rows = [check_.splitAdjustments count];
+    }
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([checkData_.currentCheck.splitAdjustments count] <= 1) {
-        NSString *CellIdentifier = @"DefaultCell";
+    if (indexPath.section == 0) {
+        NSString *CellIdentifier = @"BalanceCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         }
-        cell.textLabel.text = @"Adjust cell when splitting check";
+        
+        NSDecimalNumber *totalBalance = [check_ totalBalanceAfterAdjustments];
+        NSDecimalNumber *numberOfAdjustments = [check_ decimalNumberOfSplitAdjustments];
+        NSDecimalNumber *numberOfPeopleLeft = [check_.numberOfSplits decimalNumberBySubtracting:numberOfAdjustments];
+        
+        NSString *totalBalanceStr = [totalBalance currencyString];
+        NSString *textStr = [NSString stringWithFormat:@"Balance: %@", totalBalanceStr];
+        
+        NSDecimalNumber *balancePerPerson = [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfPeopleLeft];
+        NSString *balancePerPersonStr = [balancePerPerson currencyString];
+        NSString *detailTextStr = [NSString stringWithFormat:@"Balance Per Person: %@ (%d/%d People)",
+                                   balancePerPersonStr,
+                                   [numberOfPeopleLeft integerValue],
+                                   [[check_ numberOfSplits] integerValue]];
+        
+        cell.textLabel.text = textStr;
+        cell.detailTextLabel.text = detailTextStr;
+        
         return cell;
     }
     
@@ -187,7 +158,12 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    cell.accessoryView = [adjustmentViews_ objectAtIndex:indexPath.row];
+    Adjustment *adjustment = [check_.splitAdjustments objectAtIndex:indexPath.row];
+    NSString *textStr = [NSString stringWithFormat:@"%@ = %@ + tip %@",
+                         [[adjustment total] currencyString],
+                         [adjustment.amount currencyString],
+                         [adjustment.tip currencyString]];
+    cell.textLabel.text = textStr;
     
     return cell;
 }
@@ -196,7 +172,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 64.0;
+    return 44.0;
+}
+
+#pragma mark - UITouch Delegate Methods
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if ([adjustmentTextField_ isFirstResponder]) {
+        [adjustmentTextField_ resignFirstResponder];
+    }
 }
 
 @end

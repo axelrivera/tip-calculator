@@ -10,13 +10,13 @@
 
 @interface Adjustment : NSObject
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain, readonly) NSDecimalNumber *totalPerPerson;
-@property (nonatomic, retain, readonly) NSDecimalNumber *billAmountPerPerson;
-@property (nonatomic, retain, readonly) NSDecimalNumber *tipPerPerson;
-@property (nonatomic, assign) BOOL canChange;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, readonly) NSDecimalNumber *amount;
+@property (nonatomic, readonly) NSDecimalNumber *tip;
 
-- (id)initWithTotal:(NSDecimalNumber *)total billAmount:(NSDecimalNumber *)billAmount tip:(NSDecimalNumber *)tip;
-- (void)replaceTotal:(NSDecimalNumber *)total billAmount:(NSDecimalNumber *)billAmount tip:(NSDecimalNumber *)tip;
+- (id)initWithAmount:(NSDecimalNumber *)amount andTip:(NSDecimalNumber *)tip;
+- (id)initWithAmount:(NSDecimalNumber *)amount tipRate:(NSDecimalNumber *)tipRate;
+
+- (NSDecimalNumber *)total;
 
 @end

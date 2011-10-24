@@ -8,6 +8,8 @@
 
 #import "Check.h"
 #import "Adjustment.h"
+#import "CheckHelper.h"
+#import "NSDecimalNumber+Check.h"
 
 #define kStartNumberOfSplits 1
 #define kMaximumNumberOfSplits 50
@@ -18,7 +20,7 @@
 
 #define kDefaultNumberOfSplits @"2"
 #define kDefaultTipPercentage  @"0.15"
-#define kDefaultCheckAmount @"100.00"
+#define kDefaultBillAmount @"100.00"
 
 static NSArray *numberOfSplitsArray;
 static NSArray *tipPercentagesArray;
@@ -30,6 +32,8 @@ static NSDictionary *tipPercentagesDictionary;
 + (NSDictionary *)numberOfSplitsDictionary;
 + (NSDictionary *)tipPercentagesDictionary;
 
+- (void)setSplitAdjustments:(NSMutableArray *)splitAdjustments;
+
 - (NSString *)currencyStringForNumber:(NSNumber *)number;
 - (NSString *)percentageStringForNumber:(NSNumber *)number;
 
@@ -39,7 +43,7 @@ static NSDictionary *tipPercentagesDictionary;
 
 @synthesize numberOfSplits = numberOfSplits_;
 @synthesize tipPercentage = tipPercentage_;
-@synthesize checkAmount = checkAmount_;
+@synthesize billAmount = billAmount_;
 
 + (NSArray *)numberOfSplitsArray
 {
@@ -78,7 +82,8 @@ static NSDictionary *tipPercentagesDictionary;
     if (self) {
         self.numberOfSplits = [NSDecimalNumber decimalNumberWithString:kDefaultNumberOfSplits];
         self.tipPercentage = [NSDecimalNumber decimalNumberWithString:kDefaultTipPercentage];
-        self.checkAmount = [NSDecimalNumber decimalNumberWithString:kDefaultCheckAmount];
+        self.billAmount = [NSDecimalNumber decimalNumberWithString:kDefaultBillAmount];
+        [self setSplitAdjustments:[NSMutableArray arrayWithCapacity:0]];
     }
     return self;
 }
@@ -87,41 +92,36 @@ static NSDictionary *tipPercentagesDictionary;
 {
     [numberOfSplits_ release];
     [tipPercentage_ release];
-    [checkAmount_ release];
+    [billAmount_ release];
     [splitAdjustments_ release];
     [super dealloc]; 
-}
-
-#pragma mark - Custom Getters and Setters
-
-- (NSArray *)splitAdjustments
-{
-    return splitAdjustments_;
-}
-
-- (void)setSplitAdjustments:(NSArray *)splitAdjustments
-{
-    [splitAdjustments_ autorelease];
-    splitAdjustments_ = [[NSMutableArray alloc] initWithArray:splitAdjustments];
 }
 
 #pragma mark - Custom Methods
 
 - (NSDecimalNumber *)totalTip
 {
-    return [checkAmount_ decimalNumberByMultiplyingBy:tipPercentage_];
+    return [CheckHelper calculateTipWithAmount:billAmount_ andRate:tipPercentage_];
 }
 
 - (NSDecimalNumber *)totalToPay
 {
-    NSDecimalNumber *tip = [self totalTip];
-    return [checkAmount_ decimalNumberByAdding:tip];
+    return [CheckHelper calculateTotalWithAmount:billAmount_ andTip:[self totalTip]];
 }
 
 - (NSDecimalNumber *)totalPerPerson
 {
-    NSDecimalNumber *total = [self totalToPay];
-    return [total decimalNumberByDividingBy:numberOfSplits_];
+    return [CheckHelper calculatePersonAmount:[self totalToPay] withSplit:numberOfSplits_];
+}
+
+- (NSDecimalNumber *)tipPerPerson
+{
+    return [CheckHelper calculatePersonAmount:[self totalTip] withSplit:numberOfSplits_];
+}
+
+- (NSDecimalNumber *)billAmountPerPerson
+{
+    return [CheckHelper calculatePersonAmount:billAmount_ withSplit:numberOfSplits_];
 }
 
 - (NSString *)stringForNumberOfSplits
@@ -134,9 +134,9 @@ static NSDictionary *tipPercentagesDictionary;
     return [self percentageStringForNumber:tipPercentage_];
 }
 
-- (NSString *)stringForCheckAmount
+- (NSString *)stringForBillAmount
 {
-    return [self currencyStringForNumber:checkAmount_];
+    return [self currencyStringForNumber:billAmount_];
 }
 
 - (NSString *)stringForTotalTip
@@ -189,63 +189,104 @@ static NSDictionary *tipPercentagesDictionary;
     return [[[Check tipPercentagesDictionary] objectForKey:key] integerValue];
 }
 
-- (NSArray *)adjustmentsWithCanBeChangedValue:(BOOL)value
+- (NSDecimalNumber *)totalAdjustments
 {
-    NSInteger totalAdjustments = [splitAdjustments_ count];
-    NSMutableArray *array = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
-    for (NSInteger i = 0; i < totalAdjustments; i++) {
-        Adjustment *adjustment = [splitAdjustments_ objectAtIndex:i];
-        if (adjustment.canChange == value) {
-            [array addObject:adjustment];
+    NSDecimalNumber *sum = [NSDecimalNumber zero];
+    if ([splitAdjustments_ count] > 0) {
+        for (Adjustment *adjustment in splitAdjustments_) {
+            sum = [sum decimalCurrencyByAdding:[adjustment total]];
         }
     }
-    return array;
+    return sum;
 }
 
-- (NSDecimalNumber *)adjustmentsSumWithCanBeChangedValue:(BOOL)value
+- (NSDecimalNumber *)totalBillAmountAdjustments
 {
-    NSArray *adjustmentsArray = [self adjustmentsWithCanBeChangedValue:value];
-    NSInteger adjustmentsTotal = [adjustmentsArray count];
-    NSDecimalNumber *sumTotal = [NSDecimalNumber zero];
-    for (NSInteger i = 0; i < adjustmentsTotal; i++) {
-        Adjustment *adjustment = [adjustmentsArray objectAtIndex:i];
-        sumTotal = [sumTotal decimalNumberByAdding:adjustment.adjustmentValue];
-    }
-    return sumTotal;
-}
-
-- (void)splitAdjustmentsEvenly
-{
-    NSInteger total = [numberOfSplits_ integerValue];
-    if (total == 1) {
-        Adjustment *adjustment = [[Adjustment alloc] initWithDecimalNumber:[self totalToPay]];
-        adjustment.canChange = NO;
-        NSArray *array = [[NSArray alloc] initWithObjects:adjustment, nil];
-        [self setSplitAdjustments:array];
-        [array release];
-    } else {
-        NSDecimalNumber *totalToPay = [self totalToPay];
-        NSDecimalNumber *split = [totalToPay decimalNumberByDividingBy:numberOfSplits_];
-        
-        NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:total];
-        for (NSInteger i = 0; i < total; i++) {
-            Adjustment *adjustment = [[[Adjustment alloc] initWithDecimalNumber:split] autorelease];
-            [array addObject:adjustment];
+    NSDecimalNumber *sum = [NSDecimalNumber zero];
+    if ([splitAdjustments_ count] > 0) {
+        for (Adjustment *adjustment in splitAdjustments_) {
+            sum = [sum decimalCurrencyByAdding:adjustment.amount];
         }
-        [self setSplitAdjustments:array];
-        [array release];
     }
+    return sum;
 }
 
-- (void)setAdjustmentAtIndex:(NSInteger)index withNumber:(NSDecimalNumber *)number canChange:(BOOL)canChange
-{
-//    Adjustment *currentAdjustment = [[Adjustment alloc] initWithDecimalNumber:number];
-//    currentAdjustment.canChange = NO;
-//    [splitAdjustments_ replaceObjectAtIndex:index withObject:currentAdjustment];
-//    [currentAdjustment release];
+//- (NSDecimalNumber *)billBalanceAfterAdjustments
+//{
 //    
-//    NSDecimalNumber *validSum = [self adjustmentsSumWithCanBeChangedValue:YES];
-//    NSDecimalNumber *dirtySum = [[NSDecimalNumber one] decimalNumberBySubtracting:validSum];
+//}
+//
+//- (NSDecimalNumber *)tipBalanceAfterAdjustments
+//{
+//    
+//}
+
+- (NSDecimalNumber *)totalBalanceAfterAdjustments
+{
+    NSDecimalNumber *adjustments = [self totalAdjustments];
+    NSDecimalNumber *balance = [[self totalToPay] decimalCurrencyBySubtracting:adjustments];
+    return balance;   
+}
+
+//- (NSDecimalNumber *)billPerPersonAfterAdjustments
+//{
+//    
+//}
+//
+//- (NSDecimalNumber *)tipPerPersonAfterAdjustments
+//{
+//    
+//}
+//
+//- (NSDecimalNumber *)totalPerPersonAfterAdjustments
+//{
+//    NSDecimalNumber *totalBalance = [self balanceAfterAdjustments];
+//    NSDecimalNumber *person = [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfSplits_];
+//    return person;
+//}
+
+- (BOOL)isBalanceAfterAdjustmentsZero
+{
+    NSDecimalNumber *balance = [self totalAdjustments];
+    NSComparisonResult compareBalance = [balance compare:[NSDecimalNumber zero]];
+    if (compareBalance == NSOrderedSame) {
+        return YES;
+    }
+    return NO;
+}
+
+- (NSDecimalNumber *)decimalNumberOfSplitAdjustments
+{
+    NSNumber *number = [NSNumber numberWithInteger:[splitAdjustments_ count]];
+    return [NSDecimalNumber decimalNumberWithDecimal:[number decimalValue]];
+}
+
+- (void)addSplitAdjustment:(Adjustment *)adjustment
+{
+    [splitAdjustments_ insertObject:adjustment atIndex:0];
+}
+
+- (void)removeSplitAdjustmentAtIndex:(NSInteger)index
+{
+    [splitAdjustments_ removeObjectAtIndex:index];
+}
+
+- (void)removeAllSplitAdjustments
+{
+    [splitAdjustments_ removeAllObjects];
+}
+
+#pragma mark - Custom Setters and Getters
+
+- (NSArray *)splitAdjustments
+{
+    return splitAdjustments_;
+}
+
+- (void)setSplitAdjustments:(NSMutableArray *)splitAdjustments
+{
+    [splitAdjustments_ autorelease];
+    splitAdjustments_ = [splitAdjustments retain];
 }
 
 #pragma mark - Private Methods

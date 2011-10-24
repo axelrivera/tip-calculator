@@ -114,8 +114,8 @@
     tipPercentageLabel_.text = [checkData_.currentCheck stringForTipPercentage];
     
     NSString *textFieldStr = nil;
-    if ([checkData_.currentCheck.checkAmount floatValue] > 0.0) {
-		textFieldStr = [formatter_ stringFromNumber:checkData_.currentCheck.checkAmount];
+    if ([checkData_.currentCheck.billAmount floatValue] > 0.0) {
+		textFieldStr = [formatter_ stringFromNumber:checkData_.currentCheck.billAmount];
 	} else {
 		textFieldStr = @"";
 	}
@@ -198,13 +198,12 @@
 
 - (void)reloadCheckSummary
 {
-    CGFloat total = [checkData_.currentCheck.checkAmount floatValue];
+    CGFloat total = [checkData_.currentCheck.billAmount floatValue];
     if (total > 0.00) {
         checkSummaryView_.hidden = NO;
         totalTipLabel_.text = [checkData_.currentCheck stringForTotalTip];
         totalToPayLabel_.text = [checkData_.currentCheck stringForTotalToPay];
         totalPerPersonLabel_.text = [checkData_.currentCheck stringForTotalPerPerson];
-        [checkData_.currentCheck splitAdjustmentsEvenly];
     } else {
         checkSummaryView_.hidden = YES;
     }
@@ -274,7 +273,7 @@
 {
     amountButton_.selected = YES;
     
-    NSDecimalNumber *amount = checkData_.currentCheck.checkAmount;
+    NSDecimalNumber *amount = checkData_.currentCheck.billAmount;
 	if ([amount floatValue] > 0.0) {
 		NSDecimalNumber *digits = [amount decimalNumberByMultiplyingByPowerOf10:abs(kCurrencyScale)];
 		self.enteredDigits = [digits stringValue];
@@ -320,7 +319,7 @@
 		number = [NSDecimalNumber zero];
 	}
 	
-	checkData_.currentCheck.checkAmount = number;
+	checkData_.currentCheck.billAmount = number;
 	// Replace the text with the localized decimal number
 	textField.text = [formatter_ stringFromNumber:number];
 	

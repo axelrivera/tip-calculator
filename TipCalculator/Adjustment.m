@@ -7,60 +7,67 @@
 //
 
 #import "Adjustment.h"
+#import "CheckHelper.h"
+#import "NSDecimalNumber+Check.h"
 
 @interface Adjustment (Private)
 
-- (void)setTotalPerPerson:(NSDecimalNumber *)number;
-- (void)setBillAmountPerPerson:(NSDecimalNumber *)number;
-- (void)setTipPerPerson:(NSDecimalNumber *)number;
+- (void)setAmount:(NSDecimalNumber *)amount;
+- (void)setTip:(NSDecimalNumber *)tip;
 
 @end
 
 @implementation Adjustment
 
 @synthesize name = name_;
-@synthesize totalPerPerson = totalPerPerson_;
-@synthesize billAmountPerPerson = billAmountPerPerson_;
-@synthesize tipPerPerson = tipPerPerson_;
-@synthesize canChange = canChange_;
+@synthesize amount = amount_;
+@synthesize tip = tip_;
 
-- (id)init
+- (id)initWithAmount:(NSDecimalNumber *)amount andTip:(NSDecimalNumber *)tip
 {
     self = [super init];
     if (self) {
-        name_ = [[NSString alloc] initWithString:@""];
-        canChange_ = YES;
+        self.name = [NSString stringWithString:@""];
+        [self setAmount:amount];
+        [self setTip:tip];
     }
+    return self;
+}
+
+- (id)initWithAmount:(NSDecimalNumber *)amount tipRate:(NSDecimalNumber *)tipRate
+{
+    NSDecimalNumber *tip = [CheckHelper calculateTipWithAmount:amount andRate:tipRate];
+    self = [self initWithAmount:amount andTip:tip];
     return self;
 }
 
 - (void)dealloc
 {
     [name_ release];
-    [totalPerPerson_ release];
-    [billAmountPerPerson_ release];
-    [tipPerPerson_ release];
+    [amount_ release];
+    [tip_ release];
     [super dealloc];
+}
+
+#pragma mark - Custom Methods
+
+- (NSDecimalNumber *)total
+{
+    return [amount_ decimalCurrencyByAdding:tip_];
 }
 
 #pragma mark - Private Methods
 
-- (void)setTotalPerPerson:(NSDecimalNumber *)number
+- (void)setAmount:(NSDecimalNumber *)amount
 {
-    [totalPerPerson_ autorelease];
-    totalPerPerson_ = [number retain];
+    [amount_ autorelease];
+    amount_ = [amount copy];
 }
-
-- (void)setBillAmountPerPerson:(NSDecimalNumber *)number
+                                
+- (void)setTip:(NSDecimalNumber *)tip
 {
-    [billAmountPerPerson_ autorelease];
-    billAmountPerPerson_ = [number retain];
-}
-
-- (void)setTipPerPerson:(NSDecimalNumber *)number
-{
-    [tipPerPerson_ autorelease];
-    tipPerPerson_ = [number retain];
+    [tip_ autorelease];
+    tip_ = [tip copy];
 }
 
 @end

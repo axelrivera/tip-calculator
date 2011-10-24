@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		16165364143A350200BA2DCB /* CheckData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16165363143A350200BA2DCB /* CheckData.m */; };
+		163FBAD41450628800906BB5 /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
 		164794551436936B0095C658 /* RLInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 164794541436936B0095C658 /* RLInputButton.m */; };
 		1647946F1436A1130095C658 /* button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946B1436A1130095C658 /* button_pressed.png */; };
 		164794701436A1130095C658 /* button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946C1436A1130095C658 /* button_pressed@2x.png */; };
@@ -31,8 +32,7 @@
 		1670852B143F5DCD00FA3B02 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16708529143F5DCD00FA3B02 /* info@2x.png */; };
 		1670852E143F675600FA3B02 /* adjustment.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852C143F675600FA3B02 /* adjustment.png */; };
 		1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852D143F675600FA3B02 /* adjustment@2x.png */; };
-		16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */; };
-		16BF55BF143E3E9200CC8952 /* AdjustmentValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */; };
+		1695D0701450897C004C18EB /* NSDecimalNumber+Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */; };
 		16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* Adjustment.m */; };
 		16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
 		16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
@@ -42,6 +42,8 @@
 /* Begin PBXFileReference section */
 		16165362143A350100BA2DCB /* CheckData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckData.h; sourceTree = "<group>"; };
 		16165363143A350200BA2DCB /* CheckData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckData.m; sourceTree = "<group>"; };
+		163FBAD21450628800906BB5 /* CheckHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckHelper.h; sourceTree = "<group>"; };
+		163FBAD31450628800906BB5 /* CheckHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckHelper.m; sourceTree = "<group>"; };
 		164794531436936B0095C658 /* RLInputButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLInputButton.h; sourceTree = "<group>"; };
 		164794541436936B0095C658 /* RLInputButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputButton.m; sourceTree = "<group>"; };
 		1647946B1436A1130095C658 /* button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pressed.png; sourceTree = "<group>"; };
@@ -72,10 +74,9 @@
 		16708529143F5DCD00FA3B02 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		1670852C143F675600FA3B02 /* adjustment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = adjustment.png; sourceTree = "<group>"; };
 		1670852D143F675600FA3B02 /* adjustment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adjustment@2x.png"; sourceTree = "<group>"; };
-		16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentValueView.xib; sourceTree = "<group>"; };
-		16BF55BD143E3E9200CC8952 /* AdjustmentValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentValueView.h; sourceTree = "<group>"; };
-		16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentValueView.m; sourceTree = "<group>"; };
-		16CE4CB8143DEEF80075342C /* Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Adjustment.h; sourceTree = "<group>"; };
+		1695D06E1450897C004C18EB /* NSDecimalNumber+Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+Check.h"; sourceTree = "<group>"; };
+		1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+Check.m"; sourceTree = "<group>"; };
+		16CE4CB8143DEEF80075342C /* Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjustment.h; sourceTree = "<group>"; };
 		16CE4CB9143DEEF80075342C /* Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjustment.m; sourceTree = "<group>"; };
 		16E6AEB71435EB5800D47637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		16E6AEB81435EB5800D47637 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -103,8 +104,6 @@
 			children = (
 				164794531436936B0095C658 /* RLInputButton.h */,
 				164794541436936B0095C658 /* RLInputButton.m */,
-				16BF55BD143E3E9200CC8952 /* AdjustmentValueView.h */,
-				16BF55BE143E3E9200CC8952 /* AdjustmentValueView.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -187,7 +186,6 @@
 				166257571434D624006CA328 /* SummaryViewController.xib */,
 				1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */,
 				16E6AEB91435EB5800D47637 /* SettingsViewController.xib */,
-				16BF55BB143E3D9500CC8952 /* AdjustmentValueView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -214,6 +212,10 @@
 				16165363143A350200BA2DCB /* CheckData.m */,
 				16CE4CB8143DEEF80075342C /* Adjustment.h */,
 				16CE4CB9143DEEF80075342C /* Adjustment.m */,
+				163FBAD21450628800906BB5 /* CheckHelper.h */,
+				163FBAD31450628800906BB5 /* CheckHelper.m */,
+				1695D06E1450897C004C18EB /* NSDecimalNumber+Check.h */,
+				1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */,
 			);
 			name = "Model + Data";
 			sourceTree = "<group>";
@@ -278,7 +280,6 @@
 				164794711436A1130095C658 /* button.png in Resources */,
 				164794721436A1130095C658 /* button@2x.png in Resources */,
 				1653D3C71437A6E7005E37F2 /* Specification.markdown in Resources */,
-				16BF55BC143E3D9500CC8952 /* AdjustmentValueView.xib in Resources */,
 				1670851F143F5BA800FA3B02 /* back.png in Resources */,
 				16708520143F5BA800FA3B02 /* back@2x.png in Resources */,
 				1670852A143F5DCD00FA3B02 /* info.png in Resources */,
@@ -304,7 +305,8 @@
 				164794551436936B0095C658 /* RLInputButton.m in Sources */,
 				16165364143A350200BA2DCB /* CheckData.m in Sources */,
 				16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */,
-				16BF55BF143E3E9200CC8952 /* AdjustmentValueView.m in Sources */,
+				163FBAD41450628800906BB5 /* CheckHelper.m in Sources */,
+				1695D0701450897C004C18EB /* NSDecimalNumber+Check.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,7 +351,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -366,7 +368,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

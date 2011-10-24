@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Adjustment.h"
 
 @interface Check : NSObject
 {
-    @private
     NSMutableArray *splitAdjustments_;
 }
 
 @property (nonatomic, retain) NSDecimalNumber *numberOfSplits;
 @property (nonatomic, retain) NSDecimalNumber *tipPercentage;
-@property (nonatomic, retain) NSDecimalNumber *checkAmount;
+@property (nonatomic, retain) NSDecimalNumber *billAmount;
 @property (nonatomic, retain, readonly) NSArray *splitAdjustments;
 
 + (NSArray *)numberOfSplitsArray;
@@ -25,10 +25,12 @@
 - (NSDecimalNumber *)totalTip;
 - (NSDecimalNumber *)totalToPay;
 - (NSDecimalNumber *)totalPerPerson;
+- (NSDecimalNumber *)tipPerPerson;
+- (NSDecimalNumber *)billAmountPerPerson;
 
 - (NSString *)stringForNumberOfSplits;
 - (NSString *)stringForTipPercentage;
-- (NSString *)stringForCheckAmount;
+- (NSString *)stringForBillAmount;
 - (NSString *)stringForTotalTip;
 - (NSString *)stringForTotalToPay;
 - (NSString *)stringForTotalPerPerson;
@@ -39,10 +41,22 @@
 - (NSInteger)rowForCurrentNumberOfSplits;
 - (NSInteger)rowForCurrentTipPercentage;
 
-- (NSArray *)adjustmentsWithCanBeChangedValue:(BOOL)value;
-- (NSDecimalNumber *)adjustmentsSumWithCanBeChangedValue:(BOOL)value;
+- (NSDecimalNumber *)totalAdjustments;
+- (NSDecimalNumber *)totalBillAmountAdjustments;
 
-- (void)splitAdjustmentsEvenly;
-- (void)setAdjustmentAtIndex:(NSInteger)index withNumber:(NSDecimalNumber *)number canChange:(BOOL)canChange;
+//- (NSDecimalNumber *)billBalanceAfterAdjustments;
+//- (NSDecimalNumber *)tipBalanceAfterAdjustments;
+- (NSDecimalNumber *)totalBalanceAfterAdjustments;
+//- (NSDecimalNumber *)billPerPersonAfterAdjustments;
+//- (NSDecimalNumber *)tipPerPersonAfterAdjustments;
+//- (NSDecimalNumber *)totalPerPersonAfterAdjustments;
+
+- (BOOL)isBalanceAfterAdjustmentsZero;
+
+- (NSDecimalNumber *)decimalNumberOfSplitAdjustments;
+- (void)addSplitAdjustment:(Adjustment *)adjustment;
+- (void)removeSplitAdjustmentAtIndex:(NSInteger)index;
+- (void)removeAllSplitAdjustments;
+
 
 @end
