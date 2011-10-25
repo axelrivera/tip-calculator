@@ -83,7 +83,11 @@
 
 - (IBAction)resetAction:(id)sender
 {
-    
+    [check_ removeAllSplitAdjustments];
+    [adjustmentsTable_ beginUpdates];
+    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]
+                     withRowAnimation:UITableViewRowAnimationFade];
+    [adjustmentsTable_ endUpdates];
 }
 
 - (IBAction)addAction:(id)sender
@@ -96,9 +100,8 @@
         [adjustment release];
         
         [adjustmentsTable_ beginUpdates];
-        [adjustmentsTable_ insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]]
-                                 withRowAnimation:UITableViewRowAnimationFade];
         [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
         [adjustmentsTable_ endUpdates];
         adjustmentTextField_.text = @"";
     }
@@ -133,19 +136,26 @@
         }
         
         NSDecimalNumber *totalBalance = [check_ totalBalanceAfterAdjustments];
+        NSDecimalNumber *billAmountBalance = [check_ billAmountBalanceAfterAdjustments];
+        NSDecimalNumber *tipBalance = [check_ tipBalanceAfterAdjustments];
         NSDecimalNumber *numberOfAdjustments = [check_ decimalNumberOfSplitAdjustments];
         NSDecimalNumber *numberOfPeopleLeft = [check_.numberOfSplits decimalNumberBySubtracting:numberOfAdjustments];
         
         NSString *totalBalanceStr = [totalBalance currencyString];
-        NSString *textStr = [NSString stringWithFormat:@"Balance: %@", totalBalanceStr];
+        NSString *billAmountBalanceStr = [billAmountBalance currencyString];
+        NSString *tipBalanceStr = [tipBalance currencyString];
+        NSString *textStr = [NSString stringWithFormat:@"Balance: %@ = %@ + tip %@",
+                             totalBalanceStr,
+                             billAmountBalanceStr,
+                             tipBalanceStr];
         
         NSDecimalNumber *balancePerPerson = [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfPeopleLeft];
         NSString *balancePerPersonStr = [balancePerPerson currencyString];
-        NSString *detailTextStr = [NSString stringWithFormat:@"Balance Per Person: %@ (%d/%d People)",
+        NSString *detailTextStr = [NSString stringWithFormat:@"Per Person: %@ (%d People Left)",
                                    balancePerPersonStr,
-                                   [numberOfPeopleLeft integerValue],
-                                   [[check_ numberOfSplits] integerValue]];
+                                   [numberOfPeopleLeft integerValue]];
         
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0];
         cell.textLabel.text = textStr;
         cell.detailTextLabel.text = detailTextStr;
         
@@ -155,7 +165,7 @@
     NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
     Adjustment *adjustment = [check_.splitAdjustments objectAtIndex:indexPath.row];
@@ -163,7 +173,11 @@
                          [[adjustment total] currencyString],
                          [adjustment.amount currencyString],
                          [adjustment.tip currencyString]];
+    
+    NSString *detailTextStr = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
+    
     cell.textLabel.text = textStr;
+    cell.detailTextLabel.text = detailTextStr;
     
     return cell;
 }

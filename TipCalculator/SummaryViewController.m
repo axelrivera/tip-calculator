@@ -9,6 +9,8 @@
 #import "SummaryViewController.h"
 #import "CheckData.h"
 #import "Check.h"
+#import "CheckHelper.h"
+#import "NSDecimalNumber+Check.h"
 #import "RLInputButton.h"
 
 #define kCurrencyScale -2
@@ -41,9 +43,7 @@
 {
     self = [super initWithNibName:@"SummaryViewController" bundle:nil];
     if (self) {
-        checkData_ = [CheckData sharedCheckData];
-        formatter_ = [[NSNumberFormatter alloc] init];
-		[formatter_ setNumberStyle:NSNumberFormatterCurrencyStyle];
+        check_ = [CheckData sharedCheckData].currentCheck;
         self.enteredDigits = @"";
     }
     return self;
@@ -59,7 +59,6 @@
 
 - (void)dealloc
 {
-    [formatter_ release];
     [splitButton_ release];
     [tipButton_ release];
     [amountButton_ release];
@@ -110,12 +109,12 @@
 {
     [super viewWillAppear:animated];
     
-    splitLabel_.text = [checkData_.currentCheck stringForNumberOfSplits];
-    tipPercentageLabel_.text = [checkData_.currentCheck stringForTipPercentage];
+    splitLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+    tipPercentageLabel_.text = [check_.tipPercentage percentString];
     
     NSString *textFieldStr = nil;
-    if ([checkData_.currentCheck.billAmount floatValue] > 0.0) {
-		textFieldStr = [formatter_ stringFromNumber:checkData_.currentCheck.billAmount];
+    if ([check_.billAmount floatValue] > 0.0) {
+		textFieldStr = [check_.billAmount currencyString];
 	} else {
 		textFieldStr = @"";
 	}
@@ -138,7 +137,7 @@
         pickerType_ = SummaryViewControllerPickerSplit;
         currentPickerDataSource_ = [Check numberOfSplitsArray];
         [pickerView_ reloadAllComponents];
-        [pickerView_ selectRow:[checkData_.currentCheck rowForCurrentNumberOfSplits] inComponent:0 animated:NO];
+        [pickerView_ selectRow:[check_ rowForCurrentNumberOfSplits] inComponent:0 animated:NO];
         [splitButton_ becomeFirstResponder];
     }
 }
@@ -156,7 +155,7 @@
         pickerType_ = SummaryViewControllerPickerPercent;
         currentPickerDataSource_ = [Check tipPercentagesArray];
         [pickerView_ reloadAllComponents];
-        [pickerView_ selectRow:[checkData_.currentCheck rowForCurrentTipPercentage] inComponent:0 animated:NO];
+        [pickerView_ selectRow:[check_ rowForCurrentTipPercentage] inComponent:0 animated:NO];
         [tipButton_ becomeFirstResponder];
     }
 }
@@ -198,12 +197,12 @@
 
 - (void)reloadCheckSummary
 {
-    CGFloat total = [checkData_.currentCheck.billAmount floatValue];
+    CGFloat total = [check_.billAmount floatValue];
     if (total > 0.00) {
         checkSummaryView_.hidden = NO;
-        totalTipLabel_.text = [checkData_.currentCheck stringForTotalTip];
-        totalToPayLabel_.text = [checkData_.currentCheck stringForTotalToPay];
-        totalPerPersonLabel_.text = [checkData_.currentCheck stringForTotalPerPerson];
+        totalTipLabel_.text = [[check_ totalTip] currencyString];
+        totalToPayLabel_.text = [[check_ totalToPay] currencyString];
+        totalPerPersonLabel_.text = [[check_ totalPerPerson] currencyString];
     } else {
         checkSummaryView_.hidden = YES;
     }
@@ -227,11 +226,11 @@
 {
     NSDecimalNumber *number = [currentPickerDataSource_ objectAtIndex:row];
     if (pickerType_ == SummaryViewControllerPickerSplit) {
-        checkData_.currentCheck.numberOfSplits = number;
-        splitLabel_.text = [checkData_.currentCheck stringForNumberOfSplits];
+        check_.numberOfSplits = number;
+        splitLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
     } else {
-        checkData_.currentCheck.tipPercentage = number;
-        tipPercentageLabel_.text = [checkData_.currentCheck stringForTipPercentage];
+        check_.tipPercentage = number;
+        tipPercentageLabel_.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage];
     }
     [self reloadCheckSummary];
 }
@@ -254,9 +253,9 @@
     NSString *string = nil;
     NSDecimalNumber *currentNumber = [currentPickerDataSource_ objectAtIndex:row];
     if (pickerType_ == SummaryViewControllerPickerSplit) {
-        string = [checkData_.currentCheck stringForNumberOfSplitsWithDecimalNumber:currentNumber];
+        string = [check_ stringForNumberOfSplitsWithDecimalNumber:currentNumber];
     } else {
-        string = [checkData_.currentCheck stringForTipPercentageWithDecimalNumber:currentNumber];
+        string = [check_ stringForTipPercentageWithDecimalNumber:currentNumber];
     }
     return string;
 }
@@ -273,7 +272,7 @@
 {
     amountButton_.selected = YES;
     
-    NSDecimalNumber *amount = checkData_.currentCheck.billAmount;
+    NSDecimalNumber *amount = check_.billAmount;
 	if ([amount floatValue] > 0.0) {
 		NSDecimalNumber *digits = [amount decimalNumberByMultiplyingByPowerOf10:abs(kCurrencyScale)];
 		self.enteredDigits = [digits stringValue];
@@ -319,9 +318,9 @@
 		number = [NSDecimalNumber zero];
 	}
 	
-	checkData_.currentCheck.billAmount = number;
+	check_.billAmount = number;
 	// Replace the text with the localized decimal number
-	textField.text = [formatter_ stringFromNumber:number];
+	textField.text = [number currencyString];
 	
 	//NSLog(@"Entered Digits (change end): %@", self.enteredDigits);
 	//NSLog(@"Current Efficiency (change end): %@", self.currentPrice);

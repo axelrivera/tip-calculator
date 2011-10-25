@@ -10,7 +10,6 @@
 #import "AdjustmentsViewController.h"
 #import "SettingsViewController.h"
 
-@class CheckData;
 @class Check;
 @class RLInputButton;
 
@@ -18,8 +17,7 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
 
 @interface SummaryViewController : UIViewController <AdjustmentsViewControllerDelegate, SettingsViewControllerDelegate>
 {
-    CheckData *checkData_;
-    NSNumberFormatter *formatter_;
+    Check *check_;
 }
 
 @property (nonatomic, retain) IBOutlet RLInputButton *splitButton;

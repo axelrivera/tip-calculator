@@ -17,5 +17,6 @@
 - (NSDecimalNumber *)decimalNumberByModuloDivision:(NSDecimalNumber *)decimalNumber;
 
 - (NSString *)currencyString;
+- (NSString *)percentString;
 
 @end

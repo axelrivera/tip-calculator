@@ -34,9 +34,6 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (void)setSplitAdjustments:(NSMutableArray *)splitAdjustments;
 
-- (NSString *)currencyStringForNumber:(NSNumber *)number;
-- (NSString *)percentageStringForNumber:(NSNumber *)number;
-
 @end
 
 @implementation Check
@@ -124,36 +121,6 @@ static NSDictionary *tipPercentagesDictionary;
     return [CheckHelper calculatePersonAmount:billAmount_ withSplit:numberOfSplits_];
 }
 
-- (NSString *)stringForNumberOfSplits
-{
-     return [self stringForNumberOfSplitsWithDecimalNumber:numberOfSplits_];
-}
-
-- (NSString *)stringForTipPercentage
-{
-    return [self percentageStringForNumber:tipPercentage_];
-}
-
-- (NSString *)stringForBillAmount
-{
-    return [self currencyStringForNumber:billAmount_];
-}
-
-- (NSString *)stringForTotalTip
-{
-    return [self currencyStringForNumber:[self totalTip]];
-}
-
-- (NSString *)stringForTotalToPay
-{
-    return [self currencyStringForNumber:[self totalToPay]];
-}
-
-- (NSString *)stringForTotalPerPerson
-{
-    return [self currencyStringForNumber:[self totalPerPerson]];
-}
-
 - (NSString *)stringForNumberOfSplitsWithDecimalNumber:(NSDecimalNumber *)number
 {
     NSString *string = nil;
@@ -171,7 +138,7 @@ static NSDictionary *tipPercentagesDictionary;
     if ([number floatValue] == 0.0) {
         string = @"No Tip (Included)";
     } else {
-        string = [self percentageStringForNumber:number];
+        string = [number percentString];
     }
     return string;
 }
@@ -189,6 +156,8 @@ static NSDictionary *tipPercentagesDictionary;
     return [[[Check tipPercentagesDictionary] objectForKey:key] integerValue];
 }
 
+
+
 - (NSDecimalNumber *)totalAdjustments
 {
     NSDecimalNumber *sum = [NSDecimalNumber zero];
@@ -200,7 +169,7 @@ static NSDictionary *tipPercentagesDictionary;
     return sum;
 }
 
-- (NSDecimalNumber *)totalBillAmountAdjustments
+- (NSDecimalNumber *)billAmountAdjustments
 {
     NSDecimalNumber *sum = [NSDecimalNumber zero];
     if ([splitAdjustments_ count] > 0) {
@@ -211,15 +180,16 @@ static NSDictionary *tipPercentagesDictionary;
     return sum;
 }
 
-//- (NSDecimalNumber *)billBalanceAfterAdjustments
-//{
-//    
-//}
-//
-//- (NSDecimalNumber *)tipBalanceAfterAdjustments
-//{
-//    
-//}
+- (NSDecimalNumber *)tipAdjustments
+{
+    NSDecimalNumber *sum = [NSDecimalNumber zero];
+    if ([splitAdjustments_ count] > 0) {
+        for (Adjustment *adjustment in splitAdjustments_) {
+            sum = [sum decimalCurrencyByAdding:adjustment.tip];
+        }
+    }
+    return sum;
+}
 
 - (NSDecimalNumber *)totalBalanceAfterAdjustments
 {
@@ -228,22 +198,19 @@ static NSDictionary *tipPercentagesDictionary;
     return balance;   
 }
 
-//- (NSDecimalNumber *)billPerPersonAfterAdjustments
-//{
-//    
-//}
-//
-//- (NSDecimalNumber *)tipPerPersonAfterAdjustments
-//{
-//    
-//}
-//
-//- (NSDecimalNumber *)totalPerPersonAfterAdjustments
-//{
-//    NSDecimalNumber *totalBalance = [self balanceAfterAdjustments];
-//    NSDecimalNumber *person = [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfSplits_];
-//    return person;
-//}
+- (NSDecimalNumber *)billAmountBalanceAfterAdjustments
+{
+    NSDecimalNumber *adjustments = [self billAmountAdjustments];
+    NSDecimalNumber *balance = [billAmount_ decimalCurrencyBySubtracting:adjustments];
+    return balance;
+}
+
+- (NSDecimalNumber *)tipBalanceAfterAdjustments
+{
+    NSDecimalNumber *adjusments = [self tipAdjustments];
+    NSDecimalNumber *balance = [[self totalTip] decimalCurrencyBySubtracting:adjusments];
+    return balance;
+}
 
 - (BOOL)isBalanceAfterAdjustmentsZero
 {
@@ -263,7 +230,7 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (void)addSplitAdjustment:(Adjustment *)adjustment
 {
-    [splitAdjustments_ insertObject:adjustment atIndex:0];
+    [splitAdjustments_ addObject:adjustment];
 }
 
 - (void)removeSplitAdjustmentAtIndex:(NSInteger)index
@@ -324,24 +291,6 @@ static NSDictionary *tipPercentagesDictionary;
         [tipDictionary release];
     }
     return tipPercentagesDictionary;
-}
-
-- (NSString *)currencyStringForNumber:(NSNumber *)number
-{
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterCurrencyStyle;
-    NSString *string = [formatter stringFromNumber:number];
-    [formatter release];
-    return string;
-}
-
-- (NSString *)percentageStringForNumber:(NSNumber *)number
-{
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterPercentStyle;
-    NSString *string = [formatter stringFromNumber:number];
-    [formatter release];
-    return string;
 }
 
 @end

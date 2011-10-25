@@ -10,11 +10,13 @@
 
 static NSDecimalNumberHandler *currencyBehavior_;
 static NSNumberFormatter *currencyFormatter_;
+static NSNumberFormatter *percentFormatter_;
 
 @interface NSDecimalNumber (Private)
 
 - (NSDecimalNumberHandler *)currencyBehavior;
 - (NSNumberFormatter *)currencyFormatter;
+- (NSNumberFormatter *)percentFormatter;
 
 @end
 
@@ -61,6 +63,11 @@ static NSNumberFormatter *currencyFormatter_;
     return [[self currencyFormatter] stringFromNumber:self];
 }
 
+- (NSString *)percentString
+{
+    return [[self percentFormatter] stringFromNumber:self];
+}
+
 #pragma mark - Private Methods
 
 - (NSDecimalNumberHandler *)currencyBehavior
@@ -83,6 +90,15 @@ static NSNumberFormatter *currencyFormatter_;
         currencyFormatter_.numberStyle = NSNumberFormatterCurrencyStyle;
     }
     return currencyFormatter_;
+}
+
+- (NSNumberFormatter *)percentFormatter
+{
+    if (percentFormatter_ == nil) {
+        percentFormatter_ = [[NSNumberFormatter alloc] init];
+        percentFormatter_.numberStyle = NSNumberFormatterPercentStyle;
+    }
+    return percentFormatter_;
 }
 
 @end

@@ -28,13 +28,6 @@
 - (NSDecimalNumber *)tipPerPerson;
 - (NSDecimalNumber *)billAmountPerPerson;
 
-- (NSString *)stringForNumberOfSplits;
-- (NSString *)stringForTipPercentage;
-- (NSString *)stringForBillAmount;
-- (NSString *)stringForTotalTip;
-- (NSString *)stringForTotalToPay;
-- (NSString *)stringForTotalPerPerson;
-
 - (NSString *)stringForNumberOfSplitsWithDecimalNumber:(NSDecimalNumber *)number;
 - (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number;
 
@@ -42,14 +35,12 @@
 - (NSInteger)rowForCurrentTipPercentage;
 
 - (NSDecimalNumber *)totalAdjustments;
-- (NSDecimalNumber *)totalBillAmountAdjustments;
+- (NSDecimalNumber *)billAmountAdjustments;
+- (NSDecimalNumber *)tipAdjustments;
 
-//- (NSDecimalNumber *)billBalanceAfterAdjustments;
-//- (NSDecimalNumber *)tipBalanceAfterAdjustments;
 - (NSDecimalNumber *)totalBalanceAfterAdjustments;
-//- (NSDecimalNumber *)billPerPersonAfterAdjustments;
-//- (NSDecimalNumber *)tipPerPersonAfterAdjustments;
-//- (NSDecimalNumber *)totalPerPersonAfterAdjustments;
+- (NSDecimalNumber *)billAmountBalanceAfterAdjustments;
+- (NSDecimalNumber *)tipBalanceAfterAdjustments;
 
 - (BOOL)isBalanceAfterAdjustmentsZero;
 
