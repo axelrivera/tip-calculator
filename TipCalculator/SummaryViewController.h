@@ -9,23 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "AdjustmentsViewController.h"
 #import "SettingsViewController.h"
+#import "RLNumberPad.h"
+#import "RLNumberPadDigits.h"
+#import "InputDisplayView.h"
 
 @class Check;
-@class RLInputButton;
 
 typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPercent } SummaryViewControllerPickerType;
 
-@interface SummaryViewController : UIViewController <AdjustmentsViewControllerDelegate, SettingsViewControllerDelegate>
+@interface SummaryViewController : UIViewController
+<AdjustmentsViewControllerDelegate, SettingsViewControllerDelegate, RLNumberPadDelegate>
 {
     Check *check_;
+    RLNumberPad *numberPad_;
+    RLNumberPadDigits *numberPadDigits_;
 }
 
-@property (nonatomic, retain) IBOutlet RLInputButton *splitButton;
-@property (nonatomic, retain) IBOutlet RLInputButton *tipButton;
-@property (nonatomic, retain) IBOutlet RLInputButton *amountButton;
-@property (nonatomic, retain) IBOutlet UILabel *splitLabel;
-@property (nonatomic, retain) IBOutlet UILabel *tipPercentageLabel;
-@property (nonatomic, retain) IBOutlet UITextField *billAmountTextField;
+@property (nonatomic, retain) InputDisplayView *splitInputView;
+@property (nonatomic, retain) InputDisplayView *tipInputView;
+@property (nonatomic, retain) InputDisplayView *billAmountInputView;
 
 @property (nonatomic, retain) IBOutlet UIView *checkSummaryView;
 @property (nonatomic, retain) IBOutlet UILabel *totalTipLabel;
@@ -37,11 +39,6 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
 @property (nonatomic, assign) NSArray *currentPickerDataSource;
 @property (nonatomic, assign) SummaryViewControllerPickerType pickerType;
 
-@property (nonatomic, copy) NSString *enteredDigits;
-
-- (IBAction)splitAction:(id)sender;
-- (IBAction)tipAction:(id)sender;
-- (IBAction)amountAction:(id)sender;
 - (IBAction)showAdjustmentsAction:(id)sender;
 - (IBAction)showSettingsAction:(id)sender;
 

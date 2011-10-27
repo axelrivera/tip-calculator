@@ -19,7 +19,6 @@
 @property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
 @property (nonatomic, retain) IBOutlet UITextField *adjustmentTextField;
-@property (nonatomic, retain) IBOutlet UILabel *totalLabel;
 
 - (IBAction)backAction:(id)sender;
 - (IBAction)resetAction:(id)sender;

@@ -11,25 +11,21 @@
 #import "Check.h"
 #import "CheckHelper.h"
 #import "NSDecimalNumber+Check.h"
-#import "RLInputButton.h"
-
-#define kCurrencyScale -2
-#define kMaxDigits 9
 
 @interface SummaryViewController (Private)
 
-- (void)reloadCheckSummary;
+- (void)splitAction:(id)sender;
+- (void)tipAction:(id)sender;
+- (void)amountAction:(id)sender;
+- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments;
 
 @end
 
 @implementation SummaryViewController
 
-@synthesize splitButton = splitButton_;
-@synthesize tipButton = tipButton_;
-@synthesize amountButton = amountButton_;
-@synthesize splitLabel = splitLabel_;
-@synthesize tipPercentageLabel = tipPercentageLabel_;
-@synthesize billAmountTextField  = billAmountTextField_;
+@synthesize splitInputView = splitInputView_;
+@synthesize tipInputView = tipInputView_;
+@synthesize billAmountInputView = billAmountInputView_;
 @synthesize checkSummaryView = checkSummaryView_;
 @synthesize totalTipLabel = totalTipLabel_;
 @synthesize totalToPayLabel = totalToPayLabel_;
@@ -37,14 +33,15 @@
 @synthesize pickerView = pickerView_;
 @synthesize currentPickerDataSource = currentPickerDataSource_;
 @synthesize pickerType = pickerType_;
-@synthesize enteredDigits = enteredDigits_;
 
 - (id)init
 {
     self = [super initWithNibName:@"SummaryViewController" bundle:nil];
     if (self) {
         check_ = [CheckData sharedCheckData].currentCheck;
-        self.enteredDigits = @"";
+        numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
+        numberPad_.delegate = self;
+        numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@""];
     }
     return self;
 }
@@ -59,18 +56,18 @@
 
 - (void)dealloc
 {
-    [splitButton_ release];
-    [tipButton_ release];
-    [amountButton_ release];
-    [splitLabel_ release];
-    [tipPercentageLabel_ release];
-    [billAmountTextField_ release];
+    check_ = nil;
+    numberPad_.delegate = nil;
+    [numberPad_ release];
+    [numberPadDigits_ release];
+    [splitInputView_ release];
+    [tipInputView_ release];
+    [billAmountInputView_ release];
     [checkSummaryView_ release];
     [totalTipLabel_ release];
     [totalToPayLabel_ release];
     [totalPerPersonLabel_ release];
     [pickerView_ release];
-    [enteredDigits_ release];
     [super dealloc];
 }
 
@@ -80,11 +77,31 @@
 {
     [super viewDidLoad];
     [self setWantsFullScreenLayout:YES];
-    splitButton_.inputView = pickerView_;
-    [splitButton_ addTarget:self action:@selector(splitAction:) forControlEvents:UIControlEventTouchUpInside];
-    tipButton_.inputView = pickerView_;
-    [tipButton_ addTarget:self action:@selector(tipAction:) forControlEvents:UIControlEventTouchUpInside];
-    [amountButton_ addTarget:self action:@selector(amountAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    InputDisplayView *splitInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 30.0, 0.0, 0.0)];
+    splitInputView.titleLabel.text = @"Split Check";
+    splitInputView.inputView = pickerView_;
+    [splitInputView addTarget:self action:@selector(splitAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.splitInputView = splitInputView;
+    [splitInputView release];
+    [self.view addSubview:splitInputView_];
+    
+    InputDisplayView *tipInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 78.0, 0.0, 0.0)];
+    tipInputView.titleLabel.text = @"Tip Percentage";
+    tipInputView.inputView = pickerView_;
+    [tipInputView addTarget:self action:@selector(tipAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.tipInputView = tipInputView;
+    [tipInputView release];
+    [self.view addSubview:tipInputView_];
+    
+    InputDisplayView *billAmountInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 126, 0.0, 0.0)];
+    billAmountInputView.titleLabel.text = @"Total Bill";
+    billAmountInputView.inputView = numberPad_;
+    [billAmountInputView addTarget:self action:@selector(amountAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.billAmountInputView = billAmountInputView;
+    [billAmountInputView release];
+    numberPad_.callerView = billAmountInputView_;
+    [self.view addSubview:billAmountInputView_];
 }
 
 - (void)viewDidUnload
@@ -92,12 +109,9 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    self.splitButton = nil;
-    self.tipButton = nil;
-    self.amountButton = nil;
-    self.splitLabel = nil;
-    self.tipPercentageLabel = nil;
-    self.billAmountTextField = nil;
+    self.splitInputView = nil;
+    self.tipInputView = nil;
+    self.billAmountInputView = nil;
     self.checkSummaryView = nil;
     self.totalTipLabel = nil;
     self.totalToPayLabel = nil;
@@ -109,68 +123,79 @@
 {
     [super viewWillAppear:animated];
     
-    splitLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
-    tipPercentageLabel_.text = [check_.tipPercentage percentString];
+    splitInputView_.descriptionLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+    tipInputView_.descriptionLabel.text = [check_.tipPercentage percentString];
     
-    NSString *textFieldStr = nil;
-    if ([check_.billAmount floatValue] > 0.0) {
-		textFieldStr = [check_.billAmount currencyString];
-	} else {
-		textFieldStr = @"";
-	}
-    billAmountTextField_.text = textFieldStr;
-    [self reloadCheckSummary];
+    [numberPadDigits_ setEnteredDigitsWithDecimalNumber:check_.billAmount];
+    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    
+    [self reloadCheckSummaryAndResetAdjustments:NO];
 }
 
 #pragma mark - Custom Actions
 
-- (IBAction)splitAction:(id)sender
+- (void)splitAction:(id)sender
 {
-    if ([tipButton_ isFirstResponder])
-        [tipButton_ resignFirstResponder];
-    if ([billAmountTextField_ isFirstResponder])
-        [billAmountTextField_ resignFirstResponder];
+    if ([tipInputView_ isFirstResponder]) {
+        [tipInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
+    }
+    if ([billAmountInputView_ isFirstResponder]) {
+        [billAmountInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
+    }
     
-    if ([splitButton_ isFirstResponder]) {
-        [splitButton_ resignFirstResponder];
+    if ([splitInputView_ isFirstResponder]) {
+        [splitInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
     } else {
         pickerType_ = SummaryViewControllerPickerSplit;
         currentPickerDataSource_ = [Check numberOfSplitsArray];
         [pickerView_ reloadAllComponents];
         [pickerView_ selectRow:[check_ rowForCurrentNumberOfSplits] inComponent:0 animated:NO];
-        [splitButton_ becomeFirstResponder];
+        [splitInputView_ becomeFirstResponder];
     }
 }
 
-- (IBAction)tipAction:(id)sender
+- (void)tipAction:(id)sender
 {
-    if ([splitButton_ isFirstResponder])
-        [splitButton_ resignFirstResponder];
-    if ([billAmountTextField_ isFirstResponder])
-        [billAmountTextField_ resignFirstResponder];
+    if ([splitInputView_ isFirstResponder]) {
+        [splitInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
+    }
+    if ([billAmountInputView_ isFirstResponder]) {
+        [billAmountInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
+    }
     
-    if ([tipButton_ isFirstResponder]) {
-        [tipButton_ resignFirstResponder];
+    if ([tipInputView_ isFirstResponder]) {
+        [tipInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
     } else {
         pickerType_ = SummaryViewControllerPickerPercent;
         currentPickerDataSource_ = [Check tipPercentagesArray];
         [pickerView_ reloadAllComponents];
         [pickerView_ selectRow:[check_ rowForCurrentTipPercentage] inComponent:0 animated:NO];
-        [tipButton_ becomeFirstResponder];
+        [tipInputView_ becomeFirstResponder];
     }
 }
 
-- (IBAction)amountAction:(id)sender
+- (void)amountAction:(id)sender
 {
-    if ([splitButton_ isFirstResponder])
-        [splitButton_ resignFirstResponder];
-    if ([tipButton_ isFirstResponder])
-        [tipButton_ resignFirstResponder];
+    if ([splitInputView_ isFirstResponder]) {
+        [splitInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
+    }
+    if ([tipInputView_ isFirstResponder]) {
+        [tipInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
+    }
     
-    if ([billAmountTextField_ isFirstResponder]) {
-        [billAmountTextField_ resignFirstResponder];
+    if ([billAmountInputView_ isFirstResponder]) {
+        [billAmountInputView_ resignFirstResponder];
+        [self reloadCheckSummaryAndResetAdjustments:YES];
     } else {
-        [billAmountTextField_ becomeFirstResponder];
+        [billAmountInputView_ becomeFirstResponder];
     }
 }
 
@@ -195,7 +220,7 @@
 
 #pragma mark - Private Methods
 
-- (void)reloadCheckSummary
+- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments
 {
     CGFloat total = [check_.billAmount floatValue];
     if (total > 0.00) {
@@ -205,6 +230,10 @@
         totalPerPersonLabel_.text = [[check_ totalPerPerson] currencyString];
     } else {
         checkSummaryView_.hidden = YES;
+    }
+    
+    if (adjustments) {
+        [check_ removeAllSplitAdjustments];
     }
 }
 
@@ -227,12 +256,11 @@
     NSDecimalNumber *number = [currentPickerDataSource_ objectAtIndex:row];
     if (pickerType_ == SummaryViewControllerPickerSplit) {
         check_.numberOfSplits = number;
-        splitLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+        splitInputView_.descriptionLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
     } else {
         check_.tipPercentage = number;
-        tipPercentageLabel_.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage];
+        tipInputView_.descriptionLabel.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage];
     }
-    [self reloadCheckSummary];
 }
 
 // tell the picker how many rows are available for a given component
@@ -266,66 +294,25 @@
     return 300.00;
 }
 
-#pragma mark - UITextField Delegate
+#pragma mark - RLNumberPad Delegate Methods
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+- (void)didPressClearButtonForCallerView:(UIView *)callerView
 {
-    amountButton_.selected = YES;
-    
-    NSDecimalNumber *amount = check_.billAmount;
-	if ([amount floatValue] > 0.0) {
-		NSDecimalNumber *digits = [amount decimalNumberByMultiplyingByPowerOf10:abs(kCurrencyScale)];
-		self.enteredDigits = [digits stringValue];
-	}
+    numberPadDigits_.enteredDigits = @"";
+    check_.billAmount = [numberPadDigits_ decimalNumberForEnteredDigits];
+    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (void)didPressReturnButtonForCallerView:(UIView *)callerView
 {
-    amountButton_.selected = NO;
-    [self reloadCheckSummary];
+    [self performSelector:@selector(amountAction:)];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{	
-	//NSLog(@"Entered Digits (change start): %@", self.enteredDigits);
-	//NSLog(@"Current Efficiency (change start): %@", self.currentPrice);
-	
-	if ([string isEqualToString:@"0"] && [enteredDigits_ length] == 0) {
-		return NO;
-	}
-	
-	// Check the length of the string
-	if ([string length] > 0) {
-        if ([enteredDigits_ length] + 1 <= kMaxDigits) {
-            self.enteredDigits = [enteredDigits_ stringByAppendingFormat:@"%d", [string integerValue]];
-        }
-	} else {
-		// This is a backspace
-		NSUInteger len = [enteredDigits_ length];
-		if (len > 1) {
-			self.enteredDigits = [enteredDigits_ substringWithRange:NSMakeRange(0, len - 1)];
-		} else {
-			self.enteredDigits = @"";
-		}
-	}
-	
-	NSDecimalNumber *number = nil;
-	
-	if (![enteredDigits_ isEqualToString:@""]) {
-		NSDecimalNumber *decimal = [NSDecimalNumber decimalNumberWithString:enteredDigits_];
-		number = [decimal decimalNumberByMultiplyingByPowerOf10:kCurrencyScale];
-	} else {
-		number = [NSDecimalNumber zero];
-	}
-	
-	check_.billAmount = number;
-	// Replace the text with the localized decimal number
-	textField.text = [number currencyString];
-	
-	//NSLog(@"Entered Digits (change end): %@", self.enteredDigits);
-	//NSLog(@"Current Efficiency (change end): %@", self.currentPrice);
-	
-	return NO;  
+- (void)didPressButtonWithString:(NSString *)string callerView:(UIView *)callerView
+{
+    [numberPadDigits_ addDigit:string];
+	check_.billAmount = [numberPadDigits_ decimalNumberForEnteredDigits];
+	billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
 }
 
 @end

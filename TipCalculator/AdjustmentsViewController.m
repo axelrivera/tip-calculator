@@ -11,6 +11,7 @@
 #import "CheckData.h"
 #import "Adjustment.h"
 #import "NSDecimalNumber+Check.h"
+#import "AdjustmentBalanceView.h"
 
 @interface AdjustmentsViewController (Private)
 
@@ -21,7 +22,6 @@
 @synthesize delegate = delegate_;
 @synthesize adjusmentsTable = adjustmentsTable_;
 @synthesize adjustmentTextField = adjustmentTextField_;
-@synthesize totalLabel = totalLabel_;
 
 - (id)init
 {
@@ -45,7 +45,6 @@
     check_ = nil;
     [adjustmentsTable_ release];
     [adjustmentTextField_ release];
-    [totalLabel_ release];
     [super dealloc];
 }
 
@@ -64,13 +63,11 @@
     // e.g. self.myOutlet = nil;
     self.adjusmentsTable = nil;
     self.adjustmentTextField = nil;
-    self.totalLabel = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    totalLabel_.text = [NSString stringWithFormat:@"Total: %@", [[check_ totalToPay] currencyString]];
     [adjustmentsTable_ reloadData];
 }
 
@@ -132,8 +129,18 @@
         NSString *CellIdentifier = @"BalanceCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         }
+        
+        CGRect frame = CGRectMake(0.0f, 0.0f, 280.0f, 61.0f);
+        AdjustmentBalanceView *adjustmentView = [[[AdjustmentBalanceView alloc] initWithFrame:frame] autorelease];
+        
+        NSDecimalNumber *totalToPay = [check_ totalToPay];
+        NSDecimalNumber *numberOfPeople = [check_ numberOfSplits];
+        
+        NSString *totalToPayStr = [totalToPay currencyString];
+        NSString *numberOfPeopleStr = [check_ stringForNumberOfSplitsWithDecimalNumber:numberOfPeople];
+        NSString *line1Str = [NSString stringWithFormat:@"Total to Pay: %@ (%@)", totalToPayStr, numberOfPeopleStr];
         
         NSDecimalNumber *totalBalance = [check_ totalBalanceAfterAdjustments];
         NSDecimalNumber *billAmountBalance = [check_ billAmountBalanceAfterAdjustments];
@@ -144,20 +151,22 @@
         NSString *totalBalanceStr = [totalBalance currencyString];
         NSString *billAmountBalanceStr = [billAmountBalance currencyString];
         NSString *tipBalanceStr = [tipBalance currencyString];
-        NSString *textStr = [NSString stringWithFormat:@"Balance: %@ = %@ + tip %@",
-                             totalBalanceStr,
-                             billAmountBalanceStr,
-                             tipBalanceStr];
+        NSString *line2Str = [NSString stringWithFormat:@"Balance: %@ = %@ + tip %@",
+                              totalBalanceStr,
+                              billAmountBalanceStr,
+                              tipBalanceStr];
         
         NSDecimalNumber *balancePerPerson = [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfPeopleLeft];
         NSString *balancePerPersonStr = [balancePerPerson currencyString];
-        NSString *detailTextStr = [NSString stringWithFormat:@"Per Person: %@ (%d People Left)",
-                                   balancePerPersonStr,
-                                   [numberOfPeopleLeft integerValue]];
+        NSString *line3Str = [NSString stringWithFormat:@"Balance Per Person: %@ (%d Left)",
+                              balancePerPersonStr,
+                              [numberOfPeopleLeft integerValue]];
         
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0];
-        cell.textLabel.text = textStr;
-        cell.detailTextLabel.text = detailTextStr;
+        adjustmentView.line1.text = line1Str;
+        adjustmentView.line2.text = line2Str;
+        adjustmentView.line3.text = line3Str;
+        
+        cell.accessoryView = adjustmentView;
         
         return cell;
     }
@@ -186,7 +195,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44.0;
+    NSInteger height = 44.0;
+    if (indexPath.section == 0) {
+        height = 81.0;
+    }
+    return height;
 }
 
 #pragma mark - UITouch Delegate Methods

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		16165364143A350200BA2DCB /* CheckData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16165363143A350200BA2DCB /* CheckData.m */; };
+		1617053D14583CB200621160 /* AdjustmentBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1617053C14583CB200621160 /* AdjustmentBalanceView.m */; };
 		163FBAD41450628800906BB5 /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
-		164794551436936B0095C658 /* RLInputButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 164794541436936B0095C658 /* RLInputButton.m */; };
 		1647946F1436A1130095C658 /* button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946B1436A1130095C658 /* button_pressed.png */; };
 		164794701436A1130095C658 /* button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946C1436A1130095C658 /* button_pressed@2x.png */; };
 		164794711436A1130095C658 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946D1436A1130095C658 /* button.png */; };
@@ -26,6 +26,8 @@
 		166257591434D624006CA328 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257571434D624006CA328 /* SummaryViewController.xib */; };
 		1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662575B1434D66C006CA328 /* AdjustmentsViewController.m */; };
 		1662575E1434D66C006CA328 /* AdjustmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */; };
+		1664FCE51459E69F0032CE0D /* InputDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1664FCE41459E69F0032CE0D /* InputDisplayView.m */; };
+		166A2FE8145859E200D23870 /* RLNumberPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 166A2FE7145859E200D23870 /* RLNumberPad.m */; };
 		1670851F143F5BA800FA3B02 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851B143F5BA800FA3B02 /* back.png */; };
 		16708520143F5BA800FA3B02 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670851C143F5BA800FA3B02 /* back@2x.png */; };
 		1670852A143F5DCD00FA3B02 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 16708528143F5DCD00FA3B02 /* info.png */; };
@@ -34,6 +36,7 @@
 		1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852D143F675600FA3B02 /* adjustment@2x.png */; };
 		1695D0701450897C004C18EB /* NSDecimalNumber+Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */; };
 		16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* Adjustment.m */; };
+		16DD3A611459AF68001FBF59 /* RLNumberPadDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */; };
 		16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
 		16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
 		16E6AECF14362FD100D47637 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AECE14362FD100D47637 /* Check.m */; };
@@ -42,10 +45,10 @@
 /* Begin PBXFileReference section */
 		16165362143A350100BA2DCB /* CheckData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckData.h; sourceTree = "<group>"; };
 		16165363143A350200BA2DCB /* CheckData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckData.m; sourceTree = "<group>"; };
+		1617053B14583CB200621160 /* AdjustmentBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentBalanceView.h; sourceTree = "<group>"; };
+		1617053C14583CB200621160 /* AdjustmentBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentBalanceView.m; sourceTree = "<group>"; };
 		163FBAD21450628800906BB5 /* CheckHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckHelper.h; sourceTree = "<group>"; };
 		163FBAD31450628800906BB5 /* CheckHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckHelper.m; sourceTree = "<group>"; };
-		164794531436936B0095C658 /* RLInputButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLInputButton.h; sourceTree = "<group>"; };
-		164794541436936B0095C658 /* RLInputButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputButton.m; sourceTree = "<group>"; };
 		1647946B1436A1130095C658 /* button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pressed.png; sourceTree = "<group>"; };
 		1647946C1436A1130095C658 /* button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_pressed@2x.png"; sourceTree = "<group>"; };
 		1647946D1436A1130095C658 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
@@ -68,6 +71,10 @@
 		1662575A1434D66C006CA328 /* AdjustmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentsViewController.h; sourceTree = "<group>"; };
 		1662575B1434D66C006CA328 /* AdjustmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentsViewController.m; sourceTree = "<group>"; };
 		1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdjustmentsViewController.xib; sourceTree = "<group>"; };
+		1664FCE31459E69F0032CE0D /* InputDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputDisplayView.h; sourceTree = "<group>"; };
+		1664FCE41459E69F0032CE0D /* InputDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputDisplayView.m; sourceTree = "<group>"; };
+		166A2FE6145859E200D23870 /* RLNumberPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLNumberPad.h; sourceTree = "<group>"; };
+		166A2FE7145859E200D23870 /* RLNumberPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLNumberPad.m; sourceTree = "<group>"; };
 		1670851B143F5BA800FA3B02 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		1670851C143F5BA800FA3B02 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		16708528143F5DCD00FA3B02 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
@@ -78,6 +85,8 @@
 		1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+Check.m"; sourceTree = "<group>"; };
 		16CE4CB8143DEEF80075342C /* Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjustment.h; sourceTree = "<group>"; };
 		16CE4CB9143DEEF80075342C /* Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjustment.m; sourceTree = "<group>"; };
+		16DD3A5F1459AF68001FBF59 /* RLNumberPadDigits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLNumberPadDigits.h; sourceTree = "<group>"; };
+		16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLNumberPadDigits.m; sourceTree = "<group>"; };
 		16E6AEB71435EB5800D47637 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		16E6AEB81435EB5800D47637 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		16E6AEB91435EB5800D47637 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -102,8 +111,12 @@
 		16479452143692DE0095C658 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				164794531436936B0095C658 /* RLInputButton.h */,
-				164794541436936B0095C658 /* RLInputButton.m */,
+				1617053B14583CB200621160 /* AdjustmentBalanceView.h */,
+				1617053C14583CB200621160 /* AdjustmentBalanceView.m */,
+				166A2FE6145859E200D23870 /* RLNumberPad.h */,
+				166A2FE7145859E200D23870 /* RLNumberPad.m */,
+				1664FCE31459E69F0032CE0D /* InputDisplayView.h */,
+				1664FCE41459E69F0032CE0D /* InputDisplayView.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -216,6 +229,8 @@
 				163FBAD31450628800906BB5 /* CheckHelper.m */,
 				1695D06E1450897C004C18EB /* NSDecimalNumber+Check.h */,
 				1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */,
+				16DD3A5F1459AF68001FBF59 /* RLNumberPadDigits.h */,
+				16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */,
 			);
 			name = "Model + Data";
 			sourceTree = "<group>";
@@ -302,11 +317,14 @@
 				1662575D1434D66C006CA328 /* AdjustmentsViewController.m in Sources */,
 				16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */,
 				16E6AECF14362FD100D47637 /* Check.m in Sources */,
-				164794551436936B0095C658 /* RLInputButton.m in Sources */,
 				16165364143A350200BA2DCB /* CheckData.m in Sources */,
 				16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */,
 				163FBAD41450628800906BB5 /* CheckHelper.m in Sources */,
 				1695D0701450897C004C18EB /* NSDecimalNumber+Check.m in Sources */,
+				1617053D14583CB200621160 /* AdjustmentBalanceView.m in Sources */,
+				166A2FE8145859E200D23870 /* RLNumberPad.m in Sources */,
+				16DD3A611459AF68001FBF59 /* RLNumberPadDigits.m in Sources */,
+				1664FCE51459E69F0032CE0D /* InputDisplayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
