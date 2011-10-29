@@ -94,7 +94,7 @@
     [tipInputView release];
     [self.view addSubview:tipInputView_];
     
-    InputDisplayView *billAmountInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 126, 0.0, 0.0)];
+    InputDisplayView *billAmountInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 126.0, 0.0, 0.0)];
     billAmountInputView.titleLabel.text = @"Total Bill";
     billAmountInputView.inputView = numberPad_;
     [billAmountInputView addTarget:self action:@selector(amountAction:) forControlEvents:UIControlEventTouchUpInside];

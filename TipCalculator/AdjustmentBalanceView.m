@@ -12,11 +12,11 @@
 
 @synthesize line1 = line1_;
 @synthesize line2 = line2_;
-@synthesize line3 = line3_;
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    CGRect defaultFrame = CGRectMake(frame.origin.x, frame.origin.y, 280.0, 39.0);
+    self = [super initWithFrame:defaultFrame];
     if (self) {
         line1_ = [[UILabel alloc] initWithFrame:CGRectZero];
         line1_.backgroundColor = [UIColor clearColor];
@@ -33,14 +33,6 @@
         line2_.textAlignment = UITextAlignmentLeft;
         line2_.lineBreakMode = UILineBreakModeTailTruncation;
         [self addSubview:line2_];
-        
-        line3_ = [[UILabel alloc] initWithFrame:CGRectZero];
-        line3_.backgroundColor = [UIColor clearColor];
-        line3_.font = [UIFont systemFontOfSize:14.0];
-        line3_.textColor = [UIColor blackColor];
-        line3_.textAlignment = UITextAlignmentLeft;
-        line3_.lineBreakMode = UILineBreakModeTailTruncation;
-        [self addSubview:line3_];
     }
     return self;
 }
@@ -49,7 +41,6 @@
 {
     [line1_ release];
     [line2_ release];
-    [line3_ release];
     [super dealloc];
 }
 
@@ -66,10 +57,6 @@
                               kLabelHeight);
     line2_.frame = CGRectMake(0.0f,
                               kLabelHeight + kOffset,
-                              adjustmentFrame.size.width,
-                              kLabelHeight);
-    line3_.frame = CGRectMake(0.0f,
-                              kLabelHeight + kOffset + kLabelHeight + kOffset,
                               adjustmentFrame.size.width,
                               kLabelHeight);
 }

@@ -212,6 +212,32 @@ static NSDictionary *tipPercentagesDictionary;
     return balance;
 }
 
+- (NSDecimalNumber *)totalBalancePerPersonAfterAdjustments
+{
+    NSDecimalNumber *numberOfPeopleLeft = [self numberOfSplitsLeftAfterAdjustment];
+    NSDecimalNumber *totalBalance = [self totalBalanceAfterAdjustments];
+    return [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfPeopleLeft];
+}
+
+- (NSDecimalNumber *)billAmountBalancePerPersonAfterAdjustments
+{
+    NSDecimalNumber *numberOfPeopleLeft = [self numberOfSplitsLeftAfterAdjustment];
+    NSDecimalNumber *billBalance = [self billAmountBalanceAfterAdjustments];
+    return [CheckHelper calculatePersonAmount:billBalance withSplit:numberOfPeopleLeft];
+}
+
+- (NSDecimalNumber *)tipBalancePerPersonAfterAdjustments
+{
+    NSDecimalNumber *numberOfPeopleLeft = [self numberOfSplitsLeftAfterAdjustment];
+    NSDecimalNumber *tipBalance = [self tipBalanceAfterAdjustments];
+    return [CheckHelper calculatePersonAmount:tipBalance withSplit:numberOfPeopleLeft];
+}
+
+- (NSDecimalNumber *)numberOfSplitsLeftAfterAdjustment
+{
+    return [numberOfSplits_ decimalNumberBySubtracting:[self decimalNumberOfSplitAdjustments]];
+}
+
 - (BOOL)isBalanceAfterAdjustmentsZero
 {
     NSDecimalNumber *balance = [self totalAdjustments];

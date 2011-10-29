@@ -42,12 +42,17 @@
 - (NSDecimalNumber *)billAmountBalanceAfterAdjustments;
 - (NSDecimalNumber *)tipBalanceAfterAdjustments;
 
+- (NSDecimalNumber *)totalBalancePerPersonAfterAdjustments;
+- (NSDecimalNumber *)billAmountBalancePerPersonAfterAdjustments;
+- (NSDecimalNumber *)tipBalancePerPersonAfterAdjustments;
+
+- (NSDecimalNumber *)numberOfSplitsLeftAfterAdjustment;
+
 - (BOOL)isBalanceAfterAdjustmentsZero;
 
 - (NSDecimalNumber *)decimalNumberOfSplitAdjustments;
 - (void)addSplitAdjustment:(Adjustment *)adjustment;
 - (void)removeSplitAdjustmentAtIndex:(NSInteger)index;
 - (void)removeAllSplitAdjustments;
-
 
 @end

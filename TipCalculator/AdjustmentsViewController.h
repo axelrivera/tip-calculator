@@ -8,21 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "Check.h"
+#import "RLNumberPad.h"
+#import "RLNumberPadDigits.h"
+#import "InputDisplayView.h"
 
 @protocol AdjustmentsViewControllerDelegate;
 
-@interface AdjustmentsViewController : UIViewController
+@interface AdjustmentsViewController : UIViewController <RLNumberPadDelegate>
 {
     Check *check_;
+    RLNumberPad *numberPad_;
+    RLNumberPadDigits *numberPadDigits_;
 }
 
 @property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
-@property (nonatomic, retain) IBOutlet UITextField *adjustmentTextField;
+@property (nonatomic, retain) InputDisplayView *adjustmentsInputView;
+@property (nonatomic, retain) NSDecimalNumber *currentAdjustment;
 
 - (IBAction)backAction:(id)sender;
 - (IBAction)resetAction:(id)sender;
-- (IBAction)addAction:(id)sender;
 
 @end
 

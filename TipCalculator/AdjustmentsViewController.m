@@ -15,19 +15,28 @@
 
 @interface AdjustmentsViewController (Private)
 
+- (void)adjustmentsAction:(id)sender;
+- (void)deleteAdjustmentAction:(id)sender;
+- (void)addAction:(id)sender;
+
 @end
 
 @implementation AdjustmentsViewController
 
 @synthesize delegate = delegate_;
 @synthesize adjusmentsTable = adjustmentsTable_;
-@synthesize adjustmentTextField = adjustmentTextField_;
+@synthesize adjustmentsInputView = adjustmentsInputView_;
+@synthesize currentAdjustment = currentAdjustment_;
 
 - (id)init
 {
     self = [super initWithNibName:@"AdjustmentsViewController" bundle:nil];
     if (self) {
         check_ = [CheckData sharedCheckData].currentCheck;
+        numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
+        numberPad_.delegate = self;
+        numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@""];
+        self.currentAdjustment = [NSDecimalNumber zero];
     }
     return self;
 }
@@ -43,8 +52,13 @@
 - (void)dealloc
 {
     check_ = nil;
+    delegate_ = nil;
+    numberPad_.delegate = nil;
+    [numberPad_ release];
+    [numberPadDigits_ release];
     [adjustmentsTable_ release];
-    [adjustmentTextField_ release];
+    [adjustmentsInputView_ release];
+    [currentAdjustment_ release];
     [super dealloc];
 }
 
@@ -54,6 +68,17 @@
 {
     [super viewDidLoad];
     [self setWantsFullScreenLayout:YES];
+    
+    adjustmentsTable_.allowsSelection = NO;
+    
+    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 71.0, 0.0, 0.0)];
+    adjustmentsInputView.titleLabel.text = @"Add Adjustment";
+    adjustmentsInputView.inputView = numberPad_;
+    [adjustmentsInputView addTarget:self action:@selector(adjustmentsAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.adjustmentsInputView = adjustmentsInputView;
+    [adjustmentsInputView release];
+    numberPad_.callerView = adjustmentsInputView_;
+    [self.view addSubview:adjustmentsInputView_];
 }
 
 - (void)viewDidUnload
@@ -62,12 +87,16 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     self.adjusmentsTable = nil;
-    self.adjustmentTextField = nil;
+    self.adjustmentsInputView = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [numberPadDigits_ setEnteredDigitsWithDecimalNumber:currentAdjustment_];
+    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    
     [adjustmentsTable_ reloadData];
 }
 
@@ -87,12 +116,33 @@
     [adjustmentsTable_ endUpdates];
 }
 
-- (IBAction)addAction:(id)sender
+- (void)adjustmentsAction:(id)sender
 {
-    NSString *stringValue = adjustmentTextField_.text;
-    if (![stringValue isEqualToString:@""]) {
-        NSDecimalNumber *adjustmentValue = [NSDecimalNumber decimalNumberWithString:stringValue];
-        Adjustment *adjustment = [[Adjustment alloc] initWithAmount:adjustmentValue tipRate:check_.tipPercentage];
+    if ([adjustmentsInputView_ isFirstResponder]) {
+        [adjustmentsInputView_ resignFirstResponder];
+        self.currentAdjustment = [NSDecimalNumber zero];
+        [numberPadDigits_ setEnteredDigitsWithDecimalNumber:currentAdjustment_];
+        adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    } else {
+        [adjustmentsInputView_ becomeFirstResponder];
+    }
+}
+
+- (void)deleteAdjustmentAction:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    NSInteger row = button.tag;
+    [check_ removeSplitAdjustmentAtIndex:row];
+    [adjustmentsTable_ beginUpdates];
+    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+    [adjustmentsTable_ endUpdates];
+}
+
+- (void)addAction:(id)sender
+{
+    NSComparisonResult adjustmentCompare = [currentAdjustment_ compare:[NSDecimalNumber zero]];
+    if (adjustmentCompare != NSOrderedSame) {
+        Adjustment *adjustment = [[Adjustment alloc] initWithAmount:currentAdjustment_ tipRate:check_.tipPercentage];
         [check_ addSplitAdjustment:adjustment];
         [adjustment release];
         
@@ -100,12 +150,9 @@
         [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
         [adjustmentsTable_ endUpdates];
-        adjustmentTextField_.text = @"";
     }
-    [adjustmentTextField_ resignFirstResponder];
+    [self performSelector:@selector(adjustmentsAction:)];
 }
-
-#pragma mark - Private Methods
 
 #pragma mark - UITableView Datasource Methods
 
@@ -118,7 +165,7 @@
 {
     NSInteger rows = 1;
     if (section == 1) {
-        rows = [check_.splitAdjustments count];
+        rows = [check_.splitAdjustments count] + 1;
     }
     return rows;
 }
@@ -132,8 +179,7 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         }
         
-        CGRect frame = CGRectMake(0.0f, 0.0f, 280.0f, 61.0f);
-        AdjustmentBalanceView *adjustmentView = [[[AdjustmentBalanceView alloc] initWithFrame:frame] autorelease];
+        AdjustmentBalanceView *adjustmentView = [[[AdjustmentBalanceView alloc] initWithFrame:CGRectZero] autorelease];
         
         NSDecimalNumber *totalToPay = [check_ totalToPay];
         NSDecimalNumber *numberOfPeople = [check_ numberOfSplits];
@@ -145,8 +191,6 @@
         NSDecimalNumber *totalBalance = [check_ totalBalanceAfterAdjustments];
         NSDecimalNumber *billAmountBalance = [check_ billAmountBalanceAfterAdjustments];
         NSDecimalNumber *tipBalance = [check_ tipBalanceAfterAdjustments];
-        NSDecimalNumber *numberOfAdjustments = [check_ decimalNumberOfSplitAdjustments];
-        NSDecimalNumber *numberOfPeopleLeft = [check_.numberOfSplits decimalNumberBySubtracting:numberOfAdjustments];
         
         NSString *totalBalanceStr = [totalBalance currencyString];
         NSString *billAmountBalanceStr = [billAmountBalance currencyString];
@@ -156,15 +200,8 @@
                               billAmountBalanceStr,
                               tipBalanceStr];
         
-        NSDecimalNumber *balancePerPerson = [CheckHelper calculatePersonAmount:totalBalance withSplit:numberOfPeopleLeft];
-        NSString *balancePerPersonStr = [balancePerPerson currencyString];
-        NSString *line3Str = [NSString stringWithFormat:@"Balance Per Person: %@ (%d Left)",
-                              balancePerPersonStr,
-                              [numberOfPeopleLeft integerValue]];
-        
         adjustmentView.line1.text = line1Str;
         adjustmentView.line2.text = line2Str;
-        adjustmentView.line3.text = line3Str;
         
         cell.accessoryView = adjustmentView;
         
@@ -177,13 +214,42 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    Adjustment *adjustment = [check_.splitAdjustments objectAtIndex:indexPath.row];
-    NSString *textStr = [NSString stringWithFormat:@"%@ = %@ + tip %@",
-                         [[adjustment total] currencyString],
-                         [adjustment.amount currencyString],
-                         [adjustment.tip currencyString]];
+    NSString *textStr = nil;
+    NSString *detailTextStr = nil;
     
-    NSString *detailTextStr = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
+    if (indexPath.row < [check_.splitAdjustments count]) {
+        Adjustment *adjustment = [check_.splitAdjustments objectAtIndex:indexPath.row];
+        textStr = [NSString stringWithFormat:@"%@ = %@ + tip %@",
+                   [[adjustment total] currencyString],
+                   [adjustment.amount currencyString],
+                   [adjustment.tip currencyString]];
+        
+        detailTextStr = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
+        
+        UIButton *deleteButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+        deleteButton.frame = CGRectMake(0.0, 0.0, 24.0, 24.0);
+        deleteButton.tag = indexPath.row;
+        [deleteButton setBackgroundImage:[UIImage imageNamed:@"button_pressed.png"] forState:UIControlStateNormal];
+        [deleteButton addTarget:self action:@selector(deleteAdjustmentAction:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = deleteButton;
+        [deleteButton release];
+    } else {
+        NSDecimalNumber *totalBalancePerPerson = [check_ totalBalancePerPersonAfterAdjustments];
+        NSDecimalNumber *billAmountBalancePerPerson = [check_ billAmountBalancePerPersonAfterAdjustments];
+        NSDecimalNumber *tipBalancePerPerson = [check_ tipBalancePerPersonAfterAdjustments];
+        
+        NSString *totalBalancePerPersonStr = [totalBalancePerPerson currencyString];
+        NSString *billAmountBalancePerPersonStr = [billAmountBalancePerPerson currencyString];
+        NSString *tipBalancePerPersonStr = [tipBalancePerPerson currencyString];
+        
+        textStr = [NSString stringWithFormat:@"%@ = %@ + tip %@",
+                   totalBalancePerPersonStr,
+                   billAmountBalancePerPersonStr,
+                   tipBalancePerPersonStr];
+        detailTextStr = [NSString stringWithFormat:@"Balance Per Person (%d Left)",
+                         [[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+        cell.accessoryView = nil;
+    }
     
     cell.textLabel.text = textStr;
     cell.detailTextLabel.text = detailTextStr;
@@ -197,18 +263,30 @@
 {
     NSInteger height = 44.0;
     if (indexPath.section == 0) {
-        height = 81.0;
+        height = 59.0;
     }
     return height;
 }
 
-#pragma mark - UITouch Delegate Methods
+#pragma mark - RLNumberPad Delegate Methods
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)didPressClearButtonForCallerView:(UIView *)callerView
 {
-    if ([adjustmentTextField_ isFirstResponder]) {
-        [adjustmentTextField_ resignFirstResponder];
-    }
+    numberPadDigits_.enteredDigits = @"";
+    self.currentAdjustment = [numberPadDigits_ decimalNumberForEnteredDigits];
+    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+}
+
+- (void)didPressReturnButtonForCallerView:(UIView *)callerView
+{
+    [self performSelector:@selector(addAction:)];
+}
+
+- (void)didPressButtonWithString:(NSString *)string callerView:(UIView *)callerView
+{
+    [numberPadDigits_ addDigit:string];
+	self.currentAdjustment = [numberPadDigits_ decimalNumberForEnteredDigits];
+	adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
 }
 
 @end
