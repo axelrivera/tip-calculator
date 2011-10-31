@@ -283,7 +283,16 @@
     if (pickerType_ == SummaryViewControllerPickerSplit) {
         string = [check_ stringForNumberOfSplitsWithDecimalNumber:currentNumber];
     } else {
-        string = [check_ stringForTipPercentageWithDecimalNumber:currentNumber];
+        NSComparisonResult isZero = [currentNumber compare:[NSDecimalNumber zero]];
+        if (isZero == NSOrderedSame) {
+            string = [check_ stringForTipPercentageWithDecimalNumber:currentNumber];
+        } else {
+            NSString *tmpStr = nil;
+            NSString *percentage = [check_ stringForTipPercentageWithDecimalNumber:currentNumber];
+            tmpStr = [percentage stringByPaddingToLength:15 withString:@" " startingAtIndex:0];
+            NSString *tip = [[CheckHelper calculateTipWithAmount:check_.billAmount andRate:currentNumber] currencyString];
+            string = [NSString stringWithFormat:@"%@%@", tmpStr, tip];
+        }
     }
     return string;
 }

@@ -14,7 +14,6 @@
 		164794701436A1130095C658 /* button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946C1436A1130095C658 /* button_pressed@2x.png */; };
 		164794711436A1130095C658 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946D1436A1130095C658 /* button.png */; };
 		164794721436A1130095C658 /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946E1436A1130095C658 /* button@2x.png */; };
-		1653D3C71437A6E7005E37F2 /* Specification.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 1653D3C61437A6E7005E37F2 /* Specification.markdown */; };
 		166257221434BAA4006CA328 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257211434BAA4006CA328 /* UIKit.framework */; };
 		166257241434BAA4006CA328 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257231434BAA4006CA328 /* Foundation.framework */; };
 		166257261434BAA4006CA328 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257251434BAA4006CA328 /* CoreGraphics.framework */; };
@@ -53,7 +52,6 @@
 		1647946C1436A1130095C658 /* button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_pressed@2x.png"; sourceTree = "<group>"; };
 		1647946D1436A1130095C658 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		1647946E1436A1130095C658 /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
-		1653D3C61437A6E7005E37F2 /* Specification.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Specification.markdown; path = ../Specification.markdown; sourceTree = "<group>"; };
 		1662571D1434BAA4006CA328 /* TipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		166257211434BAA4006CA328 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		166257231434BAA4006CA328 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,7 +180,6 @@
 		166257281434BAA4006CA328 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1653D3C61437A6E7005E37F2 /* Specification.markdown */,
 				164794621436A0390095C658 /* images */,
 				166257291434BAA4006CA328 /* TipCalculator-Info.plist */,
 				1662572A1434BAA4006CA328 /* InfoPlist.strings */,
@@ -294,7 +291,6 @@
 				164794701436A1130095C658 /* button_pressed@2x.png in Resources */,
 				164794711436A1130095C658 /* button.png in Resources */,
 				164794721436A1130095C658 /* button@2x.png in Resources */,
-				1653D3C71437A6E7005E37F2 /* Specification.markdown in Resources */,
 				1670851F143F5BA800FA3B02 /* back.png in Resources */,
 				16708520143F5BA800FA3B02 /* back@2x.png in Resources */,
 				1670852A143F5DCD00FA3B02 /* info.png in Resources */,

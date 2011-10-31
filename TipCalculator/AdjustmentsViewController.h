@@ -14,11 +14,12 @@
 
 @protocol AdjustmentsViewControllerDelegate;
 
-@interface AdjustmentsViewController : UIViewController <RLNumberPadDelegate>
+@interface AdjustmentsViewController : UIViewController <RLNumberPadDelegate, UIActionSheetDelegate>
 {
     Check *check_;
     RLNumberPad *numberPad_;
     RLNumberPadDigits *numberPadDigits_;
+    UIButton *currentDeleteButton_;
 }
 
 @property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
@@ -27,7 +28,7 @@
 @property (nonatomic, retain) NSDecimalNumber *currentAdjustment;
 
 - (IBAction)backAction:(id)sender;
-- (IBAction)resetAction:(id)sender;
+- (IBAction)resetConfirmationAction:(id)sender;
 
 @end
 

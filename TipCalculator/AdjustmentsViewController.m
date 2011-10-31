@@ -15,11 +15,16 @@
 
 @interface AdjustmentsViewController (Private)
 
+- (void)resetAction:(id)sender;
 - (void)adjustmentsAction:(id)sender;
+- (void)deleteAdjustmentConfirmationAction:(id)sender;
 - (void)deleteAdjustmentAction:(id)sender;
 - (void)addAction:(id)sender;
 
 @end
+
+#define kResetAdjustmentsActionSheetTag 100
+#define kDeleteAdjustmentActionSheetTag 101
 
 @implementation AdjustmentsViewController
 
@@ -37,6 +42,7 @@
         numberPad_.delegate = self;
         numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@""];
         self.currentAdjustment = [NSDecimalNumber zero];
+        currentDeleteButton_ = currentDeleteButton_;
     }
     return self;
 }
@@ -71,7 +77,7 @@
     
     adjustmentsTable_.allowsSelection = NO;
     
-    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 71.0, 0.0, 0.0)];
+    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 105.0, 0.0, 0.0)];
     adjustmentsInputView.titleLabel.text = @"Add Adjustment";
     adjustmentsInputView.inputView = numberPad_;
     [adjustmentsInputView addTarget:self action:@selector(adjustmentsAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -107,7 +113,19 @@
     [delegate_ adjustmentsViewControllerDidFinish:self];
 }
 
-- (IBAction)resetAction:(id)sender
+- (IBAction)resetConfirmationAction:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Reset Adjustments"
+                                                    otherButtonTitles:nil];
+    actionSheet.tag = kResetAdjustmentsActionSheetTag;
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)resetAction:(id)sender
 {
     [check_ removeAllSplitAdjustments];
     [adjustmentsTable_ beginUpdates];
@@ -128,10 +146,23 @@
     }
 }
 
+- (void)deleteAdjustmentConfirmationAction:(id)sender
+{
+    currentDeleteButton_ = (UIButton *)sender;
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Delete Adjustment"
+                                                    otherButtonTitles:nil];
+    actionSheet.tag = kDeleteAdjustmentActionSheetTag;
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
 - (void)deleteAdjustmentAction:(id)sender
 {
-    UIButton *button = (UIButton *)sender;
-    NSInteger row = button.tag;
+    NSInteger row = currentDeleteButton_.tag;
+    currentDeleteButton_ = nil;
     [check_ removeSplitAdjustmentAtIndex:row];
     [adjustmentsTable_ beginUpdates];
     [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
@@ -230,7 +261,7 @@
         deleteButton.frame = CGRectMake(0.0, 0.0, 24.0, 24.0);
         deleteButton.tag = indexPath.row;
         [deleteButton setBackgroundImage:[UIImage imageNamed:@"button_pressed.png"] forState:UIControlStateNormal];
-        [deleteButton addTarget:self action:@selector(deleteAdjustmentAction:) forControlEvents:UIControlEventTouchUpInside];
+        [deleteButton addTarget:self action:@selector(deleteAdjustmentConfirmationAction:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = deleteButton;
         [deleteButton release];
     } else {
@@ -287,6 +318,21 @@
     [numberPadDigits_ addDigit:string];
 	self.currentAdjustment = [numberPadDigits_ decimalNumberForEnteredDigits];
 	adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+}
+
+#pragma mark - UIActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == kResetAdjustmentsActionSheetTag) {
+        if (buttonIndex == 0) {
+            [self performSelector:@selector(resetAction:)];
+        }
+    } else if (actionSheet.tag == kDeleteAdjustmentActionSheetTag) {
+        if (buttonIndex == 0) {
+            [self performSelector:@selector(deleteAdjustmentAction:)];
+        }
+    }
 }
 
 @end
