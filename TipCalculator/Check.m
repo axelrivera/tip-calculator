@@ -32,6 +32,8 @@ static NSDictionary *tipPercentagesDictionary;
 + (NSDictionary *)numberOfSplitsDictionary;
 + (NSDictionary *)tipPercentagesDictionary;
 
+- (NSInteger)numberOfAdjustmentsPlusOne;
+
 - (void)setSplitAdjustments:(NSMutableArray *)splitAdjustments;
 
 @end
@@ -238,14 +240,41 @@ static NSDictionary *tipPercentagesDictionary;
     return [numberOfSplits_ decimalNumberBySubtracting:[self decimalNumberOfSplitAdjustments]];
 }
 
-- (BOOL)isBalanceAfterAdjustmentsZero
+- (BOOL)canAddOneMoreAdjusment
 {
-    NSDecimalNumber *balance = [self totalAdjustments];
-    NSComparisonResult compareBalance = [balance compare:[NSDecimalNumber zero]];
-    if (compareBalance == NSOrderedSame) {
+    if ([self numberOfAdjustmentsPlusOne] > [numberOfSplits_ integerValue]) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)canAddAdjustment:(NSDecimalNumber *)totalAdjustment
+{
+    // Adjustment cannot be zero
+    if ([totalAdjustment compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+        return NO;
+    }
+    
+    NSDecimalNumber *currentBalance = [self totalBalanceAfterAdjustments];
+    NSDecimalNumber *futureBalance = [currentBalance decimalCurrencyBySubtracting:totalAdjustment];
+    
+    if (![self canAddOneMoreAdjusment]) {
+        // Number of adjustments is equal to the number of splits
+        return NO;
+    } else if ([self numberOfAdjustmentsPlusOne] == [numberOfSplits_ integerValue]) {
+        // Only 1 adjusment left
+        NSComparisonResult zeroBalance = [[NSDecimalNumber zero] compare:futureBalance];
+        if (zeroBalance != NSOrderedSame) {
+            return NO;
+        }
         return YES;
     }
-    return NO;
+    
+    NSComparisonResult compareBalance = [futureBalance compare:[NSDecimalNumber zero]];
+    if (compareBalance == NSOrderedAscending || compareBalance == NSOrderedSame) {
+        return NO;
+    }
+    return YES;
 }
 
 - (NSDecimalNumber *)decimalNumberOfSplitAdjustments
@@ -283,6 +312,11 @@ static NSDictionary *tipPercentagesDictionary;
 }
 
 #pragma mark - Private Methods
+
+- (NSInteger)numberOfAdjustmentsPlusOne
+{
+    return [splitAdjustments_ count] + 1;
+}
 
 + (NSDictionary *)numberOfSplitsDictionary
 {

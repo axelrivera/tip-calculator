@@ -142,7 +142,17 @@
         [numberPadDigits_ setEnteredDigitsWithDecimalNumber:currentAdjustment_];
         adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
     } else {
-        [adjustmentsInputView_ becomeFirstResponder];
+        if ([check_ canAddOneMoreAdjusment]) {
+            [adjustmentsInputView_ becomeFirstResponder];
+        } else {
+            UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Adjustment Error"
+                                                                 message:@"Cannot add more adjustments"
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil] autorelease];
+            [alertView show];
+            return;
+        }
     }
 }
 
@@ -165,24 +175,32 @@
     currentDeleteButton_ = nil;
     [check_ removeSplitAdjustmentAtIndex:row];
     [adjustmentsTable_ beginUpdates];
-    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]
+                     withRowAnimation:UITableViewRowAnimationFade];
     [adjustmentsTable_ endUpdates];
 }
 
 - (void)addAction:(id)sender
 {
-    NSComparisonResult adjustmentCompare = [currentAdjustment_ compare:[NSDecimalNumber zero]];
-    if (adjustmentCompare != NSOrderedSame) {
-        Adjustment *adjustment = [[Adjustment alloc] initWithAmount:currentAdjustment_ tipRate:check_.tipPercentage];
+    Adjustment *adjustment = [[Adjustment alloc] initWithAmount:currentAdjustment_ tipRate:check_.tipPercentage];
+    if ([check_ canAddAdjustment:[adjustment total]]) {
         [check_ addSplitAdjustment:adjustment];
-        [adjustment release];
-        
         [adjustmentsTable_ beginUpdates];
         [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
         [adjustmentsTable_ endUpdates];
+        [self performSelector:@selector(adjustmentsAction:)];
+        return;
     }
-    [self performSelector:@selector(adjustmentsAction:)];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Adjustment Error"
+                                                        message:@"Adjustment Error"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+    [alertView show];
+    [alertView release];
+    
+    [adjustment release];
 }
 
 #pragma mark - UITableView Datasource Methods
@@ -196,7 +214,10 @@
 {
     NSInteger rows = 1;
     if (section == 1) {
-        rows = [check_.splitAdjustments count] + 1;
+        rows = [check_.splitAdjustments count];
+        if ([[check_ splitAdjustments] count] < [check_.numberOfSplits integerValue]) {
+            rows++;
+        }
     }
     return rows;
 }

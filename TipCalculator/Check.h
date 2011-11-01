@@ -48,7 +48,8 @@
 
 - (NSDecimalNumber *)numberOfSplitsLeftAfterAdjustment;
 
-- (BOOL)isBalanceAfterAdjustmentsZero;
+- (BOOL)canAddOneMoreAdjusment;
+- (BOOL)canAddAdjustment:(NSDecimalNumber *)totalAdjustment;
 
 - (NSDecimalNumber *)decimalNumberOfSplitAdjustments;
 - (void)addSplitAdjustment:(Adjustment *)adjustment;
