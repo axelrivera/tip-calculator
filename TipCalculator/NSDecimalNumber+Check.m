@@ -46,7 +46,7 @@ static NSNumberFormatter *percentFormatter_;
 {
     NSDecimalNumber *dividend = [NSDecimalNumber decimalNumberWithDecimal:[self decimalValue]];
     NSDecimalNumber *divisor = [NSDecimalNumber decimalNumberWithDecimal:[decimal decimalValue]];
-    NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
+    NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
                                                                                               scale:0
                                                                                    raiseOnExactness:NO
                                                                                     raiseOnOverflow:NO
@@ -56,6 +56,14 @@ static NSNumberFormatter *percentFormatter_;
     NSDecimalNumber *subtractAmount = [quotient decimalNumberByMultiplyingBy:divisor];
     NSDecimalNumber *remainder = [dividend decimalNumberBySubtracting:subtractAmount];
     return remainder;
+}
+
+- (BOOL)isEqualToZero
+{
+    if ([self compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+        return YES;
+    }
+    return NO;
 }
 
 - (NSString *)currencyString
@@ -73,7 +81,7 @@ static NSNumberFormatter *percentFormatter_;
 - (NSDecimalNumberHandler *)currencyBehavior
 {
     if (currencyBehavior_ == nil) {
-        currencyBehavior_ = [[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundPlain
+        currencyBehavior_ = [[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundDown
                                                                            scale:2
                                                                 raiseOnExactness:NO
                                                                  raiseOnOverflow:NO

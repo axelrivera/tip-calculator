@@ -41,7 +41,8 @@
         check_ = [CheckData sharedCheckData].currentCheck;
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
-        numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@""];
+        numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@"" andDecimals:@""];
+        NSLog(@"[Init] %@", numberPadDigits_);
     }
     return self;
 }
@@ -126,8 +127,9 @@
     splitInputView_.descriptionLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
     tipInputView_.descriptionLabel.text = [check_.tipPercentage percentString];
     
-    [numberPadDigits_ setEnteredDigitsWithDecimalNumber:check_.billAmount];
-    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:check_.billAmount];
+    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    NSLog(@"[ViewWillAppear] %@", numberPadDigits_);
     
     [self reloadCheckSummaryAndResetAdjustments:NO];
 }
@@ -141,6 +143,8 @@
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
     if ([billAmountInputView_ isFirstResponder]) {
+        [numberPadDigits_ validateAndFixDecimalSeparator];
+        billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
@@ -164,6 +168,8 @@
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
     if ([billAmountInputView_ isFirstResponder]) {
+        [numberPadDigits_ validateAndFixDecimalSeparator];
+        billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
@@ -192,6 +198,8 @@
     }
     
     if ([billAmountInputView_ isFirstResponder]) {
+        [numberPadDigits_ validateAndFixDecimalSeparator];
+        billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
     } else {
@@ -307,9 +315,10 @@
 
 - (void)didPressClearButtonForCallerView:(UIView *)callerView
 {
-    numberPadDigits_.enteredDigits = @"";
-    check_.billAmount = [numberPadDigits_ decimalNumberForEnteredDigits];
-    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    [numberPadDigits_ resetDigitsAndDecimals];
+    check_.billAmount = [numberPadDigits_ decimalNumber];
+    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    NSLog(@"[ClearButton] %@", numberPadDigits_);
 }
 
 - (void)didPressReturnButtonForCallerView:(UIView *)callerView
@@ -319,9 +328,11 @@
 
 - (void)didPressButtonWithString:(NSString *)string callerView:(UIView *)callerView
 {
-    [numberPadDigits_ addDigit:string];
-	check_.billAmount = [numberPadDigits_ decimalNumberForEnteredDigits];
-	billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    NSLog(@"Button Pressed");
+    [numberPadDigits_ addNumber:string];
+	check_.billAmount = [numberPadDigits_ decimalNumber];
+	billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    NSLog(@"[PressedButton] %@", numberPadDigits_);
 }
 
 @end

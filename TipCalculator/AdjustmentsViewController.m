@@ -40,7 +40,7 @@
         check_ = [CheckData sharedCheckData].currentCheck;
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
-        numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@""];
+        numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@"" andDecimals:@""];
         self.currentAdjustment = [NSDecimalNumber zero];
         currentDeleteButton_ = currentDeleteButton_;
     }
@@ -100,8 +100,8 @@
 {
     [super viewWillAppear:animated];
     
-    [numberPadDigits_ setEnteredDigitsWithDecimalNumber:currentAdjustment_];
-    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
+    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
     
     [adjustmentsTable_ reloadData];
 }
@@ -137,10 +137,11 @@
 - (void)adjustmentsAction:(id)sender
 {
     if ([adjustmentsInputView_ isFirstResponder]) {
+        [numberPadDigits_ validateAndFixDecimalSeparator];
         [adjustmentsInputView_ resignFirstResponder];
         self.currentAdjustment = [NSDecimalNumber zero];
-        [numberPadDigits_ setEnteredDigitsWithDecimalNumber:currentAdjustment_];
-        adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+        [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
+        adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
     } else {
         if ([check_ canAddOneMoreAdjusment]) {
             [adjustmentsInputView_ becomeFirstResponder];
@@ -324,9 +325,9 @@
 
 - (void)didPressClearButtonForCallerView:(UIView *)callerView
 {
-    numberPadDigits_.enteredDigits = @"";
-    self.currentAdjustment = [numberPadDigits_ decimalNumberForEnteredDigits];
-    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    [numberPadDigits_ resetDigitsAndDecimals];
+    self.currentAdjustment = [numberPadDigits_ decimalNumber];
+    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
 }
 
 - (void)didPressReturnButtonForCallerView:(UIView *)callerView
@@ -336,9 +337,9 @@
 
 - (void)didPressButtonWithString:(NSString *)string callerView:(UIView *)callerView
 {
-    [numberPadDigits_ addDigit:string];
-	self.currentAdjustment = [numberPadDigits_ decimalNumberForEnteredDigits];
-	adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringForEnteredDigits];
+    [numberPadDigits_ addNumber:string];
+	self.currentAdjustment = [numberPadDigits_ decimalNumber];
+	adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
 }
 
 #pragma mark - UIActionSheet Delegate

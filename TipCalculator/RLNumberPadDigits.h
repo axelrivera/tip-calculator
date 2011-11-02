@@ -11,15 +11,22 @@
 @interface RLNumberPadDigits : NSObject
 
 @property (nonatomic, copy) NSString *enteredDigits;
+@property (nonatomic, copy) NSString *enteredDecimals;
+@property (nonatomic, assign) BOOL useDecimalSeparator;
 
-- (id)initWithDigits:(NSString *)digits;
-- (id)initWithDecimalNumber:(NSDecimalNumber *)decimal;
+- (id)initWithDigits:(NSString *)digits andDecimals:(NSString *)decimals;
+- (id)initWithDecimalNumber:(NSDecimalNumber *)decimalNumber;
 
-- (void)setEnteredDigitsWithDecimalNumber:(NSDecimalNumber *)decimal;
+- (void)setDigitsAndDecimalsWithDecimalNumber:(NSDecimalNumber *)decimalNumber;
+- (void)resetDigitsAndDecimals;
 
-- (void)addDigit:(NSString *)string;
+- (void)addNumber:(NSString *)string;
+- (NSUInteger)length;
+- (void)validateAndFixDecimalSeparator;
 
-- (NSDecimalNumber *)decimalNumberForEnteredDigits;
-- (NSString *)stringForEnteredDigits;
+- (NSDecimalNumber *)decimalNumber;
+- (NSString *)stringValue;
+
+- (NSString *)description;
 
 @end
