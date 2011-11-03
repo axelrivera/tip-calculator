@@ -8,6 +8,20 @@
 
 #import "SettingsViewController.h"
 
+#define kTextLabelKey @"TextLabelKey"
+#define kDetailTextLabelKey @"DetailTextLabelKey"
+
+#define kCurrencyControllerTag 200
+#define kRoundingControllerTag 201
+
+static NSArray *tableDataSource_;
+
+@interface SettingsViewController (Private)
+
++ (NSArray *)tableDataSource;
+
+@end
+
 @implementation SettingsViewController
 
 @synthesize delegate = delegate_;
@@ -16,7 +30,7 @@
 {
     self = [super initWithNibName:@"SettingsViewController" bundle:nil];
     if (self) {
-        // Custom code
+        settings_ = [Settings sharedSettings];
     }
     return self;
 }
@@ -57,6 +71,7 @@
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    NSLog(@"%@", [Settings currencyTypeArray]);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -71,87 +86,136 @@
     [delegate_ settingsViewControllerDidFinish:self];
 }
 
+- (void)switchAction:(id)sender
+{
+    NSLog(@"Switch Action");
+}
+
+#pragma mark - Private Methods
+
++ (NSArray *)tableDataSource
+{
+    if (tableDataSource_ == nil) {
+        Settings *settings = [Settings sharedSettings];
+        NSDictionary *dictionary = nil;
+        NSMutableArray *sectionOne = [[NSMutableArray alloc] initWithCapacity:3];
+        NSMutableArray *sectionTwo = [[NSMutableArray alloc] initWithCapacity:2];
+        
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"Currency", kTextLabelKey,
+                      [settings currencyString], kDetailTextLabelKey,
+                      nil];
+        [sectionOne addObject:dictionary];
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"Rounding", kTextLabelKey,
+                      [settings roundingString], kDetailTextLabelKey,
+                      nil];
+        [sectionOne addObject:dictionary];
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"Tax", kTextLabelKey,
+                      [settings taxString], kDetailTextLabelKey,
+                      nil];
+        [sectionOne addObject:dictionary];
+        
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"Sound", kTextLabelKey,
+                      [NSNull null], kDetailTextLabelKey,
+                      nil];
+        [sectionTwo addObject:dictionary];
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"Shake to Clear", kTextLabelKey,
+                      [NSNull null], kDetailTextLabelKey,
+                      nil];
+        [sectionTwo addObject:dictionary];
+        
+        tableDataSource_ = [[NSArray alloc] initWithObjects:sectionOne, sectionTwo, nil];
+        [sectionOne release];
+        [sectionTwo release];
+    }
+    return tableDataSource_;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return [[SettingsViewController tableDataSource] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [[[SettingsViewController tableDataSource] objectAtIndex:section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    NSArray *data = [SettingsViewController tableDataSource];
+    if (indexPath.section == 0) {
+        NSString *CellIdentifier = @"SectionOneCell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        }
+        
+        NSDictionary *dictionary = [[data objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        
+        cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
+        cell.detailTextLabel.text = [dictionary objectForKey:kDetailTextLabelKey];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        return cell;
+    }
+    
+    NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+    NSDictionary *dictionary = [[data objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
+    
+    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+    switchView.tag = indexPath.row;
+    [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    cell.accessoryView = switchView;
+    [switchView release];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            TableSelectViewController *selectController = [[TableSelectViewController alloc] init];
+            selectController.selectID = kCurrencyControllerTag;
+            selectController.delegate = self;
+            selectController.currentIndex = [settings_ currency];
+            selectController.tableData = [Settings currencyTypeArray];
+            selectController.title = @"Currency";
+            [self.navigationController pushViewController:selectController animated:YES];
+            [selectController release];
+        }
+    }
+}
+
+#pragma mark UIViewController Delegates
+
+- (void)tableSelectViewControllerDidFinish:(TableSelectViewController *)controller
+{
+    if (controller.selectID == kCurrencyControllerTag) {
+        settings_.currency = controller.currentIndex;
+    }
 }
 
 @end

@@ -8,27 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+#define kNumberOfCurrencyItems 6
 typedef enum {
-    DefaultCurrencyAutomatic = -1,
-    DefaultCurrencyDollar = 1,
-    DefaultCurrencyPound = 2,
-    DefaultCurrencyEuro = 3,
-    DefaultCurrencyFranc = 4,
-    DefaultCurrencyKrone = 5
-} DefaultCurrency;
+    CurrencyTypeAutomatic = 0,
+    CurrencyTypeDollar = 1,
+    CurrencyTypePound = 2,
+    CurrencyTypeEuro = 3,
+    CurrencyTypeFranc = 4,
+    CurrencyTypeKrone = 5
+} CurrencyType;
 
+#define kNumberOfRoundingItems 5
 typedef enum {
-    DefaultRoundingNone = -1,
-    DefaultRoundingTotal = 1,
-    DefaultRoundingTotalPerPerson = 2,
-    DefaultRoundingTip = 3,
-    DefaultRoundingTipPerPerson = 4
-} DefaultRounding;
+    RoundingTypeNone = 0,
+    RoundingTypeTotal = 1,
+    RoundingTypeTotalPerPerson = 2,
+    RoundingTypeTip = 3,
+    RoundingTypeTipPerPerson = 4
+} RoundingType;
 
 @interface Settings : NSObject
 
-@property (nonatomic, assign) DefaultCurrency currency;
-@property (nonatomic, assign) DefaultRounding rounding;
+@property (nonatomic, assign) CurrencyType currency;
+@property (nonatomic, assign) RoundingType rounding;
 @property (nonatomic, assign) BOOL tipOnTax;
 @property (nonatomic, assign) BOOL taxOnAdjustments;
 @property (nonatomic, assign) BOOL sound;
@@ -36,5 +38,15 @@ typedef enum {
 @property (nonatomic, retain) NSDecimalNumber *taxRate;
 
 + (Settings *)sharedSettings;
+
++ (NSString *)stringForCurrencyType:(CurrencyType)currencyType;
++ (NSString *)stringForRoundingType:(RoundingType)roundingType;
+
++ (NSArray *)currencyTypeArray;
++ (NSArray *)roundingTypeArray;
+
+- (NSString *)currencyString;
+- (NSString *)roundingString;
+- (NSString *)taxString;
 
 @end

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Settings.h"
+#import "TableSelectViewController.h"
 
 @protocol SettingsViewControllerDelegate;
 
-@interface SettingsViewController : UITableViewController
+@interface SettingsViewController : UITableViewController <TableSelectViewControllerDelegate>
+{
+    Settings *settings_;
+}
 
 @property (nonatomic, assign) id <SettingsViewControllerDelegate> delegate;
 

@@ -8,21 +8,28 @@
 
 #import "Settings.h"
 
-#define kDefaultCurrencyKey @"DefaultCurrencyKey"
-#define kDefaultRoundingKey @"DefaultRoundingKey"
-#define kDefaultTipOnTaxKey @"DefaultTipOnTaxKey"
-#define kDefaultTaxOnAdjustmentsKey @"DefaultTaxOnAdjustmentsKey"
-#define kDefaultSoundKey @"DefaultSoundKey"
-#define kDefaultShakeToClearKey @"DefaultShakeToClearKey"
-#define kDefaultTaxRateKey @"DefaultTaxRateKey"
+// The order of the arguments must match the order of the enum types
+#define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Franc (Fr)",@"Krone/Krona (Kr)",nil
+#define kRoundingStringsArgs @"No Rounding",@"Round Total",@"Round Total Per Person",@"Round Tip",@"Round Tip Per Person",nil
 
-#define kDefaultCurrency DefaultCurrencyAutomatic
-#define kDefaultRounding DefaultRoundingNone
-#define kDefaultTipOnTax NO
-#define kDefaultTaxOnAdjustments NO
-#define kDefaultSound YES
-#define kDefaultShakeToClear YES
-#define kDefaultTaxRate @"0.0"
+#define kDefaultCurrencyKey @"RLTipCalculatorDefaultCurrencyKey"
+#define kDefaultRoundingKey @"RLTipCalculatorDefaultRoundingKey"
+#define kDefaultTipOnTaxKey @"RLTipCalculatorDefaultTipOnTaxKey"
+#define kDefaultTaxOnAdjustmentsKey @"RLTipCalculatorDefaultTaxOnAdjustmentsKey"
+#define kDefaultSoundKey @"RLTipCalculatorDefaultSoundKey"
+#define kDefaultShakeToClearKey @"RLTipCalculatorDefaultShakeToClearKey"
+#define kDefaultTaxRateKey @"RLTipCalculatorDefaultTaxRateKey"
+
+static NSArray *currencyArray_;
+static NSArray *roundingArray_;
+
+CurrencyType const kDefaultCurrency = CurrencyTypeAutomatic;
+RoundingType const kDefaultRounding = RoundingTypeNone;
+BOOL const kDefaultTipOnTax = NO;
+BOOL const kDefaultTaxOnAdjustments = NO;
+BOOL const kDefaultSound = YES;
+BOOL const kDefaultShakeToClear = YES;
+NSString * const kDefaultTaxRate = @"0.0";
 
 static Settings *sharedSettings_;
 
@@ -40,29 +47,41 @@ static Settings *sharedSettings_;
 {
     self = [super init];
     if (self) {
-        NSInteger currency = [[NSUserDefaults standardUserDefaults] integerForKey:kDefaultCurrencyKey];
-		if (currency == 0) {
-			currency = (NSInteger)kDefaultCurrencyKey;
+        NSNumber *currency = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultCurrencyKey];
+		if (currency == nil) {
+			currency = [NSNumber numberWithInteger:kDefaultCurrency];
 		}
-		self.currency = (DefaultCurrency)currency;
+		self.currency = (CurrencyType)[currency integerValue];
         
-        NSInteger rounding = [[NSUserDefaults standardUserDefaults] integerForKey:kDefaultRoundingKey];
-        if (rounding == 0) {
-            rounding = (NSInteger)rounding;
+        NSNumber *rounding = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultRoundingKey];
+        if (rounding == nil) {
+            rounding = [NSNumber numberWithInteger:kDefaultRounding];
         }
-        self.rounding = (DefaultRounding)rounding;
+        self.rounding = (RoundingType)[rounding integerValue];
         
-        BOOL tipOnTax = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultTipOnTaxKey];
-        self.tipOnTax = tipOnTax;
+        NSNumber *tipOnTax = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultTipOnTaxKey];
+        if (tipOnTax == nil) {
+            tipOnTax = [NSNumber numberWithBool:kDefaultTipOnTax];
+        }
+        self.tipOnTax = [tipOnTax boolValue];
         
-        BOOL taxOnAdjustments = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultTaxOnAdjustmentsKey];
-        self.taxOnAdjustments = taxOnAdjustments;
+        NSNumber *taxOnAdjustments = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultTaxOnAdjustmentsKey];
+        if (taxOnAdjustments == nil) {
+            taxOnAdjustments = [NSNumber numberWithBool:kDefaultTaxOnAdjustments];
+        }
+        self.taxOnAdjustments = [taxOnAdjustments boolValue];
         
-        BOOL sound = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultSoundKey];
-        self.sound = sound;
+        NSNumber *sound = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultSoundKey];
+        if (sound == nil) {
+            sound = [NSNumber numberWithBool:kDefaultSound];
+        }
+        self.sound = [sound boolValue];
         
-        BOOL shakeToClear = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultShakeToClearKey];
-        self.shakeToClear = shakeToClear;
+        NSNumber *shakeToClear = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultShakeToClearKey];
+        if (shakeToClear == nil) {
+            shakeToClear = [NSNumber numberWithBool:kDefaultShakeToClear];
+        }
+        self.shakeToClear = [shakeToClear boolValue];
         
         NSString *taxRateStr = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultTaxRateKey];
         if (taxRateStr == nil) {
@@ -81,45 +100,45 @@ static Settings *sharedSettings_;
 
 #pragma mark - Custom Setters
 
-- (void)setCurrency:(DefaultCurrency)currency
+- (void)setCurrency:(CurrencyType)currency
 {
    	currency_ = currency;
-	[[NSUserDefaults standardUserDefaults] setInteger:currency forKey:kDefaultCurrencyKey];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:currency] forKey:kDefaultCurrencyKey];
 	[[NSUserDefaults standardUserDefaults] synchronize]; 
 }
 
-- (void)setRounding:(DefaultRounding)rounding
+- (void)setRounding:(RoundingType)rounding
 {
     rounding_ = rounding;
-    [[NSUserDefaults standardUserDefaults] setInteger:rounding forKey:kDefaultRoundingKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:rounding] forKey:kDefaultRoundingKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)setTipOnTax:(BOOL)tipOnTax
 {
     tipOnTax_ = tipOnTax;
-    [[NSUserDefaults standardUserDefaults] setInteger:tipOnTax forKey:kDefaultTipOnTaxKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:tipOnTax] forKey:kDefaultTipOnTaxKey];
     [[NSUserDefaults standardUserDefaults] synchronize];    
 }
 
 - (void)setTaxOnAdjustments:(BOOL)taxOnAdjustments
 {
     taxOnAdjustments_ = taxOnAdjustments;
-    [[NSUserDefaults standardUserDefaults] setInteger:taxOnAdjustments forKey:kDefaultTaxOnAdjustmentsKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:taxOnAdjustments] forKey:kDefaultTaxOnAdjustmentsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];    
 }
 
 - (void)setSound:(BOOL)sound
 {
     sound_ = sound;
-    [[NSUserDefaults standardUserDefaults] setInteger:sound forKey:kDefaultSoundKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:sound] forKey:kDefaultSoundKey];
     [[NSUserDefaults standardUserDefaults] synchronize];    
 }
 
 - (void)setShakeToClear:(BOOL)shakeToClear
 {
     shakeToClear_ = shakeToClear;
-    [[NSUserDefaults standardUserDefaults] setInteger:shakeToClear forKey:kDefaultShakeToClearKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:shakeToClear] forKey:kDefaultShakeToClearKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -129,6 +148,51 @@ static Settings *sharedSettings_;
 	taxRate_ = [taxRate retain];
 	[[NSUserDefaults standardUserDefaults] setObject:[taxRate stringValue] forKey:kDefaultTaxRateKey];
 	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Custom Methods
+
+- (NSString *)currencyString
+{
+    return [Settings stringForCurrencyType:currency_];
+}
+
+- (NSString *)roundingString
+{
+    return [Settings stringForRoundingType:rounding_];
+}
+
+- (NSString *)taxString
+{
+    return [taxRate_ stringValue]; 
+}
+
+#pragma mark - Custom Class Methods
+
++ (NSString *)stringForCurrencyType:(CurrencyType)currencyType
+{
+    return [[Settings currencyTypeArray] objectAtIndex:currencyType];
+}
+
++ (NSString *)stringForRoundingType:(RoundingType)roundingType
+{
+    return [[Settings roundingTypeArray] objectAtIndex:roundingType];
+}
+
++ (NSArray *)currencyTypeArray
+{
+    if (currencyArray_ == nil) {
+        currencyArray_ = [[NSArray alloc] initWithObjects:kCurrencyStringArgs];
+    }
+    return currencyArray_;
+}
+
++ (NSArray *)roundingTypeArray
+{
+    if (roundingArray_ == nil) {
+        roundingArray_ = [[NSArray alloc] initWithObjects:kRoundingStringsArgs];
+    }
+    return roundingArray_;
 }
 
 #pragma mark - Singleton Methods

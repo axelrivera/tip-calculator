@@ -34,6 +34,8 @@
 		1670852B143F5DCD00FA3B02 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16708529143F5DCD00FA3B02 /* info@2x.png */; };
 		1670852E143F675600FA3B02 /* adjustment.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852C143F675600FA3B02 /* adjustment.png */; };
 		1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1670852D143F675600FA3B02 /* adjustment@2x.png */; };
+		1689F89A146326B50040A33D /* TableSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1689F898146326B50040A33D /* TableSelectViewController.m */; };
+		1689F89B146326B50040A33D /* TableSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1689F899146326B50040A33D /* TableSelectViewController.xib */; };
 		1695D0701450897C004C18EB /* NSDecimalNumber+Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */; };
 		16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* Adjustment.m */; };
 		16DD3A611459AF68001FBF59 /* RLNumberPadDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */; };
@@ -82,6 +84,9 @@
 		16708529143F5DCD00FA3B02 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		1670852C143F675600FA3B02 /* adjustment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = adjustment.png; sourceTree = "<group>"; };
 		1670852D143F675600FA3B02 /* adjustment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adjustment@2x.png"; sourceTree = "<group>"; };
+		1689F897146326B50040A33D /* TableSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableSelectViewController.h; sourceTree = "<group>"; };
+		1689F898146326B50040A33D /* TableSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableSelectViewController.m; sourceTree = "<group>"; };
+		1689F899146326B50040A33D /* TableSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableSelectViewController.xib; sourceTree = "<group>"; };
 		1695D06E1450897C004C18EB /* NSDecimalNumber+Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+Check.h"; sourceTree = "<group>"; };
 		1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+Check.m"; sourceTree = "<group>"; };
 		16CE4CB8143DEEF80075342C /* Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjustment.h; sourceTree = "<group>"; };
@@ -199,6 +204,7 @@
 				166257571434D624006CA328 /* SummaryViewController.xib */,
 				1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */,
 				16E6AEB91435EB5800D47637 /* SettingsViewController.xib */,
+				1689F899146326B50040A33D /* TableSelectViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -212,6 +218,8 @@
 				1662575B1434D66C006CA328 /* AdjustmentsViewController.m */,
 				16E6AEB71435EB5800D47637 /* SettingsViewController.h */,
 				16E6AEB81435EB5800D47637 /* SettingsViewController.m */,
+				1689F897146326B50040A33D /* TableSelectViewController.h */,
+				1689F898146326B50040A33D /* TableSelectViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -302,6 +310,7 @@
 				1670852B143F5DCD00FA3B02 /* info@2x.png in Resources */,
 				1670852E143F675600FA3B02 /* adjustment.png in Resources */,
 				1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */,
+				1689F89B146326B50040A33D /* TableSelectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +336,7 @@
 				16DD3A611459AF68001FBF59 /* RLNumberPadDigits.m in Sources */,
 				1664FCE51459E69F0032CE0D /* InputDisplayView.m in Sources */,
 				166F5D591461B188000742F2 /* Settings.m in Sources */,
+				1689F89A146326B50040A33D /* TableSelectViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +377,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -384,7 +394,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
