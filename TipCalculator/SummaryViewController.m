@@ -42,7 +42,6 @@
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
         numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@"" andDecimals:@""];
-        NSLog(@"[Init] %@", numberPadDigits_);
     }
     return self;
 }
@@ -129,7 +128,6 @@
     
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:check_.billAmount];
     billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
-    NSLog(@"[ViewWillAppear] %@", numberPadDigits_);
     
     [self reloadCheckSummaryAndResetAdjustments:NO];
 }
@@ -318,7 +316,6 @@
     [numberPadDigits_ resetDigitsAndDecimals];
     check_.billAmount = [numberPadDigits_ decimalNumber];
     billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
-    NSLog(@"[ClearButton] %@", numberPadDigits_);
 }
 
 - (void)didPressReturnButtonForCallerView:(UIView *)callerView
@@ -328,11 +325,9 @@
 
 - (void)didPressButtonWithString:(NSString *)string callerView:(UIView *)callerView
 {
-    NSLog(@"Button Pressed");
     [numberPadDigits_ addNumber:string];
 	check_.billAmount = [numberPadDigits_ decimalNumber];
 	billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
-    NSLog(@"[PressedButton] %@", numberPadDigits_);
 }
 
 @end

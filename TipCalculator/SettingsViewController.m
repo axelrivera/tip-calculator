@@ -14,8 +14,6 @@
 #define kCurrencyControllerTag 200
 #define kRoundingControllerTag 201
 
-static NSArray *tableDataSource_;
-
 @interface SettingsViewController (Private)
 
 + (NSArray *)tableDataSource;
@@ -71,7 +69,7 @@ static NSArray *tableDataSource_;
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
-    NSLog(@"%@", [Settings currencyTypeArray]);
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -88,51 +86,54 @@ static NSArray *tableDataSource_;
 
 - (void)switchAction:(id)sender
 {
-    NSLog(@"Switch Action");
+    UISwitch *switchView = (UISwitch *)sender;
+    if (switchView.tag == 0) {
+        settings_.sound = switchView.on;
+    } else {
+        settings_.shakeToClear = switchView.on;
+    }
 }
 
 #pragma mark - Private Methods
 
 + (NSArray *)tableDataSource
 {
-    if (tableDataSource_ == nil) {
-        Settings *settings = [Settings sharedSettings];
-        NSDictionary *dictionary = nil;
-        NSMutableArray *sectionOne = [[NSMutableArray alloc] initWithCapacity:3];
-        NSMutableArray *sectionTwo = [[NSMutableArray alloc] initWithCapacity:2];
-        
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                      @"Currency", kTextLabelKey,
-                      [settings currencyString], kDetailTextLabelKey,
-                      nil];
-        [sectionOne addObject:dictionary];
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                      @"Rounding", kTextLabelKey,
-                      [settings roundingString], kDetailTextLabelKey,
-                      nil];
-        [sectionOne addObject:dictionary];
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                      @"Tax", kTextLabelKey,
-                      [settings taxString], kDetailTextLabelKey,
-                      nil];
-        [sectionOne addObject:dictionary];
-        
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                      @"Sound", kTextLabelKey,
-                      [NSNull null], kDetailTextLabelKey,
-                      nil];
-        [sectionTwo addObject:dictionary];
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                      @"Shake to Clear", kTextLabelKey,
-                      [NSNull null], kDetailTextLabelKey,
-                      nil];
-        [sectionTwo addObject:dictionary];
-        
-        tableDataSource_ = [[NSArray alloc] initWithObjects:sectionOne, sectionTwo, nil];
-        [sectionOne release];
-        [sectionTwo release];
-    }
-    return tableDataSource_;
+    Settings *settings = [Settings sharedSettings];
+    NSDictionary *dictionary = nil;
+    NSMutableArray *sectionOne = [[NSMutableArray alloc] initWithCapacity:3];
+    NSMutableArray *sectionTwo = [[NSMutableArray alloc] initWithCapacity:2];
+    
+    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Currency", kTextLabelKey,
+                  [settings currencyString], kDetailTextLabelKey,
+                  nil];
+    [sectionOne addObject:dictionary];
+    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Rounding", kTextLabelKey,
+                  [settings roundingString], kDetailTextLabelKey,
+                  nil];
+    [sectionOne addObject:dictionary];
+    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Tax", kTextLabelKey,
+                  [settings taxString], kDetailTextLabelKey,
+                  nil];
+    [sectionOne addObject:dictionary];
+    
+    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Sound", kTextLabelKey,
+                  [NSNull null], kDetailTextLabelKey,
+                  nil];
+    [sectionTwo addObject:dictionary];
+    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Shake to Clear", kTextLabelKey,
+                  [NSNull null], kDetailTextLabelKey,
+                  nil];
+    [sectionTwo addObject:dictionary];
+    
+    NSArray *data = [[NSArray alloc] initWithObjects:sectionOne, sectionTwo, nil];
+    [sectionOne release];
+    [sectionTwo release];
+    return data;
 }
 
 #pragma mark - Table view data source
@@ -181,6 +182,16 @@ static NSArray *tableDataSource_;
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
     switchView.tag = indexPath.row;
     [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    
+    BOOL onValue;
+    if (indexPath.row == 0) {
+        onValue = settings_.sound;
+    } else {
+        onValue = settings_.shakeToClear;
+    }
+    
+    [switchView setOn:onValue animated:NO];
+    
     cell.accessoryView = switchView;
     [switchView release];
     
@@ -196,13 +207,20 @@ static NSArray *tableDataSource_;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0 || indexPath.row == 1) {
             TableSelectViewController *selectController = [[TableSelectViewController alloc] init];
-            selectController.selectID = kCurrencyControllerTag;
             selectController.delegate = self;
-            selectController.currentIndex = [settings_ currency];
-            selectController.tableData = [Settings currencyTypeArray];
-            selectController.title = @"Currency";
+            if (indexPath.row == 0) {
+                selectController.selectID = kCurrencyControllerTag;
+                selectController.currentIndex = [settings_ currency];
+                selectController.tableData = [Settings currencyTypeArray];
+                selectController.title = @"Currency";
+            } else {
+                selectController.selectID = kRoundingControllerTag;
+                selectController.currentIndex = [settings_ rounding];
+                selectController.tableData = [Settings roundingTypeArray];
+                selectController.title = @"Rounding";
+            }
             [self.navigationController pushViewController:selectController animated:YES];
             [selectController release];
         }
@@ -215,6 +233,8 @@ static NSArray *tableDataSource_;
 {
     if (controller.selectID == kCurrencyControllerTag) {
         settings_.currency = controller.currentIndex;
+    } else {
+        settings_.rounding = controller.currentIndex;
     }
 }
 

@@ -10,7 +10,7 @@
 
 // The order of the arguments must match the order of the enum types
 #define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Franc (Fr)",@"Krone/Krona (Kr)",nil
-#define kRoundingStringsArgs @"No Rounding",@"Round Total",@"Round Total Per Person",@"Round Tip",@"Round Tip Per Person",nil
+#define kRoundingStringsArgs @"No Rounding",@"Round Total",@"Round Total / Person",@"Round Tip",@"Round Tip / Person",nil
 
 #define kDefaultCurrencyKey @"RLTipCalculatorDefaultCurrencyKey"
 #define kDefaultRoundingKey @"RLTipCalculatorDefaultRoundingKey"

@@ -235,7 +235,6 @@ static NSNumberFormatter *digitsFormatter_;
 - (void)removeLastDecimal
 {
     if ([enteredDecimals_ length] > 0) {
-        NSLog(@"Am I executing?");
         NSString *decimals = [enteredDecimals_ substringToIndex:[enteredDecimals_ length] - 1];
         if ([decimals length] == 0) {
             useDecimalSeparator_ = NO;
