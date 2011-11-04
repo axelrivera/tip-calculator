@@ -12,6 +12,7 @@
 #import "Adjustment.h"
 #import "NSDecimalNumber+Check.h"
 #import "AdjustmentBalanceView.h"
+#import "ControllerConstants.h"
 
 @interface AdjustmentsViewController (Private)
 
@@ -22,9 +23,6 @@
 - (void)addAction:(id)sender;
 
 @end
-
-#define kResetAdjustmentsActionSheetTag 100
-#define kDeleteAdjustmentActionSheetTag 101
 
 @implementation AdjustmentsViewController
 

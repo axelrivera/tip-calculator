@@ -16,7 +16,7 @@ static NSNumberFormatter *percentFormatter_;
 
 - (NSDecimalNumberHandler *)currencyBehavior;
 - (NSNumberFormatter *)currencyFormatter;
-- (NSNumberFormatter *)percentFormatter;
+- (NSNumberFormatter *)percentFormatterWithDecimalPlaces:(NSInteger)decimalPlaces;
 
 @end
 
@@ -73,7 +73,12 @@ static NSNumberFormatter *percentFormatter_;
 
 - (NSString *)percentString
 {
-    return [[self percentFormatter] stringFromNumber:self];
+    return [self percentStringWithDecimalPlaces:0];
+}
+
+- (NSString *)percentStringWithDecimalPlaces:(NSInteger)decimalPlaces
+{
+    return [[self percentFormatterWithDecimalPlaces:decimalPlaces] stringFromNumber:self];
 }
 
 #pragma mark - Private Methods
@@ -100,11 +105,12 @@ static NSNumberFormatter *percentFormatter_;
     return currencyFormatter_;
 }
 
-- (NSNumberFormatter *)percentFormatter
+- (NSNumberFormatter *)percentFormatterWithDecimalPlaces:(NSInteger)decimalPlaces
 {
     if (percentFormatter_ == nil) {
         percentFormatter_ = [[NSNumberFormatter alloc] init];
         percentFormatter_.numberStyle = NSNumberFormatterPercentStyle;
+        percentFormatter_.maximumFractionDigits = decimalPlaces;
     }
     return percentFormatter_;
 }

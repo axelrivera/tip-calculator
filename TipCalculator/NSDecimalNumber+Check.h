@@ -20,5 +20,6 @@
 
 - (NSString *)currencyString;
 - (NSString *)percentString;
+- (NSString *)percentStringWithDecimalPlaces:(NSInteger)decimalPlaces;
 
 @end

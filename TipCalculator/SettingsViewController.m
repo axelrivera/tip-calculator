@@ -7,12 +7,7 @@
 //
 
 #import "SettingsViewController.h"
-
-#define kTextLabelKey @"TextLabelKey"
-#define kDetailTextLabelKey @"DetailTextLabelKey"
-
-#define kCurrencyControllerTag 200
-#define kRoundingControllerTag 201
+#import "ControllerConstants.h"
 
 @interface SettingsViewController (Private)
 
@@ -87,10 +82,15 @@
 - (void)switchAction:(id)sender
 {
     UISwitch *switchView = (UISwitch *)sender;
-    if (switchView.tag == 0) {
-        settings_.sound = switchView.on;
-    } else {
-        settings_.shakeToClear = switchView.on;
+    switch (switchView.tag) {
+        case kSettingsControllerSoundTag:
+            settings_.sound = switchView.on;
+            break;
+        case kSettingscontrollerShakeToClearTag:
+            settings_.shakeToClear = switchView.on;
+            break;
+        default:
+            break;
     }
 }
 
@@ -180,17 +180,20 @@
     cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
     
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    switchView.tag = indexPath.row;
     [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     
     BOOL onValue;
+    NSInteger tag;
     if (indexPath.row == 0) {
         onValue = settings_.sound;
+        tag = kSettingsControllerSoundTag;
     } else {
         onValue = settings_.shakeToClear;
+        tag = kSettingscontrollerShakeToClearTag;
     }
     
     [switchView setOn:onValue animated:NO];
+    switchView.tag = tag;
     
     cell.accessoryView = switchView;
     [switchView release];
@@ -212,17 +215,25 @@
             selectController.delegate = self;
             if (indexPath.row == 0) {
                 selectController.selectID = kCurrencyControllerTag;
-                selectController.currentIndex = [settings_ currency];
+                selectController.currentIndex = settings_.currency;
                 selectController.tableData = [Settings currencyTypeArray];
                 selectController.title = @"Currency";
             } else {
                 selectController.selectID = kRoundingControllerTag;
-                selectController.currentIndex = [settings_ rounding];
+                selectController.currentIndex = settings_.rounding;
                 selectController.tableData = [Settings roundingTypeArray];
                 selectController.title = @"Rounding";
             }
             [self.navigationController pushViewController:selectController animated:YES];
             [selectController release];
+        } else {
+            TaxViewController *taxController = [[TaxViewController alloc] init];
+            taxController.delegate = self;
+            taxController.tipOnTax = settings_.tipOnTax;
+            taxController.taxOnAdjustments = settings_.taxOnAdjustments;
+            taxController.title = @"Tax";
+            [self.navigationController pushViewController:taxController animated:YES];
+            [taxController release];
         }
     }
 }
@@ -236,6 +247,12 @@
     } else {
         settings_.rounding = controller.currentIndex;
     }
+}
+
+- (void)taxViewControllerDidFinish:(TaxViewController *)controller
+{
+    settings_.tipOnTax = controller.tipOnTax;
+    settings_.taxOnAdjustments = controller.taxOnAdjustments;
 }
 
 @end
