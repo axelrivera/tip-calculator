@@ -18,6 +18,7 @@
 #define kSettingsControllerSoundTag 300
 #define kSettingscontrollerShakeToClearTag 301
 
+#define kTaxControllerTaxRateDecimalPlaces 3
 #define kTaxControllerTipOnTaxTag 400
 #define kTaxControllerTaxOnAdjustmentsTag 401
 #define kTaxControllerTaxRateTag 402

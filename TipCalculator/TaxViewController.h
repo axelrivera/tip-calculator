@@ -10,7 +10,7 @@
 
 @protocol TaxViewControllerDelegate;
 
-@interface TaxViewController : UITableViewController <UITextFieldDelegate>
+@interface TaxViewController : UITableViewController
 
 @property (nonatomic, assign) id <TaxViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UIPickerView *pickerView;

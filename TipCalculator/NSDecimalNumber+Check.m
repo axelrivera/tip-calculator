@@ -111,6 +111,7 @@ static NSNumberFormatter *percentFormatter_;
         percentFormatter_ = [[NSNumberFormatter alloc] init];
         percentFormatter_.numberStyle = NSNumberFormatterPercentStyle;
         percentFormatter_.maximumFractionDigits = decimalPlaces;
+        percentFormatter_.minimumFractionDigits = 3;
     }
     return percentFormatter_;
 }

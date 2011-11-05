@@ -8,6 +8,7 @@
 
 #import "Settings.h"
 #import "NSDecimalNumber+Check.h"
+#import "ControllerConstants.h"
 
 // The order of the arguments must match the order of the enum types
 #define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Franc (Fr)",@"Krone/Krona (Kr)",nil
@@ -167,7 +168,7 @@ static Settings *sharedSettings_;
 {
     NSString *taxStr = nil;
     if (tipOnTax_ || taxOnAdjustments_) {
-        taxStr = [taxRate_ percentStringWithDecimalPlaces:3];
+        taxStr = [taxRate_ percentStringWithDecimalPlaces:kTaxControllerTaxRateDecimalPlaces];
     } else {
         taxStr = @"No Tax";
     }

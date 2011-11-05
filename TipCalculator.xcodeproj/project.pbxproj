@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		16165364143A350200BA2DCB /* CheckData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16165363143A350200BA2DCB /* CheckData.m */; };
 		1617053D14583CB200621160 /* AdjustmentBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1617053C14583CB200621160 /* AdjustmentBalanceView.m */; };
+		163DA35B14647B400007727F /* RLInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 163DA35A14647B400007727F /* RLInputLabel.m */; };
 		163FBAD41450628800906BB5 /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
 		1647946F1436A1130095C658 /* button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946B1436A1130095C658 /* button_pressed.png */; };
 		164794701436A1130095C658 /* button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946C1436A1130095C658 /* button_pressed@2x.png */; };
@@ -51,6 +52,8 @@
 		16165363143A350200BA2DCB /* CheckData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckData.m; sourceTree = "<group>"; };
 		1617053B14583CB200621160 /* AdjustmentBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentBalanceView.h; sourceTree = "<group>"; };
 		1617053C14583CB200621160 /* AdjustmentBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentBalanceView.m; sourceTree = "<group>"; };
+		163DA35914647B400007727F /* RLInputLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLInputLabel.h; sourceTree = "<group>"; };
+		163DA35A14647B400007727F /* RLInputLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputLabel.m; sourceTree = "<group>"; };
 		163FBAD21450628800906BB5 /* CheckHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckHelper.h; sourceTree = "<group>"; };
 		163FBAD31450628800906BB5 /* CheckHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckHelper.m; sourceTree = "<group>"; };
 		1647946B1436A1130095C658 /* button_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pressed.png; sourceTree = "<group>"; };
@@ -129,6 +132,8 @@
 				166A2FE7145859E200D23870 /* RLNumberPad.m */,
 				1664FCE31459E69F0032CE0D /* InputDisplayView.h */,
 				1664FCE41459E69F0032CE0D /* InputDisplayView.m */,
+				163DA35914647B400007727F /* RLInputLabel.h */,
+				163DA35A14647B400007727F /* RLInputLabel.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -349,6 +354,7 @@
 				166F5D591461B188000742F2 /* Settings.m in Sources */,
 				1689F89A146326B50040A33D /* TableSelectViewController.m in Sources */,
 				167FB5701464236300967E4F /* TaxViewController.m in Sources */,
+				163DA35B14647B400007727F /* RLInputLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

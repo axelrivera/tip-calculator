@@ -231,6 +231,7 @@
             taxController.delegate = self;
             taxController.tipOnTax = settings_.tipOnTax;
             taxController.taxOnAdjustments = settings_.taxOnAdjustments;
+            taxController.taxRate = settings_.taxRate;
             taxController.title = @"Tax";
             [self.navigationController pushViewController:taxController animated:YES];
             [taxController release];
