@@ -19,6 +19,7 @@
 - (NSDecimalNumber *)decimalCurrencyByMultiplyingBy:(NSDecimalNumber *)decimalNumber;
 - (NSDecimalNumber *)decimalCurrencyByDividingBy:(NSDecimalNumber *)decimalNumber;
 - (NSDecimalNumber *)decimalNumberByModuloDivision:(NSDecimalNumber *)decimalNumber;
+- (NSDecimalNumber *)decimalCurrencyByRoundingDown;
 
 - (BOOL)isEqualToZero;
 

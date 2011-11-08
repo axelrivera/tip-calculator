@@ -106,7 +106,22 @@ static NSDictionary *tipPercentagesDictionary;
         NSDecimalNumber *divisor = [[NSDecimalNumber one] decimalNumberByAdding:[settings_ taxRatePercentage]];
         amount = [billAmount_ decimalCurrencyByDividingBy:divisor];
     }
-    return [CheckHelper calculateTipWithAmount:amount andRate:tipPercentage_];
+    
+    NSDecimalNumber *tip = [CheckHelper calculateTipWithAmount:amount andRate:tipPercentage_];
+    
+    if (settings_.rounding == RoundingTypeNone) {
+        return tip;
+    }
+    
+    if (settings_.rounding == RoundingTypeTip) {
+        tip = [tip decimalCurrencyByRoundingDown];
+    } else if (settings_.rounding == RoundingTypeTotal) {
+        NSDecimalNumber *totalBill = [CheckHelper calculateTotalWithAmount:amount andTip:tip];
+        NSDecimalNumber *newTotal = [totalBill decimalCurrencyByRoundingDown];
+        NSDecimalNumber *totalOffset = [totalBill decimalCurrencyBySubtracting:newTotal];
+        tip = [tip decimalCurrencyBySubtracting:totalOffset];
+    }
+    return tip;
 }
 
 - (NSDecimalNumber *)totalToPay

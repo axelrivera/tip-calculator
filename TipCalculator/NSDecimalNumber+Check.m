@@ -9,11 +9,6 @@
 #import "NSDecimalNumber+Check.h"
 #import "Settings.h"
 
-static NSDecimalNumberHandler *currencyBehavior_;
-static NSNumberFormatter *currencyFormatter_;
-static NSNumberFormatter *percentFormatter_;
-static NSNumberFormatter *taxFormatter_;
-
 @interface NSDecimalNumber (Private)
 
 - (NSDecimalNumberHandler *)currencyBehavior;
@@ -58,6 +53,17 @@ static NSNumberFormatter *taxFormatter_;
     return remainder;
 }
 
+- (NSDecimalNumber *)decimalCurrencyByRoundingDown
+{
+    NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
+                                                                                              scale:0
+                                                                                   raiseOnExactness:NO
+                                                                                    raiseOnOverflow:NO
+                                                                                   raiseOnUnderflow:NO
+                                                                                raiseOnDivideByZero:NO];
+    return [self decimalNumberByRoundingAccordingToBehavior:behavior];
+}
+
 - (BOOL)isEqualToZero
 {
     if ([self compare:[NSDecimalNumber zero]] == NSOrderedSame) {
@@ -85,24 +91,19 @@ static NSNumberFormatter *taxFormatter_;
 
 - (NSDecimalNumberHandler *)currencyBehavior
 {
-    if (currencyBehavior_ == nil) {
-        currencyBehavior_ = [[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundUp
-                                                                           scale:2
-                                                                raiseOnExactness:NO
-                                                                 raiseOnOverflow:NO
-                                                                raiseOnUnderflow:NO
-                                                             raiseOnDivideByZero:NO];
-    }
-    return currencyBehavior_;
+    return [[[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundUp
+                                                           scale:2
+                                                raiseOnExactness:NO
+                                                 raiseOnOverflow:NO
+                                                raiseOnUnderflow:NO
+                                             raiseOnDivideByZero:NO] autorelease];
 }
 
 #pragma mark - Class Methods
 
 + (NSNumberFormatter *)currencyFormatter
 {
-    if (currencyFormatter_ == nil) {
-        currencyFormatter_ = [[NSNumberFormatter alloc] init];
-    }
+    NSNumberFormatter *currencyFormatter_ = [[[NSNumberFormatter alloc] init] autorelease];
     currencyFormatter_.numberStyle = NSNumberFormatterCurrencyStyle;
     currencyFormatter_.locale = [[Settings sharedSettings] currentLocale];
     return currencyFormatter_;
@@ -110,23 +111,19 @@ static NSNumberFormatter *taxFormatter_;
 
 + (NSNumberFormatter *)percentFormatter
 {
-    if (percentFormatter_ == nil) {
-        percentFormatter_ = [[NSNumberFormatter alloc] init];
-        percentFormatter_.numberStyle = NSNumberFormatterPercentStyle;
-    }
+    NSNumberFormatter *percentFormatter_ = [[[NSNumberFormatter alloc] init] autorelease];
+    percentFormatter_.numberStyle = NSNumberFormatterPercentStyle;
     return percentFormatter_;
 }
 
 + (NSNumberFormatter *)taxFormatter
 {
-    if (taxFormatter_ == nil) {
-        taxFormatter_ = [[NSNumberFormatter alloc] init];
-        taxFormatter_.numberStyle = NSNumberFormatterDecimalStyle;
-        [taxFormatter_ setPositiveFormat:@"#0.00'%'"];
-        [taxFormatter_ setNegativeFormat:@"-#0.00'%'"];
-        [taxFormatter_ setMinimumFractionDigits:2];
-        [taxFormatter_ setMaximumFractionDigits:2];
-    }
+    NSNumberFormatter *taxFormatter_ = [[[NSNumberFormatter alloc] init] autorelease];
+    taxFormatter_.numberStyle = NSNumberFormatterDecimalStyle;
+    [taxFormatter_ setPositiveFormat:@"#0.00'%'"];
+    [taxFormatter_ setNegativeFormat:@"-#0.00'%'"];
+    [taxFormatter_ setMinimumFractionDigits:2];
+    [taxFormatter_ setMaximumFractionDigits:2];
     return taxFormatter_;
 }
 

@@ -8,30 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-#define kNumberOfCurrencyItems 6
 typedef enum {
-    CurrencyTypeAutomatic = 0,
-    CurrencyTypeDollar = 1,
-    CurrencyTypePound = 2,
-    CurrencyTypeEuro = 3,
-    CurrencyTypeFranc = 4,
-    CurrencyTypeKrone = 5
+    CurrencyTypeAutomatic,
+    CurrencyTypeDollar,
+    CurrencyTypePound,
+    CurrencyTypeEuro,
+    CurrencyTypeFranc,
+    CurrencyTypeKrone
 } CurrencyType;
 
-#define kNumberOfRoundingItems 5
 typedef enum {
-    RoundingTypeNone = 0,
-    RoundingTypeTotal = 1,
-    RoundingTypeTotalPerPerson = 2,
-    RoundingTypeTip = 3,
-    RoundingTypeTipPerPerson = 4
+    RoundingTypeNone,
+    RoundingTypeTotal,
+    RoundingTypeTip,
 } RoundingType;
-
-typedef enum {
-    CurrencySymbolPositionNone = 0,
-    CurrencySymbolPositionLeft = 1,
-    CurrencySymbolPositionRight = 2
-} CurrencySymbolPosition;
 
 @interface Settings : NSObject
 
@@ -50,6 +40,11 @@ typedef enum {
 
 + (NSArray *)currencyTypeArray;
 + (NSArray *)roundingTypeArray;
+
++ (CurrencyType)currencyTypeForKey:(NSString *)key;
++ (NSString *)keyForCurrencyType:(CurrencyType)currencyType;
++ (RoundingType)roundingTypeForKey:(NSString *)key;
++ (NSString *)keyForRoundingType:(RoundingType)roundingType;
 
 - (NSString *)currencyString;
 - (NSString *)roundingString;
