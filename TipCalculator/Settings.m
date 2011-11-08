@@ -10,6 +10,8 @@
 #import "NSDecimalNumber+Check.h"
 #import "ControllerConstants.h"
 
+#define kTaxRateDecimalPlacesFactor -2
+
 // The order of the arguments must match the order of the enum types
 #define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Swiss Franc (CHF)",@"Krone/Krona (Kr)",nil
 #define kRoundingStringsArgs @"No Rounding",@"Round Total",@"Round Total / Person",@"Round Tip",@"Round Tip / Person",nil
@@ -175,35 +177,9 @@ static Settings *sharedSettings_;
     return taxStr; 
 }
 
-- (NSString *)currencySymbolString
+- (NSDecimalNumber *)taxRatePercentage
 {
-    NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
-    [userFormatter setLocale:[NSLocale currentLocale]];
-    NSString *symbol = nil;
-    switch (currency_) {
-        case CurrencyTypeAutomatic:
-            symbol = userFormatter.currencySymbol;
-            break;
-        case CurrencyTypeDollar:
-            symbol = @"$";
-            break;
-        case CurrencyTypePound:
-            symbol = @"£";
-            break;
-        case CurrencyTypeEuro:
-            symbol = @"€";
-            break;
-        case CurrencyTypeFranc:
-            symbol = @"Fr";
-            break;
-        case CurrencyTypeKrone:
-            symbol = @"Kr";
-            break;
-        default:
-            break;
-    }
-    [userFormatter release];
-    return symbol;
+    return [taxRate_ decimalNumberByMultiplyingByPowerOf10:kTaxRateDecimalPlacesFactor]; 
 }
 
 - (NSLocale *)currentLocale

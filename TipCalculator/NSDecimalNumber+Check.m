@@ -86,7 +86,7 @@ static NSNumberFormatter *taxFormatter_;
 - (NSDecimalNumberHandler *)currencyBehavior
 {
     if (currencyBehavior_ == nil) {
-        currencyBehavior_ = [[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundDown
+        currencyBehavior_ = [[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundUp
                                                                            scale:2
                                                                 raiseOnExactness:NO
                                                                  raiseOnOverflow:NO

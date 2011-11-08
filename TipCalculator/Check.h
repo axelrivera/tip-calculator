@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "Adjustment.h"
+#import "Settings.h"
 
 @interface Check : NSObject
 {
+    Settings *settings_;
     NSMutableArray *splitAdjustments_;
 }
 

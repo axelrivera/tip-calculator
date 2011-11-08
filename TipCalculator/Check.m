@@ -79,6 +79,7 @@ static NSDictionary *tipPercentagesDictionary;
 {
     self = [super init];
     if (self) {
+        settings_ = [Settings sharedSettings];
         self.numberOfSplits = [NSDecimalNumber decimalNumberWithString:kDefaultNumberOfSplits];
         self.tipPercentage = [NSDecimalNumber decimalNumberWithString:kDefaultTipPercentage];
         self.billAmount = [NSDecimalNumber decimalNumberWithString:kDefaultBillAmount];
@@ -100,7 +101,12 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (NSDecimalNumber *)totalTip
 {
-    return [CheckHelper calculateTipWithAmount:billAmount_ andRate:tipPercentage_];
+    NSDecimalNumber *amount = billAmount_;
+    if (settings_.tipOnTax) {
+        NSDecimalNumber *divisor = [[NSDecimalNumber one] decimalNumberByAdding:[settings_ taxRatePercentage]];
+        amount = [billAmount_ decimalCurrencyByDividingBy:divisor];
+    }
+    return [CheckHelper calculateTipWithAmount:amount andRate:tipPercentage_];
 }
 
 - (NSDecimalNumber *)totalToPay
