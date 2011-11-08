@@ -228,8 +228,7 @@
 
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments
 {
-    CGFloat total = [check_.billAmount floatValue];
-    if (total > 0.00) {
+    if (![check_.billAmount isEqualToZero]) {
         checkSummaryView_.hidden = NO;
         totalTipLabel_.text = [[check_ totalTip] currencyString];
         totalToPayLabel_.text = [[check_ totalToPay] currencyString];
@@ -253,6 +252,7 @@
 - (void)settingsViewControllerDidFinish:(SettingsViewController *)controller
 {
     [controller dismissModalViewControllerAnimated:YES];
+    [self reloadCheckSummaryAndResetAdjustments:NO];
 }
 
 #pragma mark - UIPickerView Delegate Methods

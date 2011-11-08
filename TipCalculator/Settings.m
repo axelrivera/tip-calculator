@@ -11,7 +11,7 @@
 #import "ControllerConstants.h"
 
 // The order of the arguments must match the order of the enum types
-#define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Franc (Fr)",@"Krone/Krona (Kr)",nil
+#define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Swiss Franc (CHF)",@"Krone/Krona (Kr)",nil
 #define kRoundingStringsArgs @"No Rounding",@"Round Total",@"Round Total / Person",@"Round Tip",@"Round Tip / Person",nil
 
 #define kDefaultCurrencyKey @"RLTipCalculatorDefaultCurrencyKey"
@@ -168,11 +168,70 @@ static Settings *sharedSettings_;
 {
     NSString *taxStr = nil;
     if (tipOnTax_ || taxOnAdjustments_) {
-        taxStr = [taxRate_ percentStringWithDecimalPlaces:kTaxControllerTaxRateDecimalPlaces];
+        taxStr = [taxRate_ taxString];
     } else {
         taxStr = @"No Tax";
     }
     return taxStr; 
+}
+
+- (NSString *)currencySymbolString
+{
+    NSNumberFormatter *userFormatter = [[NSNumberFormatter alloc] init];
+    [userFormatter setLocale:[NSLocale currentLocale]];
+    NSString *symbol = nil;
+    switch (currency_) {
+        case CurrencyTypeAutomatic:
+            symbol = userFormatter.currencySymbol;
+            break;
+        case CurrencyTypeDollar:
+            symbol = @"$";
+            break;
+        case CurrencyTypePound:
+            symbol = @"£";
+            break;
+        case CurrencyTypeEuro:
+            symbol = @"€";
+            break;
+        case CurrencyTypeFranc:
+            symbol = @"Fr";
+            break;
+        case CurrencyTypeKrone:
+            symbol = @"Kr";
+            break;
+        default:
+            break;
+    }
+    [userFormatter release];
+    return symbol;
+}
+
+- (NSLocale *)currentLocale
+{
+    NSLocale *locale = nil;
+    switch (currency_) {
+        case CurrencyTypeAutomatic:
+            locale = [NSLocale autoupdatingCurrentLocale];
+            break;
+        case CurrencyTypeDollar:
+            locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease];
+            break;
+        case CurrencyTypePound:
+            locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"] autorelease];
+            break;
+        case CurrencyTypeEuro:
+            locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"es_ES_EUR"] autorelease];
+            break;
+        case CurrencyTypeFranc:
+            locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"ge_CH"] autorelease];
+            break;
+        case CurrencyTypeKrone:
+            locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"da_DK_DKK"] autorelease];
+            break;
+        default:
+            break;
+    }
+    return locale;
 }
 
 #pragma mark - Custom Class Methods

@@ -7,16 +7,16 @@
 //
 
 #import "NSDecimalNumber+Check.h"
+#import "Settings.h"
 
 static NSDecimalNumberHandler *currencyBehavior_;
 static NSNumberFormatter *currencyFormatter_;
 static NSNumberFormatter *percentFormatter_;
+static NSNumberFormatter *taxFormatter_;
 
 @interface NSDecimalNumber (Private)
 
 - (NSDecimalNumberHandler *)currencyBehavior;
-- (NSNumberFormatter *)currencyFormatter;
-- (NSNumberFormatter *)percentFormatterWithDecimalPlaces:(NSInteger)decimalPlaces;
 
 @end
 
@@ -68,17 +68,17 @@ static NSNumberFormatter *percentFormatter_;
 
 - (NSString *)currencyString
 {
-    return [[self currencyFormatter] stringFromNumber:self];
+    return [[[self class] currencyFormatter] stringFromNumber:self];
 }
 
 - (NSString *)percentString
 {
-    return [self percentStringWithDecimalPlaces:0];
+    return [[[self class] percentFormatter] stringFromNumber:self];
 }
 
-- (NSString *)percentStringWithDecimalPlaces:(NSInteger)decimalPlaces
+- (NSString *)taxString
 {
-    return [[self percentFormatterWithDecimalPlaces:decimalPlaces] stringFromNumber:self];
+    return [[[self class] taxFormatter] stringFromNumber:self];
 }
 
 #pragma mark - Private Methods
@@ -96,24 +96,38 @@ static NSNumberFormatter *percentFormatter_;
     return currencyBehavior_;
 }
 
-- (NSNumberFormatter *)currencyFormatter
+#pragma mark - Class Methods
+
++ (NSNumberFormatter *)currencyFormatter
 {
     if (currencyFormatter_ == nil) {
         currencyFormatter_ = [[NSNumberFormatter alloc] init];
-        currencyFormatter_.numberStyle = NSNumberFormatterCurrencyStyle;
     }
+    currencyFormatter_.numberStyle = NSNumberFormatterCurrencyStyle;
+    currencyFormatter_.locale = [[Settings sharedSettings] currentLocale];
     return currencyFormatter_;
 }
 
-- (NSNumberFormatter *)percentFormatterWithDecimalPlaces:(NSInteger)decimalPlaces
++ (NSNumberFormatter *)percentFormatter
 {
     if (percentFormatter_ == nil) {
         percentFormatter_ = [[NSNumberFormatter alloc] init];
         percentFormatter_.numberStyle = NSNumberFormatterPercentStyle;
-        percentFormatter_.maximumFractionDigits = decimalPlaces;
-        percentFormatter_.minimumFractionDigits = 3;
     }
     return percentFormatter_;
+}
+
++ (NSNumberFormatter *)taxFormatter
+{
+    if (taxFormatter_ == nil) {
+        taxFormatter_ = [[NSNumberFormatter alloc] init];
+        taxFormatter_.numberStyle = NSNumberFormatterDecimalStyle;
+        [taxFormatter_ setPositiveFormat:@"#0.00'%'"];
+        [taxFormatter_ setNegativeFormat:@"-#0.00'%'"];
+        [taxFormatter_ setMinimumFractionDigits:2];
+        [taxFormatter_ setMaximumFractionDigits:2];
+    }
+    return taxFormatter_;
 }
 
 @end

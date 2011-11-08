@@ -254,6 +254,7 @@
 {
     settings_.tipOnTax = controller.tipOnTax;
     settings_.taxOnAdjustments = controller.taxOnAdjustments;
+    settings_.taxRate = controller.taxRate;
 }
 
 @end

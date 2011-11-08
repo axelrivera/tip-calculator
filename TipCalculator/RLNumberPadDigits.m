@@ -160,22 +160,30 @@ static NSNumberFormatter *digitsFormatter_;
 
 - (NSString *)stringValue
 {
+    NSNumberFormatter *formatter = [[NSDecimalNumber currencyFormatter] copy];
+    
     NSString *dollarsStr = @"0";
     if (![enteredDigits_ isEqualToString:@""]) {
         dollarsStr = enteredDigits_;
     }
-    NSDecimalNumber *dollars = [NSDecimalNumber decimalNumberWithString:dollarsStr];
     NSString *centsStr  = enteredDecimals_;
     
-    NSMutableString *string = [NSMutableString stringWithFormat:@"%@%@",
-                               [RLNumberPadDigits defaultCurrencySymbol],
-                               [[RLNumberPadDigits digitsFormatter] stringFromNumber:dollars]];
+    NSString *string = [[NSArray arrayWithObjects:dollarsStr, centsStr, nil] componentsJoinedByString:@"."];
+    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:string];
     
-    if (useDecimalSeparator_) {
-        [string appendFormat:@"%@%@", [RLNumberPadDigits defaultDecimalSeparator], centsStr];
+    formatter.minimumFractionDigits = [centsStr length];
+    formatter.maximumFractionDigits = [centsStr length];
+    
+    if ([centsStr length] == 0 && useDecimalSeparator_) {
+        formatter.alwaysShowsDecimalSeparator = YES;
+    } else {
+        formatter.alwaysShowsDecimalSeparator = NO;
     }
     
-    return string;
+    NSString *decimalStr = [formatter stringFromNumber:decimalNumber];
+    [formatter release];
+    
+    return decimalStr;
 }
 
 - (NSString *)description

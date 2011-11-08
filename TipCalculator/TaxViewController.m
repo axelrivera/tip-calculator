@@ -26,6 +26,7 @@ static NSArray *decimalRange_;
 - (NSString *)stringFromPickerView:(UIPickerView *)pickerView;
 
 - (void)setPickerViewWithDecimalNumber:(NSDecimalNumber *)decimalNumber animated:(BOOL)animated;
+- (void)loadPickerView;
 - (void)dismissPickerView;
 
 @end
@@ -89,7 +90,9 @@ static NSArray *decimalRange_;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
     [self setPickerViewWithDecimalNumber:taxRate_ animated:NO];
+    [self loadPickerView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -154,7 +157,8 @@ static NSArray *decimalRange_;
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     RLInputLabel *inputLabel = (RLInputLabel *)[cell viewWithTag:kTaxControllerTaxRateTag];
-    inputLabel.text = [taxRate_ stringValue];
+    NSLog(@"Tax Rate: %@", taxRate_);
+    inputLabel.text = [taxRate_ taxString];
 }
 
 - (NSString *)stringFromPickerView:(UIPickerView *)pickerView
@@ -165,7 +169,7 @@ static NSArray *decimalRange_;
             [string appendString:[[TaxViewController integerRange] objectAtIndex:[pickerView selectedRowInComponent:i]]];
         } else if (i == 1) {
             [string appendString:@"."];
-        } else if (i >= 2 && i <= 4) {
+        } else if (i >= 2 && i <= 3) {
             [string appendString:[[TaxViewController decimalRange] objectAtIndex:[pickerView selectedRowInComponent:i]]];
         }
     }
@@ -174,14 +178,22 @@ static NSArray *decimalRange_;
 
 - (void)setPickerViewWithDecimalNumber:(NSDecimalNumber *)decimalNumber animated:(BOOL)animated
 {
-    NSString *taxStr = [decimalNumber percentStringWithDecimalPlaces:kTaxControllerTaxRateDecimalPlaces];
+    NSString *taxStr = [decimalNumber taxString];
     NSArray *components = [taxStr componentsSeparatedByString:@"."];
     NSString *integerStr = [components objectAtIndex:0];
     NSString *decimalStr = [components objectAtIndex:1];
     [pickerView_ selectRow:[integerStr integerValue] inComponent:0 animated:animated];
     [pickerView_ selectRow:[[decimalStr substringWithRange:NSMakeRange(0, 1)] integerValue] inComponent:2 animated:animated];
     [pickerView_ selectRow:[[decimalStr substringWithRange:NSMakeRange(1, 1)] integerValue] inComponent:3 animated:animated];
-    [pickerView_ selectRow:[[decimalStr substringWithRange:NSMakeRange(2, 1)] integerValue] inComponent:4 animated:animated];
+}
+
+- (void)loadPickerView
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    RLInputLabel *inputLabel = (RLInputLabel *)[cell viewWithTag:kTaxControllerTaxRateTag];
+    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [inputLabel becomeFirstResponder];
 }
 
 - (void)dismissPickerView
@@ -243,7 +255,7 @@ static NSArray *decimalRange_;
         inputLabel.textColor = [UIColor darkGrayColor];
         inputLabel.backgroundColor = [UIColor clearColor];
         inputLabel.highlightedTextColor = [UIColor whiteColor];
-        inputLabel.text = [taxRate_ percentStringWithDecimalPlaces:kTaxControllerTaxRateDecimalPlaces];
+        inputLabel.text = [taxRate_ taxString];
         accessoryView = inputLabel;
     }
     
@@ -261,33 +273,16 @@ static NSArray *decimalRange_;
 
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 2) {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        RLInputLabel *inputLabel = (RLInputLabel *)[cell viewWithTag:kTaxControllerTaxRateTag];
-        if ([inputLabel isFirstResponder]) {
-            [self dismissPickerView];
-        } else {
-            [inputLabel becomeFirstResponder];
-        }
-    }
-}
-
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
-        return nil;
-    }
-    return indexPath;
+    return nil;
 }
 
 #pragma mark - UIPickerView Data Source
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 6;
+    return 5;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
@@ -302,10 +297,9 @@ static NSArray *decimalRange_;
             break;
         case 2:
         case 3:
-        case 4:
             rows = [[TaxViewController decimalRange] count];
             break;
-        case 5:
+        case 4:
             rows = 1;
             break;
         default:
@@ -328,10 +322,9 @@ static NSArray *decimalRange_;
             break;
         case 2:
         case 3:
-        case 4:
             title = [[TaxViewController decimalRange] objectAtIndex:row];
             break;
-        case 5:
+        case 4:
             title = @"%";
             break;
         default:
@@ -352,10 +345,9 @@ static NSArray *decimalRange_;
             break;
         case 2:
         case 3:
-        case 4:
-            width = 44.0;
+            width = 48.0;
             break;
-        case 5:
+        case 4:
             width = 40.0;
             break;
         default:

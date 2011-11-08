@@ -27,6 +27,12 @@ typedef enum {
     RoundingTypeTipPerPerson = 4
 } RoundingType;
 
+typedef enum {
+    CurrencySymbolPositionNone = 0,
+    CurrencySymbolPositionLeft = 1,
+    CurrencySymbolPositionRight = 2
+} CurrencySymbolPosition;
+
 @interface Settings : NSObject
 
 @property (nonatomic, assign) CurrencyType currency;
@@ -48,5 +54,8 @@ typedef enum {
 - (NSString *)currencyString;
 - (NSString *)roundingString;
 - (NSString *)taxString;
+
+- (NSString *)currencySymbolString;
+- (NSLocale *)currentLocale;
 
 @end

@@ -10,6 +10,10 @@
 
 @interface NSDecimalNumber (Check)
 
++ (NSNumberFormatter *)currencyFormatter;
++ (NSNumberFormatter *)percentFormatter;
++ (NSNumberFormatter *)taxFormatter;
+
 - (NSDecimalNumber *)decimalCurrencyByAdding:(NSDecimalNumber *)decimalNumber;
 - (NSDecimalNumber *)decimalCurrencyBySubtracting:(NSDecimalNumber *)decimalNumber;
 - (NSDecimalNumber *)decimalCurrencyByMultiplyingBy:(NSDecimalNumber *)decimalNumber;
@@ -20,6 +24,6 @@
 
 - (NSString *)currencyString;
 - (NSString *)percentString;
-- (NSString *)percentStringWithDecimalPlaces:(NSInteger)decimalPlaces;
+- (NSString *)taxString;
 
 @end
