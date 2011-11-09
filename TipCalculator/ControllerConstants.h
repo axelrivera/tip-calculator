@@ -14,13 +14,9 @@
 
 #define kCurrencyControllerTag 200
 #define kRoundingControllerTag 201
+#define kTipOnTaxControllerTag 202
 
-#define kSettingsControllerTipOnTaxTag 300
-#define kSettingsControllerTaxOnAdjustmentsTag 301
-#define kSettingsControllerSoundTag 302
-#define kSettingsControllerShakeToClearTag 303
+#define kSettingsControllerSoundTag 300
+#define kSettingsControllerShakeToClearTag 301
 
-#define kTaxControllerTipOnTaxTag 400
-#define kTaxControllerTaxOnAdjustmentsTag 401
-
-#define kTaxControllerTaxRateTag 402
+#define kTaxControllerTaxRateTag 400

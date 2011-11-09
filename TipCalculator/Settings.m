@@ -30,7 +30,6 @@
 #define kSettingsCurrencyKey @"RLTipCalculatorCurrencyKey"
 #define kSettingsRoundingKey @"RLTipCalculatorRoundingKey"
 #define kSettingsTipOnTaxKey @"RLTipCalculatorTipOnTaxKey"
-#define kSettingsTaxOnAdjustmentsKey @"RLTipCalculatorTaxOnAdjustmentsKey"
 #define kSettingsSoundKey @"RLTipCalculatorSoundKey"
 #define kSettingsShakeToClearKey @"RLTipCalculatorShakeToClearKey"
 #define kSettingsTaxRateKey @"RLTipCalculatorTaxRateKey"
@@ -40,8 +39,7 @@ static NSArray *roundingArray_;
 
 CurrencyType const kDefaultCurrency = CurrencyTypeAutomatic;
 RoundingType const kDefaultRounding = RoundingTypeNone;
-BOOL const kDefaultTipOnTax = NO;
-BOOL const kDefaultTaxOnAdjustments = NO;
+BOOL const kDefaultTipOnTax = YES;
 BOOL const kDefaultSound = YES;
 BOOL const kDefaultShakeToClear = YES;
 NSString * const kDefaultTaxRate = @"0.0";
@@ -53,7 +51,6 @@ static Settings *sharedSettings_;
 @synthesize currency = currency_;
 @synthesize rounding = rounding_;
 @synthesize tipOnTax = tipOnTax_;
-@synthesize taxOnAdjustments = taxOnAdjustments_;
 @synthesize sound = sound_;
 @synthesize shakeToClear = shakeToClear_;
 @synthesize taxRate = taxRate_;
@@ -79,12 +76,6 @@ static Settings *sharedSettings_;
             tipOnTax = [NSNumber numberWithBool:kDefaultTipOnTax];
         }
         self.tipOnTax = [tipOnTax boolValue];
-        
-        NSNumber *taxOnAdjustments = [[NSUserDefaults standardUserDefaults] objectForKey:kSettingsTaxOnAdjustmentsKey];
-        if (taxOnAdjustments == nil) {
-            taxOnAdjustments = [NSNumber numberWithBool:kDefaultTaxOnAdjustments];
-        }
-        self.taxOnAdjustments = [taxOnAdjustments boolValue];
         
         NSNumber *sound = [[NSUserDefaults standardUserDefaults] objectForKey:kSettingsSoundKey];
         if (sound == nil) {
@@ -136,13 +127,6 @@ static Settings *sharedSettings_;
     [[NSUserDefaults standardUserDefaults] synchronize];    
 }
 
-- (void)setTaxOnAdjustments:(BOOL)taxOnAdjustments
-{
-    taxOnAdjustments_ = taxOnAdjustments;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:taxOnAdjustments] forKey:kSettingsTaxOnAdjustmentsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];    
-}
-
 - (void)setSound:(BOOL)sound
 {
     sound_ = sound;
@@ -177,33 +161,20 @@ static Settings *sharedSettings_;
     return [Settings stringForRoundingType:rounding_];
 }
 
-- (NSString *)taxOptionsString
+- (NSString *)tipOnTaxString
 {
     NSString *string = nil;
-    if (tipOnTax_ || taxOnAdjustments_) {
-        NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
-        if (tipOnTax_) {
-            [array addObject:@"Tip"];
-        }
-        if (taxOnAdjustments_) {
-            [array addObject:@"Adjustments"];
-        }
-        string = [array componentsJoinedByString:@", "];
+    if (tipOnTax_) {
+        string = @"Yes";
     } else {
-        string = @"Disabled";
+        string = @"No";
     }
     return string;
 }
 
 - (NSString *)taxString
 {
-    NSString *taxStr = nil;
-    if (tipOnTax_ || taxOnAdjustments_) {
-        taxStr = [taxRate_ taxString];
-    } else {
-        taxStr = @"No Tax";
-    }
-    return taxStr; 
+    return [taxRate_ taxString]; 
 }
 
 - (NSDecimalNumber *)taxRatePercentage

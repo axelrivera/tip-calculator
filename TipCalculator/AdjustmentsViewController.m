@@ -181,7 +181,10 @@
 
 - (void)addAction:(id)sender
 {
-    Adjustment *adjustment = [[Adjustment alloc] initWithAmount:currentAdjustment_ tipRate:check_.tipPercentage];
+    Settings *settings = [Settings sharedSettings];
+    NSDecimalNumber *taxRate = [[NSDecimalNumber one] decimalNumberByAdding:[settings taxRatePercentage]];
+    NSDecimalNumber *newAdjustment = [currentAdjustment_ decimalCurrencyByMultiplyingBy:taxRate];
+    Adjustment *adjustment = [[Adjustment alloc] initWithAmount:newAdjustment tipRate:check_.tipPercentage];
     if ([check_ canAddAdjustment:[adjustment total]]) {
         [check_ addSplitAdjustment:adjustment];
         [adjustmentsTable_ beginUpdates];

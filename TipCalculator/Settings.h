@@ -28,7 +28,6 @@ typedef enum {
 @property (nonatomic, assign) CurrencyType currency;
 @property (nonatomic, assign) RoundingType rounding;
 @property (nonatomic, assign) BOOL tipOnTax;
-@property (nonatomic, assign) BOOL taxOnAdjustments;
 @property (nonatomic, assign) BOOL sound;
 @property (nonatomic, assign) BOOL shakeToClear;
 @property (nonatomic, retain) NSDecimalNumber *taxRate;
@@ -48,7 +47,7 @@ typedef enum {
 
 - (NSString *)currencyString;
 - (NSString *)roundingString;
-- (NSString *)taxOptionsString;
+- (NSString *)tipOnTaxString;
 - (NSString *)taxString;
 
 - (NSDecimalNumber *)taxRatePercentage;

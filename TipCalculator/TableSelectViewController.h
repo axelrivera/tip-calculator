@@ -16,6 +16,8 @@
 @property (nonatomic, assign) NSInteger selectID;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, retain) NSArray *tableData;
+@property (nonatomic, copy) NSString *tableHeaderTitle;
+@property (nonatomic, copy) NSString *tableFooterTitle;
 
 @end
 

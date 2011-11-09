@@ -8,12 +8,34 @@
 
 #import "CheckHelper.h"
 #import "NSDecimalNumber+Check.h"
+#import "Settings.h"
 
 @implementation CheckHelper
 
 + (NSDecimalNumber *)calculateTipWithAmount:(NSDecimalNumber *)amount andRate:(NSDecimalNumber *)rate
 {
-    NSDecimalNumber *tip = [amount decimalCurrencyByMultiplyingBy:rate];
+    Settings *settings = [Settings sharedSettings];
+    NSDecimalNumber *newAmount = amount;
+    if (!settings.tipOnTax) {
+        NSDecimalNumber *divisor = [[NSDecimalNumber one] decimalNumberByAdding:[settings taxRatePercentage]];
+        newAmount = [newAmount decimalCurrencyByDividingBy:divisor];
+    }
+    
+    NSDecimalNumber *tip = [newAmount decimalCurrencyByMultiplyingBy:rate];
+    //NSDecimalNumber *tip = [CheckHelper calculateTipWithAmount:amount andRate:rate];
+    
+    if (settings.rounding == RoundingTypeNone) {
+        return tip;
+    }
+    
+    if (settings.rounding == RoundingTypeTip) {
+        tip = [tip decimalCurrencyByRoundingDown];
+    } else if (settings.rounding == RoundingTypeTotal) {
+        NSDecimalNumber *totalBill = [CheckHelper calculateTotalWithAmount:amount andTip:tip];
+        NSDecimalNumber *newTotal = [totalBill decimalCurrencyByRoundingDown];
+        NSDecimalNumber *totalOffset = [totalBill decimalCurrencyBySubtracting:newTotal];
+        tip = [tip decimalCurrencyBySubtracting:totalOffset];
+    }
     return tip;
 }
 

@@ -14,6 +14,8 @@
 @synthesize selectID = selectID_;
 @synthesize currentIndex = currentIndex_;
 @synthesize tableData = tableData_;
+@synthesize tableHeaderTitle = tableHeaderTitle_;
+@synthesize tableFooterTitle = tableFooterTitle_;
 
 - (id)init
 {
@@ -21,6 +23,8 @@
     if (self) {
         selectID_ = 0;
         currentIndex_ = 0;
+        tableHeaderTitle_ = nil;
+        tableFooterTitle_ = nil;
     }
     return self;
 }
@@ -37,6 +41,8 @@
 {
     delegate_ = nil;
     [tableData_ release];
+    [tableHeaderTitle_ release];
+    [tableFooterTitle_ release];
     [super dealloc];
 }
 
@@ -111,6 +117,16 @@
 	if (oldCell.accessoryType == UITableViewCellAccessoryCheckmark) {
 		oldCell.accessoryType = UITableViewCellAccessoryNone;
 	}
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return tableHeaderTitle_;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return tableFooterTitle_;
 }
 
 @end

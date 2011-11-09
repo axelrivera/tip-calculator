@@ -67,7 +67,7 @@ static NSArray *decimalRange_;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.sectionHeaderHeight = 70.0;
+    self.tableView.sectionHeaderHeight = 30.0;
 }
 
 - (void)viewDidUnload
@@ -132,7 +132,6 @@ static NSArray *decimalRange_;
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     RLInputLabel *inputLabel = (RLInputLabel *)[cell viewWithTag:kTaxControllerTaxRateTag];
-    NSLog(@"Tax Rate: %@", taxRate_);
     inputLabel.text = [taxRate_ taxString];
 }
 
@@ -223,6 +222,13 @@ static NSArray *decimalRange_;
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    NSString *title = @"The tax rate is used to automatically add the tax amount to split adjustments. "
+                      @"It's also used to calculate the tax amount when \"Tip on Tax\" is set to \"No\".";
+    return title;
 }
 
 #pragma mark - UIPickerView Data Source

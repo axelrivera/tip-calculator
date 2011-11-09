@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		16165364143A350200BA2DCB /* CheckData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16165363143A350200BA2DCB /* CheckData.m */; };
 		1617053D14583CB200621160 /* AdjustmentBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1617053C14583CB200621160 /* AdjustmentBalanceView.m */; };
-		1626F0B1146AE33200F70C14 /* TaxOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1626F0AF146AE33100F70C14 /* TaxOptionsViewController.m */; };
-		1626F0B2146AE33200F70C14 /* TaxOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1626F0B0146AE33200F70C14 /* TaxOptionsViewController.xib */; };
 		163DA35B14647B400007727F /* RLInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 163DA35A14647B400007727F /* RLInputLabel.m */; };
 		163FBAD41450628800906BB5 /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
 		1647946F1436A1130095C658 /* button_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946B1436A1130095C658 /* button_pressed.png */; };
@@ -54,9 +52,6 @@
 		16165363143A350200BA2DCB /* CheckData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckData.m; sourceTree = "<group>"; };
 		1617053B14583CB200621160 /* AdjustmentBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentBalanceView.h; sourceTree = "<group>"; };
 		1617053C14583CB200621160 /* AdjustmentBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustmentBalanceView.m; sourceTree = "<group>"; };
-		1626F0AE146AE33100F70C14 /* TaxOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxOptionsViewController.h; sourceTree = "<group>"; };
-		1626F0AF146AE33100F70C14 /* TaxOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxOptionsViewController.m; sourceTree = "<group>"; };
-		1626F0B0146AE33200F70C14 /* TaxOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaxOptionsViewController.xib; sourceTree = "<group>"; };
 		163DA35914647B400007727F /* RLInputLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLInputLabel.h; sourceTree = "<group>"; };
 		163DA35A14647B400007727F /* RLInputLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputLabel.m; sourceTree = "<group>"; };
 		163FBAD21450628800906BB5 /* CheckHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckHelper.h; sourceTree = "<group>"; };
@@ -221,7 +216,6 @@
 				1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */,
 				16E6AEB91435EB5800D47637 /* SettingsViewController.xib */,
 				1689F899146326B50040A33D /* TableSelectViewController.xib */,
-				1626F0B0146AE33200F70C14 /* TaxOptionsViewController.xib */,
 				167FB56F1464236300967E4F /* TaxViewController.xib */,
 			);
 			name = Views;
@@ -239,8 +233,6 @@
 				16E6AEB81435EB5800D47637 /* SettingsViewController.m */,
 				1689F897146326B50040A33D /* TableSelectViewController.h */,
 				1689F898146326B50040A33D /* TableSelectViewController.m */,
-				1626F0AE146AE33100F70C14 /* TaxOptionsViewController.h */,
-				1626F0AF146AE33100F70C14 /* TaxOptionsViewController.m */,
 				167FB56D1464236300967E4F /* TaxViewController.h */,
 				167FB56E1464236300967E4F /* TaxViewController.m */,
 			);
@@ -335,7 +327,6 @@
 				1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */,
 				1689F89B146326B50040A33D /* TableSelectViewController.xib in Resources */,
 				167FB5711464236300967E4F /* TaxViewController.xib in Resources */,
-				1626F0B2146AE33200F70C14 /* TaxOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,7 +355,6 @@
 				1689F89A146326B50040A33D /* TableSelectViewController.m in Sources */,
 				167FB5701464236300967E4F /* TaxViewController.m in Sources */,
 				163DA35B14647B400007727F /* RLInputLabel.m in Sources */,
-				1626F0B1146AE33200F70C14 /* TaxOptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -114,18 +114,15 @@
                   nil];
     [sectionOne addObject:dictionary];
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                  @"Tax Options", kTextLabelKey,
-                  [settings taxOptionsString], kDetailTextLabelKey,
+                  @"Tip On Tax", kTextLabelKey,
+                  [settings tipOnTaxString], kDetailTextLabelKey,
                   nil];
     [sectionOne addObject:dictionary];
-    
-    if (settings.tipOnTax || settings.taxOnAdjustments) {
-        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                      @"Tax Rate", kTextLabelKey,
-                      [settings taxString], kDetailTextLabelKey,
-                      nil];
-        [sectionOne addObject:dictionary];
-    }
+    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                  @"Tax Rate", kTextLabelKey,
+                  [settings taxString], kDetailTextLabelKey,
+                  nil];
+    [sectionOne addObject:dictionary];
     
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Sound", kTextLabelKey,
@@ -218,7 +215,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 0 || indexPath.row == 1) {
+        if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2) {
             TableSelectViewController *selectController = [[TableSelectViewController alloc] init];
             selectController.delegate = self;
             if (indexPath.row == 0) {
@@ -226,22 +223,20 @@
                 selectController.currentIndex = settings_.currency;
                 selectController.tableData = [Settings currencyTypeArray];
                 selectController.title = @"Currency";
-            } else {
+            } else if (indexPath.row == 1) {
                 selectController.selectID = kRoundingControllerTag;
                 selectController.currentIndex = settings_.rounding;
                 selectController.tableData = [Settings roundingTypeArray];
                 selectController.title = @"Rounding";
+            } else {
+                selectController.selectID = kTipOnTaxControllerTag;
+                selectController.currentIndex = (NSInteger)settings_.tipOnTax;
+                selectController.tableData = [NSArray arrayWithObjects:@"No", @"Yes", nil];
+                selectController.tableFooterTitle = @"Answer \"Yes\" to tip on the total amount including taxes.";
+                selectController.title = @"Tip On Tax";
             }
             [self.navigationController pushViewController:selectController animated:YES];
             [selectController release];
-        } else if (indexPath.row == 2) {
-            TaxOptionsViewController *taxController = [[TaxOptionsViewController alloc] init];
-            taxController.delegate = self;
-            taxController.tipOnTaxIndex = (NSInteger)settings_.tipOnTax;
-            taxController.taxOnAdjustmentsIndex = (NSInteger)settings_.taxOnAdjustments;
-            taxController.title = @"Tax Options";
-            [self.navigationController pushViewController:taxController animated:YES];
-            [taxController release];
         } else {
             TaxViewController *taxController = [[TaxViewController alloc] init];
             taxController.delegate = self;
@@ -259,15 +254,11 @@
 {
     if (controller.selectID == kCurrencyControllerTag) {
         settings_.currency = controller.currentIndex;
-    } else {
+    } else if (controller.selectID == kRoundingControllerTag) {
         settings_.rounding = controller.currentIndex;
+    } else {
+        settings_.tipOnTax = (BOOL)controller.currentIndex;
     }
-}
-
-- (void)taxOptionsViewControllerDidFinish:(TaxOptionsViewController *)controller
-{
-    settings_.tipOnTax = (BOOL)controller.tipOnTaxIndex;
-    settings_.taxOnAdjustments = (BOOL)controller.taxOnAdjustmentsIndex;
 }
 
 - (void)taxViewControllerDidFinish:(TaxViewController *)controller

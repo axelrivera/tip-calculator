@@ -101,27 +101,7 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (NSDecimalNumber *)totalTip
 {
-    NSDecimalNumber *amount = billAmount_;
-    if (settings_.tipOnTax) {
-        NSDecimalNumber *divisor = [[NSDecimalNumber one] decimalNumberByAdding:[settings_ taxRatePercentage]];
-        amount = [billAmount_ decimalCurrencyByDividingBy:divisor];
-    }
-    
-    NSDecimalNumber *tip = [CheckHelper calculateTipWithAmount:amount andRate:tipPercentage_];
-    
-    if (settings_.rounding == RoundingTypeNone) {
-        return tip;
-    }
-    
-    if (settings_.rounding == RoundingTypeTip) {
-        tip = [tip decimalCurrencyByRoundingDown];
-    } else if (settings_.rounding == RoundingTypeTotal) {
-        NSDecimalNumber *totalBill = [CheckHelper calculateTotalWithAmount:amount andTip:tip];
-        NSDecimalNumber *newTotal = [totalBill decimalCurrencyByRoundingDown];
-        NSDecimalNumber *totalOffset = [totalBill decimalCurrencyBySubtracting:newTotal];
-        tip = [tip decimalCurrencyBySubtracting:totalOffset];
-    }
-    return tip;
+    return [CheckHelper calculateTipWithAmount:billAmount_ andRate:tipPercentage_];
 }
 
 - (NSDecimalNumber *)totalToPay
