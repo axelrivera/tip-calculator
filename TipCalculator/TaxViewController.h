@@ -14,8 +14,6 @@
 
 @property (nonatomic, assign) id <TaxViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
-@property (nonatomic, assign) BOOL tipOnTax;
-@property (nonatomic, assign) BOOL taxOnAdjustments;
 @property (nonatomic, retain) NSDecimalNumber *taxRate;
 
 @end

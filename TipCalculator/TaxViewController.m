@@ -35,16 +35,12 @@ static NSArray *decimalRange_;
 
 @synthesize delegate = delegate_;
 @synthesize pickerView = pickerView_;
-@synthesize tipOnTax = tipOnTax_;
-@synthesize taxOnAdjustments = taxOnAdjustments_;
 @synthesize taxRate = taxRate_;
 
 - (id)init
 {
     self = [super initWithNibName:@"TaxViewController" bundle:nil];
     if (self) {
-        self.tipOnTax = NO;
-        self.taxOnAdjustments = NO;
         self.taxRate = [NSDecimalNumber zero];
     }
     return self;
@@ -71,12 +67,7 @@ static NSArray *decimalRange_;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.sectionHeaderHeight = 70.0;
 }
 
 - (void)viewDidUnload
@@ -104,22 +95,6 @@ static NSArray *decimalRange_;
 
 #pragma mark -
 #pragma mark Custom Actions
-
-- (void)switchAction:(id)sender
-{
-    NSLog(@"Switch Action");
-    UISwitch *switchView = (UISwitch *)sender;
-    switch (switchView.tag) {
-        case kTaxControllerTipOnTaxTag:
-            self.tipOnTax = switchView.on;
-            break;
-        case kTaxControllerTaxOnAdjustmentsTag:
-            self.taxOnAdjustments = switchView.on;
-            break;
-        default:
-            break;
-    }
-}
 
 #pragma mark Private Class Methods
 
@@ -189,7 +164,7 @@ static NSArray *decimalRange_;
 
 - (void)loadPickerView
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     RLInputLabel *inputLabel = (RLInputLabel *)[cell viewWithTag:kTaxControllerTaxRateTag];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
@@ -211,7 +186,7 @@ static NSArray *decimalRange_;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -224,49 +199,21 @@ static NSArray *decimalRange_;
     }
     
     NSString *textLabelStr = nil;
-    UIView *accessoryView = nil;
-    NSInteger tag;
     
-    if (indexPath.row == 0 || indexPath.row == 1) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-        [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-        
-        BOOL onValue;
-        if (indexPath.row == 0) {
-            textLabelStr = @"Tip On Tax";
-            onValue = tipOnTax_;
-            tag = kTaxControllerTipOnTaxTag;
-        } else {
-            textLabelStr = @"Tax Adjsutments";
-            onValue = taxOnAdjustments_;
-            tag = kTaxControllerTaxOnAdjustmentsTag;
-        }
-        [switchView setOn:onValue animated:NO];
-        accessoryView = switchView;
-    } else {
-        textLabelStr = @"Tax Rate";
-        tag = kTaxControllerTaxRateTag;
-        RLInputLabel *inputLabel = [[RLInputLabel alloc] initWithFrame:CGRectMake(0.0, 7.0, 200.0, 30.0)];
-        inputLabel.font = [UIFont systemFontOfSize:17.0];
-        inputLabel.adjustsFontSizeToFitWidth = YES;
-        inputLabel.textAlignment = UITextAlignmentRight;
-        inputLabel.inputView = pickerView_;
-        inputLabel.textColor = [UIColor darkGrayColor];
-        inputLabel.backgroundColor = [UIColor clearColor];
-        inputLabel.highlightedTextColor = [UIColor whiteColor];
-        inputLabel.text = [taxRate_ taxString];
-        accessoryView = inputLabel;
-    }
-    
-    accessoryView.tag = tag;
+    textLabelStr = @"Tax Rate";
+    RLInputLabel *inputLabel = [[RLInputLabel alloc] initWithFrame:CGRectMake(0.0, 7.0, 200.0, 30.0)];
+    inputLabel.tag = kTaxControllerTaxRateTag;
+    inputLabel.font = [UIFont systemFontOfSize:17.0];
+    inputLabel.adjustsFontSizeToFitWidth = YES;
+    inputLabel.textAlignment = UITextAlignmentRight;
+    inputLabel.inputView = pickerView_;
+    inputLabel.textColor = [UIColor darkGrayColor];
+    inputLabel.backgroundColor = [UIColor clearColor];
+    inputLabel.highlightedTextColor = [UIColor whiteColor];
+    inputLabel.text = [taxRate_ taxString];
     
     cell.textLabel.text = textLabelStr;
-    cell.accessoryView = accessoryView;
-    
-    if (accessoryView) {
-        [accessoryView release];
-    }
+    cell.accessoryView = inputLabel;
     
     return cell;
 }

@@ -48,6 +48,7 @@ typedef enum {
 
 - (NSString *)currencyString;
 - (NSString *)roundingString;
+- (NSString *)taxOptionsString;
 - (NSString *)taxString;
 
 - (NSDecimalNumber *)taxRatePercentage;

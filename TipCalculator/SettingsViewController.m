@@ -86,7 +86,7 @@
         case kSettingsControllerSoundTag:
             settings_.sound = switchView.on;
             break;
-        case kSettingscontrollerShakeToClearTag:
+        case kSettingsControllerShakeToClearTag:
             settings_.shakeToClear = switchView.on;
             break;
         default:
@@ -114,10 +114,18 @@
                   nil];
     [sectionOne addObject:dictionary];
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                  @"Tax", kTextLabelKey,
-                  [settings taxString], kDetailTextLabelKey,
+                  @"Tax Options", kTextLabelKey,
+                  [settings taxOptionsString], kDetailTextLabelKey,
                   nil];
     [sectionOne addObject:dictionary];
+    
+    if (settings.tipOnTax || settings.taxOnAdjustments) {
+        dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @"Tax Rate", kTextLabelKey,
+                      [settings taxString], kDetailTextLabelKey,
+                      nil];
+        [sectionOne addObject:dictionary];
+    }
     
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Sound", kTextLabelKey,
@@ -152,7 +160,7 @@
 {
     NSArray *data = [SettingsViewController tableDataSource];
     if (indexPath.section == 0) {
-        NSString *CellIdentifier = @"SectionOneCell";
+        NSString *CellIdentifier = @"DefaultCell";
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -189,7 +197,7 @@
         tag = kSettingsControllerSoundTag;
     } else {
         onValue = settings_.shakeToClear;
-        tag = kSettingscontrollerShakeToClearTag;
+        tag = kSettingsControllerShakeToClearTag;
     }
     
     [switchView setOn:onValue animated:NO];
@@ -226,11 +234,17 @@
             }
             [self.navigationController pushViewController:selectController animated:YES];
             [selectController release];
+        } else if (indexPath.row == 2) {
+            TaxOptionsViewController *taxController = [[TaxOptionsViewController alloc] init];
+            taxController.delegate = self;
+            taxController.tipOnTaxIndex = (NSInteger)settings_.tipOnTax;
+            taxController.taxOnAdjustmentsIndex = (NSInteger)settings_.taxOnAdjustments;
+            taxController.title = @"Tax Options";
+            [self.navigationController pushViewController:taxController animated:YES];
+            [taxController release];
         } else {
             TaxViewController *taxController = [[TaxViewController alloc] init];
             taxController.delegate = self;
-            taxController.tipOnTax = settings_.tipOnTax;
-            taxController.taxOnAdjustments = settings_.taxOnAdjustments;
             taxController.taxRate = settings_.taxRate;
             taxController.title = @"Tax";
             [self.navigationController pushViewController:taxController animated:YES];
@@ -250,10 +264,14 @@
     }
 }
 
+- (void)taxOptionsViewControllerDidFinish:(TaxOptionsViewController *)controller
+{
+    settings_.tipOnTax = (BOOL)controller.tipOnTaxIndex;
+    settings_.taxOnAdjustments = (BOOL)controller.taxOnAdjustmentsIndex;
+}
+
 - (void)taxViewControllerDidFinish:(TaxViewController *)controller
 {
-    settings_.tipOnTax = controller.tipOnTax;
-    settings_.taxOnAdjustments = controller.taxOnAdjustments;
     settings_.taxRate = controller.taxRate;
 }
 

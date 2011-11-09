@@ -177,6 +177,24 @@ static Settings *sharedSettings_;
     return [Settings stringForRoundingType:rounding_];
 }
 
+- (NSString *)taxOptionsString
+{
+    NSString *string = nil;
+    if (tipOnTax_ || taxOnAdjustments_) {
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+        if (tipOnTax_) {
+            [array addObject:@"Tip"];
+        }
+        if (taxOnAdjustments_) {
+            [array addObject:@"Adjustments"];
+        }
+        string = [array componentsJoinedByString:@", "];
+    } else {
+        string = @"Disabled";
+    }
+    return string;
+}
+
 - (NSString *)taxString
 {
     NSString *taxStr = nil;

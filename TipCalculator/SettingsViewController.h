@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Settings.h"
 #import "TableSelectViewController.h"
+#import "TaxOptionsViewController.h"
 #import "TaxViewController.h"
 
 @protocol SettingsViewControllerDelegate;
 
-@interface SettingsViewController : UITableViewController <TableSelectViewControllerDelegate, TaxViewControllerDelegate>
+@interface SettingsViewController : UITableViewController
+<TableSelectViewControllerDelegate, TaxOptionsViewControllerDelegate, TaxViewControllerDelegate>
 {
     Settings *settings_;
 }
