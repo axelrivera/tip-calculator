@@ -12,6 +12,8 @@
 #import "CheckHelper.h"
 #import "NSDecimalNumber+Check.h"
 
+#define kInputLabelWidth 266.0
+
 @interface SummaryViewController (Private)
 
 - (void)splitAction:(id)sender;
@@ -76,26 +78,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setWantsFullScreenLayout:YES];
     
-    InputDisplayView *splitInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 30.0, 0.0, 0.0)];
-    splitInputView.titleLabel.text = @"Split Check";
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainscreen_background.png"]]];
+    
+    InputDisplayView *splitInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(27.0, 75.0, kInputLabelWidth, 0.0)];
+    splitInputView.textLabel.text = @"Split Check";
     splitInputView.inputView = pickerView_;
     [splitInputView addTarget:self action:@selector(splitAction:) forControlEvents:UIControlEventTouchUpInside];
     self.splitInputView = splitInputView;
     [splitInputView release];
     [self.view addSubview:splitInputView_];
     
-    InputDisplayView *tipInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 78.0, 0.0, 0.0)];
-    tipInputView.titleLabel.text = @"Tip Percentage";
+    InputDisplayView *tipInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(27.0, 122.0, kInputLabelWidth, 0.0)];
+    tipInputView.textLabel.text = @"Tip Percentage";
     tipInputView.inputView = pickerView_;
     [tipInputView addTarget:self action:@selector(tipAction:) forControlEvents:UIControlEventTouchUpInside];
     self.tipInputView = tipInputView;
     [tipInputView release];
     [self.view addSubview:tipInputView_];
     
-    InputDisplayView *billAmountInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 126.0, 0.0, 0.0)];
-    billAmountInputView.titleLabel.text = @"Total Bill";
+    InputDisplayView *billAmountInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(27.0, 169.0, kInputLabelWidth, 0.0)];
+    billAmountInputView.textLabel.text = @"Check Amount";
     billAmountInputView.inputView = numberPad_;
     [billAmountInputView addTarget:self action:@selector(amountAction:) forControlEvents:UIControlEventTouchUpInside];
     self.billAmountInputView = billAmountInputView;
@@ -123,11 +126,11 @@
 {
     [super viewWillAppear:animated];
     
-    splitInputView_.descriptionLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
-    tipInputView_.descriptionLabel.text = [check_.tipPercentage percentString];
+    splitInputView_.detailTextLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+    tipInputView_.detailTextLabel.text = [check_.tipPercentage percentString];
     
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:check_.billAmount];
-    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
     [self reloadCheckSummaryAndResetAdjustments:NO];
 }
@@ -142,7 +145,7 @@
     }
     if ([billAmountInputView_ isFirstResponder]) {
         [numberPadDigits_ validateAndFixDecimalSeparator];
-        billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+        billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
@@ -167,7 +170,7 @@
     }
     if ([billAmountInputView_ isFirstResponder]) {
         [numberPadDigits_ validateAndFixDecimalSeparator];
-        billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+        billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
@@ -197,7 +200,7 @@
     
     if ([billAmountInputView_ isFirstResponder]) {
         [numberPadDigits_ validateAndFixDecimalSeparator];
-        billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+        billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
     } else {
@@ -262,10 +265,10 @@
     NSDecimalNumber *number = [currentPickerDataSource_ objectAtIndex:row];
     if (pickerType_ == SummaryViewControllerPickerSplit) {
         check_.numberOfSplits = number;
-        splitInputView_.descriptionLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+        splitInputView_.detailTextLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
     } else {
         check_.tipPercentage = number;
-        tipInputView_.descriptionLabel.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage];
+        tipInputView_.detailTextLabel.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage];
     }
 }
 
@@ -315,7 +318,7 @@
 {
     [numberPadDigits_ resetDigitsAndDecimals];
     check_.billAmount = [numberPadDigits_ decimalNumber];
-    billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
 - (void)didPressReturnButtonForCallerView:(UIView *)callerView
@@ -327,7 +330,7 @@
 {
     [numberPadDigits_ addNumber:string];
 	check_.billAmount = [numberPadDigits_ decimalNumber];
-	billAmountInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+	billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
 @end

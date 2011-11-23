@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InputDisplayView : UIControl
+@interface InputDisplayView : UIButton
 
-@property (nonatomic, retain, readonly) UILabel *titleLabel;
-@property (nonatomic, retain, readonly) UILabel *descriptionLabel;
+@property (nonatomic, retain, readonly) UILabel *textLabel;
+@property (nonatomic, retain, readonly) UILabel *detailTextLabel;
 @property (readwrite, retain) UIView *inputView;
 @property (readwrite, retain) UIView *inputAccessoryView;
 

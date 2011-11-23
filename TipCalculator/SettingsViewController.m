@@ -44,8 +44,6 @@
     
     self.title = @"Tip Calculator";
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                target:self
                                                                                action:@selector(doneAction:)];

@@ -75,8 +75,9 @@
     
     adjustmentsTable_.allowsSelection = NO;
     
-    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 105.0, 0.0, 0.0)];
-    adjustmentsInputView.titleLabel.text = @"Add Adjustment";
+    CGFloat inputViewWidth = [UIScreen mainScreen].bounds.size.width - 20.0;
+    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 105.0, inputViewWidth, 0.0)];
+    adjustmentsInputView.textLabel.text = @"Add Adjustment";
     adjustmentsInputView.inputView = numberPad_;
     [adjustmentsInputView addTarget:self action:@selector(adjustmentsAction:) forControlEvents:UIControlEventTouchUpInside];
     self.adjustmentsInputView = adjustmentsInputView;
@@ -99,7 +100,7 @@
     [super viewWillAppear:animated];
     
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
-    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
     [adjustmentsTable_ reloadData];
 }
@@ -139,7 +140,7 @@
         [adjustmentsInputView_ resignFirstResponder];
         self.currentAdjustment = [NSDecimalNumber zero];
         [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
-        adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+        adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     } else {
         if ([check_ canAddOneMoreAdjusment]) {
             [adjustmentsInputView_ becomeFirstResponder];
@@ -328,7 +329,7 @@
 {
     [numberPadDigits_ resetDigitsAndDecimals];
     self.currentAdjustment = [numberPadDigits_ decimalNumber];
-    adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+    adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
 - (void)didPressReturnButtonForCallerView:(UIView *)callerView
@@ -340,7 +341,7 @@
 {
     [numberPadDigits_ addNumber:string];
 	self.currentAdjustment = [numberPadDigits_ decimalNumber];
-	adjustmentsInputView_.descriptionLabel.text = [numberPadDigits_ stringValue];
+	adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
 #pragma mark - UIActionSheet Delegate

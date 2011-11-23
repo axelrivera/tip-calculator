@@ -15,6 +15,13 @@
 		164794701436A1130095C658 /* button_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946C1436A1130095C658 /* button_pressed@2x.png */; };
 		164794711436A1130095C658 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946D1436A1130095C658 /* button.png */; };
 		164794721436A1130095C658 /* button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1647946E1436A1130095C658 /* button@2x.png */; };
+		165741AD147C58A7001F93EA /* select_view_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741A9147C58A7001F93EA /* select_view_highlighted.png */; };
+		165741AE147C58A7001F93EA /* select_view_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741AA147C58A7001F93EA /* select_view_highlighted@2x.png */; };
+		165741AF147C58A7001F93EA /* select_view_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741AB147C58A7001F93EA /* select_view_normal.png */; };
+		165741B0147C58A7001F93EA /* select_view_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741AC147C58A7001F93EA /* select_view_normal@2x.png */; };
+		165741B4147C5C53001F93EA /* UIColor+TipCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 165741B3147C5C53001F93EA /* UIColor+TipCalculator.m */; };
+		165741B7147C6596001F93EA /* mainscreen_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741B5147C6596001F93EA /* mainscreen_background.png */; };
+		165741B8147C6596001F93EA /* mainscreen_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741B6147C6596001F93EA /* mainscreen_background@2x.png */; };
 		166257221434BAA4006CA328 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257211434BAA4006CA328 /* UIKit.framework */; };
 		166257241434BAA4006CA328 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257231434BAA4006CA328 /* Foundation.framework */; };
 		166257261434BAA4006CA328 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257251434BAA4006CA328 /* CoreGraphics.framework */; };
@@ -60,6 +67,14 @@
 		1647946C1436A1130095C658 /* button_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_pressed@2x.png"; sourceTree = "<group>"; };
 		1647946D1436A1130095C658 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		1647946E1436A1130095C658 /* button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button@2x.png"; sourceTree = "<group>"; };
+		165741A9147C58A7001F93EA /* select_view_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_view_highlighted.png; sourceTree = "<group>"; };
+		165741AA147C58A7001F93EA /* select_view_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_view_highlighted@2x.png"; sourceTree = "<group>"; };
+		165741AB147C58A7001F93EA /* select_view_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_view_normal.png; sourceTree = "<group>"; };
+		165741AC147C58A7001F93EA /* select_view_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_view_normal@2x.png"; sourceTree = "<group>"; };
+		165741B2147C5C53001F93EA /* UIColor+TipCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TipCalculator.h"; sourceTree = "<group>"; };
+		165741B3147C5C53001F93EA /* UIColor+TipCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TipCalculator.m"; sourceTree = "<group>"; };
+		165741B5147C6596001F93EA /* mainscreen_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainscreen_background.png; sourceTree = "<group>"; };
+		165741B6147C6596001F93EA /* mainscreen_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mainscreen_background@2x.png"; sourceTree = "<group>"; };
 		1662571D1434BAA4006CA328 /* TipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		166257211434BAA4006CA328 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		166257231434BAA4006CA328 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -141,6 +156,12 @@
 		164794621436A0390095C658 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				165741B5147C6596001F93EA /* mainscreen_background.png */,
+				165741B6147C6596001F93EA /* mainscreen_background@2x.png */,
+				165741A9147C58A7001F93EA /* select_view_highlighted.png */,
+				165741AA147C58A7001F93EA /* select_view_highlighted@2x.png */,
+				165741AB147C58A7001F93EA /* select_view_normal.png */,
+				165741AC147C58A7001F93EA /* select_view_normal@2x.png */,
 				1670852C143F675600FA3B02 /* adjustment.png */,
 				1670852D143F675600FA3B02 /* adjustment@2x.png */,
 				16708528143F5DCD00FA3B02 /* info.png */,
@@ -256,6 +277,8 @@
 				16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */,
 				166F5D571461B188000742F2 /* Settings.h */,
 				166F5D581461B188000742F2 /* Settings.m */,
+				165741B2147C5C53001F93EA /* UIColor+TipCalculator.h */,
+				165741B3147C5C53001F93EA /* UIColor+TipCalculator.m */,
 			);
 			name = "Model + Data";
 			sourceTree = "<group>";
@@ -327,6 +350,12 @@
 				1670852F143F675600FA3B02 /* adjustment@2x.png in Resources */,
 				1689F89B146326B50040A33D /* TableSelectViewController.xib in Resources */,
 				167FB5711464236300967E4F /* TaxViewController.xib in Resources */,
+				165741AD147C58A7001F93EA /* select_view_highlighted.png in Resources */,
+				165741AE147C58A7001F93EA /* select_view_highlighted@2x.png in Resources */,
+				165741AF147C58A7001F93EA /* select_view_normal.png in Resources */,
+				165741B0147C58A7001F93EA /* select_view_normal@2x.png in Resources */,
+				165741B7147C6596001F93EA /* mainscreen_background.png in Resources */,
+				165741B8147C6596001F93EA /* mainscreen_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +384,7 @@
 				1689F89A146326B50040A33D /* TableSelectViewController.m in Sources */,
 				167FB5701464236300967E4F /* TaxViewController.m in Sources */,
 				163DA35B14647B400007727F /* RLInputLabel.m in Sources */,
+				165741B4147C5C53001F93EA /* UIColor+TipCalculator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

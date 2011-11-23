@@ -7,46 +7,54 @@
 //
 
 #import "InputDisplayView.h"
+#import "UIColor+TipCalculator.h"
 
 @implementation InputDisplayView
 
-@synthesize titleLabel = titleLabel_;
-@synthesize descriptionLabel = descriptionLabel_;
+@synthesize textLabel = textLabel_;
+@synthesize detailTextLabel = detailTextLabel_;
 @synthesize inputView, inputAccessoryView;
 
 - (id)initWithFrame:(CGRect)frame
 {
     CGRect defaultFrame = CGRectMake(frame.origin.x,
                                      frame.origin.y,
-                                     300.0f,
-                                     38.0f);
+                                     frame.size.width,
+                                     37.0f);
     self = [super initWithFrame:defaultFrame];
     if (self) {
         self.opaque = YES;
         self.userInteractionEnabled = YES;
+        
+        textLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
+        textLabel_.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:20.0];
+        textLabel_.backgroundColor = [UIColor clearColor];
+        textLabel_.textAlignment = UITextAlignmentLeft;
+        [self addSubview:textLabel_];
+        
+        detailTextLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
+        detailTextLabel_.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:18.0];
+        detailTextLabel_.backgroundColor = [UIColor clearColor];
+        detailTextLabel_.textAlignment = UITextAlignmentRight;
+        [self addSubview:detailTextLabel_];
+        
+        UIImage *normalImage = [UIImage imageNamed:@"select_view_normal.png"];
+        UIImage *normalBackground = [normalImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37.0];
+        [self setBackgroundImage:normalBackground forState:UIControlStateNormal];
+        
+        UIImage *selectedImage = [UIImage imageNamed:@"select_view_highlighted.png"];
+        UIImage *selectedBackground = [selectedImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37];
+        [self setBackgroundImage:selectedBackground forState:UIControlStateSelected];
+        
         self.selected = NO;
-        
-        titleLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
-        titleLabel_.font = [UIFont boldSystemFontOfSize:16.0];
-        titleLabel_.backgroundColor = [UIColor clearColor];
-        titleLabel_.textColor = [UIColor blackColor];
-        titleLabel_.textAlignment = UITextAlignmentLeft;
-        [self addSubview:titleLabel_];
-        
-        descriptionLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
-        descriptionLabel_.font = [UIFont systemFontOfSize:16.0];
-        descriptionLabel_.backgroundColor = [UIColor clearColor];
-        descriptionLabel_.textColor = [UIColor blackColor];
-        descriptionLabel_.textAlignment = UITextAlignmentRight;
-        [self addSubview:descriptionLabel_];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [titleLabel_ release];
-    [descriptionLabel_ release];
+    [textLabel_ release];
+    [detailTextLabel_ release];
     [inputView release];
     [inputAccessoryView release];
     [super dealloc];
@@ -79,13 +87,14 @@
 #define kTitleLabelWidth 140.0f
 #define kLabelHeight 18.0f
 #define kLabelOffset 5.0f
-    titleLabel_.frame = CGRectMake(kHorizontalPadding,
+    textLabel_.frame = CGRectMake(kHorizontalPadding,
                                    kVerticalPadding,
                                    kTitleLabelWidth,
                                    kLabelHeight);
-    descriptionLabel_.frame = CGRectMake(kHorizontalPadding + kTitleLabelWidth + kLabelOffset,
+    CGFloat detailTextWidth = self.frame.size.width - (kHorizontalPadding + kTitleLabelWidth + kLabelOffset + kHorizontalPadding);
+    detailTextLabel_.frame = CGRectMake(kHorizontalPadding + kTitleLabelWidth + kLabelOffset,
                                          kVerticalPadding,
-                                         self.frame.size.width - (kHorizontalPadding + kTitleLabelWidth + kLabelOffset + kHorizontalPadding),
+                                         detailTextWidth,
                                          kLabelHeight);
 }
 
@@ -93,11 +102,19 @@
 {
     [super setSelected:selected];
     
+    UIColor *color = nil;
     if (selected == YES) {
-        self.backgroundColor = [UIColor cyanColor];
+        color = [UIColor selectedViewHighlightedColor];
     } else {
-        self.backgroundColor = [UIColor lightGrayColor];
+        color = [UIColor selectedViewNormalColor];
     }
+    textLabel_.textColor = color;
+    detailTextLabel_.textColor = color;
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    // Disable Highlighting to avoid weird color issues in label colors
 }
 
 @end
