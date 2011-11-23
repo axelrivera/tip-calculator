@@ -12,6 +12,7 @@
 #import "RLNumberPad.h"
 #import "RLNumberPadDigits.h"
 #import "InputDisplayView.h"
+#import "GuestCheckView.h"
 
 @class Check;
 
@@ -23,23 +24,18 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
     Check *check_;
     RLNumberPad *numberPad_;
     RLNumberPadDigits *numberPadDigits_;
+    GuestCheckView *guestCheckView_;
+    UIButton *splitsButton_;
+    UIButton *settingsButton_;
 }
 
 @property (nonatomic, retain) InputDisplayView *splitInputView;
 @property (nonatomic, retain) InputDisplayView *tipInputView;
 @property (nonatomic, retain) InputDisplayView *billAmountInputView;
 
-@property (nonatomic, retain) IBOutlet UIView *checkSummaryView;
-@property (nonatomic, retain) IBOutlet UILabel *totalTipLabel;
-@property (nonatomic, retain) IBOutlet UILabel *totalToPayLabel;
-@property (nonatomic, retain) IBOutlet UILabel *totalPerPersonLabel;
-
 @property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
 
 @property (nonatomic, assign) NSArray *currentPickerDataSource;
 @property (nonatomic, assign) SummaryViewControllerPickerType pickerType;
-
-- (IBAction)showAdjustmentsAction:(id)sender;
-- (IBAction)showSettingsAction:(id)sender;
 
 @end

@@ -11,6 +11,7 @@
 #import "Check.h"
 #import "CheckHelper.h"
 #import "NSDecimalNumber+Check.h"
+#import "UIButton+TipCalculator.h"
 
 #define kInputLabelWidth 266.0
 
@@ -19,6 +20,8 @@
 - (void)splitAction:(id)sender;
 - (void)tipAction:(id)sender;
 - (void)amountAction:(id)sender;
+- (void)showAdjustmentsAction:(id)sender;
+- (void)showSettingsAction:(id)sender;
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments;
 
 @end
@@ -28,10 +31,6 @@
 @synthesize splitInputView = splitInputView_;
 @synthesize tipInputView = tipInputView_;
 @synthesize billAmountInputView = billAmountInputView_;
-@synthesize checkSummaryView = checkSummaryView_;
-@synthesize totalTipLabel = totalTipLabel_;
-@synthesize totalToPayLabel = totalToPayLabel_;
-@synthesize totalPerPersonLabel = totalPerPersonLabel_;
 @synthesize pickerView = pickerView_;
 @synthesize currentPickerDataSource = currentPickerDataSource_;
 @synthesize pickerType = pickerType_;
@@ -62,13 +61,12 @@
     numberPad_.delegate = nil;
     [numberPad_ release];
     [numberPadDigits_ release];
+    [guestCheckView_ release];
+    [splitsButton_ release];
+    [settingsButton_ release];
     [splitInputView_ release];
     [tipInputView_ release];
     [billAmountInputView_ release];
-    [checkSummaryView_ release];
-    [totalTipLabel_ release];
-    [totalToPayLabel_ release];
-    [totalPerPersonLabel_ release];
     [pickerView_ release];
     [super dealloc];
 }
@@ -105,6 +103,24 @@
     [billAmountInputView release];
     numberPad_.callerView = billAmountInputView_;
     [self.view addSubview:billAmountInputView_];
+    
+    guestCheckView_ = [[GuestCheckView alloc] initWithFrame:CGRectMake(27.0, 225.0, kInputLabelWidth, 168.0)];
+    [self.view addSubview:guestCheckView_];
+    
+    splitsButton_ = [[UIButton orangeButtonAtPoint:CGPointMake(27.0, 400.0)] retain];
+    [splitsButton_ setTitle:@"Splits" forState:UIControlStateNormal];
+    [splitsButton_ addTarget:self action:@selector(showAdjustmentsAction:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:splitsButton_];
+    
+    settingsButton_ = [[UIButton whiteButtonAtPoint:CGPointZero] retain];
+    CGSize settingsSize = CGSizeMake(settingsButton_.frame.size.width, settingsButton_.frame.size.height);
+    settingsButton_.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - (27.0 + settingsSize.width),
+                                       400.0,
+                                       settingsSize.width,
+                                       settingsSize.height);
+    [settingsButton_ setTitle:@"Settings" forState:UIControlStateNormal];
+    [settingsButton_ addTarget:self action:@selector(showSettingsAction:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:settingsButton_];
 }
 
 - (void)viewDidUnload
@@ -112,13 +128,15 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [guestCheckView_ release];
+    guestCheckView_ = nil;
+    [splitsButton_ release];
+    splitsButton_ = nil;
+    [settingsButton_ release];
+    settingsButton_ = nil;
     self.splitInputView = nil;
     self.tipInputView = nil;
     self.billAmountInputView = nil;
-    self.checkSummaryView = nil;
-    self.totalTipLabel = nil;
-    self.totalToPayLabel = nil;
-    self.totalPerPersonLabel = nil;
     self.pickerView = nil;
 }
 
@@ -232,12 +250,12 @@
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments
 {
     if (![check_.billAmount isEqualToZero]) {
-        checkSummaryView_.hidden = NO;
-        totalTipLabel_.text = [[check_ totalTip] currencyString];
-        totalToPayLabel_.text = [[check_ totalToPay] currencyString];
-        totalPerPersonLabel_.text = [[check_ totalPerPerson] currencyString];
+        guestCheckView_.hidden = NO;
+        guestCheckView_.totalTipLabel.text = [[check_ totalTip] currencyString];
+        guestCheckView_.totalToPayLabel.text = [[check_ totalToPay] currencyString];
+        guestCheckView_.totalPerPersonLabel.text = [[check_ totalPerPerson] currencyString];
     } else {
-        checkSummaryView_.hidden = YES;
+        guestCheckView_.hidden = YES;
     }
     
     if (adjustments) {
