@@ -21,7 +21,7 @@
         self.opaque = YES;
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"guest_check_background.png"]];
         
-        UIFont *titleFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:16.0];
+        UIFont *titleFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
         UIFont *detailFont = [UIFont fontWithName:@"MarkerFelt-Wide" size:14.0];
         UIColor *labelColor = [UIColor whiteColor];
         
