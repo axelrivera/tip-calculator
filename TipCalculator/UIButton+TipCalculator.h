@@ -12,5 +12,7 @@
 
 + (UIButton *)whiteButtonAtPoint:(CGPoint)point;
 + (UIButton *)orangeButtonAtPoint:(CGPoint)point;
++ (UIButton *)greenButtonAtPoint:(CGPoint)point;
++ (UIButton *)redButtonAtPoint:(CGPoint)point;
 
 @end

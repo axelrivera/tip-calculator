@@ -13,14 +13,19 @@
 #import "NSDecimalNumber+Check.h"
 #import "AdjustmentBalanceView.h"
 #import "ControllerConstants.h"
+#import "UIColor+TipCalculator.h"
+#import "UIButton+TipCalculator.h"
 
 @interface AdjustmentsViewController (Private)
 
+- (void)backAction:(id)sender;
+- (void)resetConfirmationAction:(id)sender;
 - (void)resetAction:(id)sender;
 - (void)adjustmentsAction:(id)sender;
 - (void)deleteAdjustmentConfirmationAction:(id)sender;
 - (void)deleteAdjustmentAction:(id)sender;
 - (void)addAction:(id)sender;
+- (void)questionAction:(id)sender;
 
 @end
 
@@ -28,6 +33,10 @@
 
 @synthesize delegate = delegate_;
 @synthesize adjusmentsTable = adjustmentsTable_;
+@synthesize headerView = headerView_;
+@synthesize backButton = backButton_;
+@synthesize resetButton = resetButton_;
+@synthesize questionButton = questionButton_;
 @synthesize adjustmentsInputView = adjustmentsInputView_;
 @synthesize currentAdjustment = currentAdjustment_;
 
@@ -61,6 +70,10 @@
     [numberPad_ release];
     [numberPadDigits_ release];
     [adjustmentsTable_ release];
+	[headerView_ release];
+	[backButton_ release];
+	[resetButton_ release];
+	[questionButton_ release];
     [adjustmentsInputView_ release];
     [currentAdjustment_ release];
     [super dealloc];
@@ -71,19 +84,63 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setWantsFullScreenLayout:YES];
-    
+    self.view.backgroundColor = [UIColor greenBoardColor];
+	
+	adjustmentsTable_.backgroundColor = [UIColor greenBoardColor];
     adjustmentsTable_.allowsSelection = NO;
+	adjustmentsTable_.rowHeight = 72.0;
+	
+	CGSize screenSize = [UIScreen mainScreen].bounds.size;
+	headerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenSize.width, 88.0)];
+	headerView_.opaque = NO;
+	headerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_header_bg.png"]];
+	[self.view addSubview:headerView_];
+	
+	backButton_ = [[UIButton greenButtonAtPoint:CGPointMake(10.0, 5.0)] retain];
+    [backButton_ setTitle:@"Back" forState:UIControlStateNormal];
+    [backButton_ addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchDown];
+    [headerView_ addSubview:backButton_];
     
-    CGFloat inputViewWidth = [UIScreen mainScreen].bounds.size.width - 20.0;
-    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 105.0, inputViewWidth, 0.0)];
+    resetButton_ = [[UIButton redButtonAtPoint:CGPointZero] retain];
+    CGSize resetSize = CGSizeMake(resetButton_.frame.size.width, resetButton_.frame.size.height);
+    resetButton_.frame = CGRectMake(screenSize.width - (10.0 + resetSize.width),
+                                       5.0,
+                                       resetSize.width,
+                                       resetSize.height);
+    [resetButton_ setTitle:@"Reset" forState:UIControlStateNormal];
+    [resetButton_ addTarget:self action:@selector(resetConfirmationAction:) forControlEvents:UIControlEventTouchDown];
+    [headerView_ addSubview:resetButton_];
+    
+	
+    CGFloat inputViewWidth = screenSize.width - (10.0 + 10.0 + 30.0 + 10.0);
+    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 44.0, inputViewWidth, 0.0)];
+	
+	adjustmentsInputView.textColor = [UIColor whiteColor];
+	adjustmentsInputView.textColorSelected = [UIColor greenBoardColor];
+	adjustmentsInputView.imageAccessory = [UIImage imageNamed:@"input_accessory_down_white.png"];
+	adjustmentsInputView.imageAccessorySelected = [UIImage imageNamed:@"input_accessory_up_green.png"];
+	
+	UIImage *normalImage = [UIImage imageNamed:@"select_view_green.png"];
+	UIImage *normalBackground = [normalImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37.0];
+	[adjustmentsInputView setBackgroundImage:normalBackground forState:UIControlStateNormal];
+	
+	UIImage *selectedImage = [UIImage imageNamed:@"select_view_yellow.png"];
+	UIImage *selectedBackground = [selectedImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37];
+	[adjustmentsInputView setBackgroundImage:selectedBackground forState:UIControlStateSelected];
+	
     adjustmentsInputView.textLabel.text = @"Add Adjustment";
     adjustmentsInputView.inputView = numberPad_;
     [adjustmentsInputView addTarget:self action:@selector(adjustmentsAction:) forControlEvents:UIControlEventTouchUpInside];
     self.adjustmentsInputView = adjustmentsInputView;
     [adjustmentsInputView release];
     numberPad_.callerView = adjustmentsInputView_;
-    [self.view addSubview:adjustmentsInputView_];
+    [headerView_ addSubview:adjustmentsInputView_];
+	
+	questionButton_ = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	questionButton_.frame = CGRectMake(10.0 + inputViewWidth + 10.0, 48.0, 30.0, 30.0);
+	[questionButton_ setBackgroundImage:[UIImage imageNamed:@"button_question.png"] forState:UIControlStateNormal];
+	[questionButton_ addTarget:self action:@selector(questionAction:) forControlEvents:UIControlEventTouchDown];
+	[headerView_ addSubview:questionButton_];
 }
 
 - (void)viewDidUnload
@@ -92,6 +149,10 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     self.adjusmentsTable = nil;
+	self.headerView = nil;
+	self.backButton = nil;
+	self.resetButton = nil;
+	self.questionButton = nil;
     self.adjustmentsInputView = nil;
 }
 
@@ -107,12 +168,12 @@
 
 #pragma mark - Custom Action Methods
 
-- (IBAction)backAction:(id)sender
+- (void)backAction:(id)sender
 {
     [delegate_ adjustmentsViewControllerDidFinish:self];
 }
 
-- (IBAction)resetConfirmationAction:(id)sender
+- (void)resetConfirmationAction:(id)sender
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
@@ -204,6 +265,11 @@
     [alertView release];
     
     [adjustment release];
+}
+
+- (void)questionAction:(id)sender
+{
+	
 }
 
 #pragma mark - UITableView Datasource Methods
@@ -305,22 +371,20 @@
                          [[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
         cell.accessoryView = nil;
     }
+	
+	UIColor *backgroundColor = nil;
+	if ((indexPath.row % 2) == 0) {
+		backgroundColor = [UIColor greenBoardColor];
+	} else {
+		backgroundColor = [UIColor lightGreenBoardColor];
+	}
+	
+	cell.backgroundColor = backgroundColor;
     
     cell.textLabel.text = textStr;
     cell.detailTextLabel.text = detailTextStr;
     
     return cell;
-}
-
-#pragma mark - UITableView Delegate Methods
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSInteger height = 44.0;
-    if (indexPath.section == 0) {
-        height = 59.0;
-    }
-    return height;
 }
 
 #pragma mark - RLNumberPad Delegate Methods

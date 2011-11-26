@@ -24,11 +24,12 @@
 
 @property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
+@property (nonatomic, retain) UIView *headerView;
+@property (nonatomic, retain) UIButton *backButton;
+@property (nonatomic, retain) UIButton *resetButton;
+@property (nonatomic, retain) UIButton *questionButton;
 @property (nonatomic, retain) InputDisplayView *adjustmentsInputView;
 @property (nonatomic, retain) NSDecimalNumber *currentAdjustment;
-
-- (IBAction)backAction:(id)sender;
-- (IBAction)resetConfirmationAction:(id)sender;
 
 @end
 

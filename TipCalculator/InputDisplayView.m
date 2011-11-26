@@ -17,7 +17,10 @@
 @synthesize textLabel = textLabel_;
 @synthesize detailTextLabel = detailTextLabel_;
 @synthesize accessoryView = accessoryView_;
-@synthesize accessoryType = accessoryType_;
+@synthesize textColor = textColor_;
+@synthesize textColorSelected = textColorSelected_;
+@synthesize imageAccessory = imageAccessory_;
+@synthesize imageAccessorySelected = imageAccessorySelected_;
 @synthesize inputView, inputAccessoryView;
 
 - (id)initWithFrame:(CGRect)frame
@@ -30,6 +33,11 @@
     if (self) {
         self.opaque = YES;
         self.userInteractionEnabled = YES;
+		
+		textColor_ = [[UIColor selectedViewNormalColor] retain];
+		textColorSelected_ = [[UIColor selectedViewHighlightedColor] retain];
+		imageAccessory_ = [[UIImage imageNamed:kInputViewImage] retain];
+		imageAccessorySelected_ = [[UIImage imageNamed:kInputViewImageSelected] retain];
         
         textLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
         textLabel_.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:18.0];
@@ -43,19 +51,15 @@
         detailTextLabel_.textAlignment = UITextAlignmentRight;
         [self addSubview:detailTextLabel_];
         
-        UIImage *normalImage = [UIImage imageNamed:@"select_view_normal.png"];
+        UIImage *normalImage = [UIImage imageNamed:@"select_view_black.png"];
         UIImage *normalBackground = [normalImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37.0];
         [self setBackgroundImage:normalBackground forState:UIControlStateNormal];
         
-        UIImage *selectedImage = [UIImage imageNamed:@"select_view_highlighted.png"];
+        UIImage *selectedImage = [UIImage imageNamed:@"select_view_white.png"];
         UIImage *selectedBackground = [selectedImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37];
         [self setBackgroundImage:selectedBackground forState:UIControlStateSelected];
         
-		accessoryType_ = InputDisplayViewAccessoryTypeSelect;
-		
-		UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kInputViewImage]];
-		self.accessoryView = imageView;
-		[imageView release];
+		accessoryView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kInputViewImage]];
 		[self addSubview:accessoryView_];
 		
         self.selected = NO;
@@ -68,6 +72,10 @@
     [textLabel_ release];
     [detailTextLabel_ release];
 	[accessoryView_ release];
+	[textColor_ release];
+	[textColorSelected_ release];
+	[imageAccessory_ release];
+	[imageAccessorySelected_ release];
     [inputView release];
     [inputAccessoryView release];
     [super dealloc];
@@ -126,24 +134,17 @@
     [super setSelected:selected];
     
     UIColor *color = nil;
-	NSString *imageName = nil;
+	UIImage *image = nil;
     if (selected == YES) {
-        color = [UIColor selectedViewHighlightedColor];
-		if (accessoryType_ == InputDisplayViewAccessoryTypeSelect) {
-			imageName = kInputViewImageSelected;
-		}
+        color = textColorSelected_;
+		image = imageAccessorySelected_;
     } else {
-        color = [UIColor selectedViewNormalColor];
-		if (accessoryType_ == InputDisplayViewAccessoryTypeSelect) {
-			imageName = kInputViewImage;
-		}
+        color = textColor_;
+		image = imageAccessory_;
     }
     textLabel_.textColor = color;
     detailTextLabel_.textColor = color;
-	if (accessoryView_ && imageName) {
-		UIImageView *imageView = (UIImageView *)accessoryView_;
-		[imageView setImage:[UIImage imageNamed:imageName]];
-	}
+	[accessoryView_ setImage:image];
 }
 
 - (void)setHighlighted:(BOOL)highlighted

@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum {
-	InputDisplayViewAccessoryTypeNone,
-	InputDisplayViewAccessoryTypeSelect
-} InputDisplayViewAccessoryType;
-
 @interface InputDisplayView : UIButton
 
 @property (nonatomic, retain, readonly) UILabel *textLabel;
 @property (nonatomic, retain, readonly) UILabel *detailTextLabel;
-@property (nonatomic, retain) UIView *accessoryView;
+@property (nonatomic, retain) UIImageView *accessoryView;
+
+@property (nonatomic, retain) UIColor *textColor;
+@property (nonatomic, retain) UIColor *textColorSelected;
+@property (nonatomic, retain) UIImage *imageAccessory;
+@property (nonatomic, retain) UIImage *imageAccessorySelected;
+
 @property (readwrite, retain) UIView *inputView;
 @property (readwrite, retain) UIView *inputAccessoryView;
-@property (nonatomic, assign) InputDisplayViewAccessoryType accessoryType;
 
 @end
