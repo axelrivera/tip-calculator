@@ -34,6 +34,7 @@
 @synthesize delegate = delegate_;
 @synthesize adjusmentsTable = adjustmentsTable_;
 @synthesize headerView = headerView_;
+@synthesize footerView = footerView_;
 @synthesize backButton = backButton_;
 @synthesize resetButton = resetButton_;
 @synthesize questionButton = questionButton_;
@@ -71,6 +72,7 @@
     [numberPadDigits_ release];
     [adjustmentsTable_ release];
 	[headerView_ release];
+	[footerView_ release];
 	[backButton_ release];
 	[resetButton_ release];
 	[questionButton_ release];
@@ -150,6 +152,7 @@
     // e.g. self.myOutlet = nil;
     self.adjusmentsTable = nil;
 	self.headerView = nil;
+	self.footerView = nil;
 	self.backButton = nil;
 	self.resetButton = nil;
 	self.questionButton = nil;
