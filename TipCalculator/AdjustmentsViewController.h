@@ -30,6 +30,9 @@
 @property (nonatomic, retain) UIButton *resetButton;
 @property (nonatomic, retain) UIButton *questionButton;
 @property (nonatomic, retain) InputDisplayView *adjustmentsInputView;
+@property (nonatomic, retain) UILabel *totalToPayTitleLabel;
+@property (nonatomic, retain) UILabel *totalToPayLabel;
+@property (nonatomic, retain) UILabel *peopleLeftLabel;
 @property (nonatomic, retain) NSDecimalNumber *currentAdjustment;
 
 @end

@@ -240,6 +240,7 @@
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] init];
     settingsViewController.delegate = self;
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[settingsViewController release];
 	[self presentModalViewController:navController animated:YES];
 	[navController release];

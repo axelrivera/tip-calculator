@@ -39,6 +39,9 @@
 @synthesize resetButton = resetButton_;
 @synthesize questionButton = questionButton_;
 @synthesize adjustmentsInputView = adjustmentsInputView_;
+@synthesize totalToPayTitleLabel = totalToPayTitleLabel_;
+@synthesize totalToPayLabel = totalToPayLabel_;
+@synthesize peopleLeftLabel = peopleLeftLabel_;
 @synthesize currentAdjustment = currentAdjustment_;
 
 - (id)init
@@ -77,6 +80,9 @@
 	[resetButton_ release];
 	[questionButton_ release];
     [adjustmentsInputView_ release];
+	[totalToPayTitleLabel_ release];
+	[totalToPayLabel_ release];
+	[peopleLeftLabel_ release];
     [currentAdjustment_ release];
     [super dealloc];
 }
@@ -90,15 +96,15 @@
 	
 	adjustmentsTable_.backgroundColor = [UIColor greenBoardColor];
     adjustmentsTable_.allowsSelection = NO;
-	adjustmentsTable_.rowHeight = 72.0;
+	adjustmentsTable_.rowHeight = 65.0;
 	
 	CGSize screenSize = [UIScreen mainScreen].bounds.size;
-	headerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenSize.width, 88.0)];
+	headerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenSize.width, 97.0)];
 	headerView_.opaque = NO;
 	headerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_header_bg.png"]];
 	[self.view addSubview:headerView_];
 	
-	backButton_ = [[UIButton greenButtonAtPoint:CGPointMake(10.0, 5.0)] retain];
+	backButton_ = [[UIButton greenButtonAtPoint:CGPointMake(10.0, 10.0)] retain];
     [backButton_ setTitle:@"Back" forState:UIControlStateNormal];
     [backButton_ addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchDown];
     [headerView_ addSubview:backButton_];
@@ -106,7 +112,7 @@
     resetButton_ = [[UIButton redButtonAtPoint:CGPointZero] retain];
     CGSize resetSize = CGSizeMake(resetButton_.frame.size.width, resetButton_.frame.size.height);
     resetButton_.frame = CGRectMake(screenSize.width - (10.0 + resetSize.width),
-                                       5.0,
+                                       10.0,
                                        resetSize.width,
                                        resetSize.height);
     [resetButton_ setTitle:@"Reset" forState:UIControlStateNormal];
@@ -115,7 +121,7 @@
     
 	
     CGFloat inputViewWidth = screenSize.width - (10.0 + 10.0 + 30.0 + 10.0);
-    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 44.0, inputViewWidth, 0.0)];
+    InputDisplayView *adjustmentsInputView = [[InputDisplayView alloc] initWithFrame:CGRectMake(10.0, 50.0, inputViewWidth, 0.0)];
 	
 	adjustmentsInputView.textColor = [UIColor whiteColor];
 	adjustmentsInputView.textColorSelected = [UIColor greenBoardColor];
@@ -139,10 +145,39 @@
     [headerView_ addSubview:adjustmentsInputView_];
 	
 	questionButton_ = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	questionButton_.frame = CGRectMake(10.0 + inputViewWidth + 10.0, 48.0, 30.0, 30.0);
+	questionButton_.frame = CGRectMake(10.0 + inputViewWidth + 10.0, 54.0, 30.0, 30.0);
 	[questionButton_ setBackgroundImage:[UIImage imageNamed:@"button_question.png"] forState:UIControlStateNormal];
 	[questionButton_ addTarget:self action:@selector(questionAction:) forControlEvents:UIControlEventTouchDown];
 	[headerView_ addSubview:questionButton_];
+	
+	footerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, screenSize.height - (37.0 + 20.0), screenSize.width, 37.0)];
+	footerView_.opaque = NO;
+	footerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_footer_bg.png"]];
+	[self.view addSubview:footerView_];
+	
+	totalToPayTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 5.0, 110.0, 27.0)];
+	totalToPayTitleLabel_.backgroundColor = [UIColor clearColor];
+	totalToPayTitleLabel_.font = [UIFont fontWithName:@"ChalkboardSE-Bold" size:16.0];
+	totalToPayTitleLabel_.textColor = [UIColor purpleChalkColor];
+	totalToPayTitleLabel_.textAlignment = UITextAlignmentLeft;
+	totalToPayTitleLabel_.text = @"Total to Pay:";
+	[footerView_ addSubview:totalToPayTitleLabel_];
+	
+	totalToPayLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(120.0, 5.0, 125.0, 27.0)];
+	totalToPayLabel_.backgroundColor = [UIColor clearColor];
+	totalToPayLabel_.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:16.0];
+	totalToPayLabel_.textColor = [UIColor greenBoardColor];
+	totalToPayLabel_.textAlignment = UITextAlignmentLeft;
+	totalToPayLabel_.text = @"$9,999,999.00";
+	[footerView_ addSubview:totalToPayLabel_];
+	
+	peopleLeftLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(250.0, 5.0, 60.0, 27.0)];
+	peopleLeftLabel_.backgroundColor = [UIColor clearColor];
+	peopleLeftLabel_.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:16.0];
+	peopleLeftLabel_.textColor = [UIColor greenBoardColor];
+	peopleLeftLabel_.textAlignment = UITextAlignmentRight;
+	peopleLeftLabel_.text = @"50 People";
+	[footerView_ addSubview:peopleLeftLabel_];
 }
 
 - (void)viewDidUnload
@@ -157,6 +192,9 @@
 	self.resetButton = nil;
 	self.questionButton = nil;
     self.adjustmentsInputView = nil;
+	self.totalToPayTitleLabel = nil;
+	self.totalToPayLabel = nil;
+	self.peopleLeftLabel = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -166,6 +204,12 @@
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
     adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
+	NSDecimalNumber *totalToPay = [check_ totalToPay];
+	NSDecimalNumber *numberOfPeople = [check_ numberOfSplits];
+	
+	totalToPayLabel_.text = [totalToPay currencyString];
+	peopleLeftLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:numberOfPeople];
+	
     [adjustmentsTable_ reloadData];
 }
 
@@ -192,7 +236,7 @@
 {
     [check_ removeAllSplitAdjustments];
     [adjustmentsTable_ beginUpdates];
-    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]
+    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]
                      withRowAnimation:UITableViewRowAnimationFade];
     [adjustmentsTable_ endUpdates];
 }
@@ -239,7 +283,7 @@
     currentDeleteButton_ = nil;
     [check_ removeSplitAdjustmentAtIndex:row];
     [adjustmentsTable_ beginUpdates];
-    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]
+    [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]
                      withRowAnimation:UITableViewRowAnimationFade];
     [adjustmentsTable_ endUpdates];
 }
@@ -253,8 +297,7 @@
     if ([check_ canAddAdjustment:[adjustment total]]) {
         [check_ addSplitAdjustment:adjustment];
         [adjustmentsTable_ beginUpdates];
-        [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+        [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
         [adjustmentsTable_ endUpdates];
         [self performSelector:@selector(adjustmentsAction:)];
         return;
@@ -277,61 +320,17 @@
 
 #pragma mark - UITableView Datasource Methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rows = 1;
-    if (section == 1) {
-        rows = [check_.splitAdjustments count];
-        if ([[check_ splitAdjustments] count] < [check_.numberOfSplits integerValue]) {
-            rows++;
-        }
-    }
+	NSInteger rows = [check_.splitAdjustments count];
+	if ([[check_ splitAdjustments] count] < [check_.numberOfSplits integerValue]) {
+		rows++;
+	}
     return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        NSString *CellIdentifier = @"BalanceCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        }
-        
-        AdjustmentBalanceView *adjustmentView = [[[AdjustmentBalanceView alloc] initWithFrame:CGRectZero] autorelease];
-        
-        NSDecimalNumber *totalToPay = [check_ totalToPay];
-        NSDecimalNumber *numberOfPeople = [check_ numberOfSplits];
-        
-        NSString *totalToPayStr = [totalToPay currencyString];
-        NSString *numberOfPeopleStr = [check_ stringForNumberOfSplitsWithDecimalNumber:numberOfPeople];
-        NSString *line1Str = [NSString stringWithFormat:@"Total to Pay: %@ (%@)", totalToPayStr, numberOfPeopleStr];
-        
-        NSDecimalNumber *totalBalance = [check_ totalBalanceAfterAdjustments];
-        NSDecimalNumber *billAmountBalance = [check_ billAmountBalanceAfterAdjustments];
-        NSDecimalNumber *tipBalance = [check_ tipBalanceAfterAdjustments];
-        
-        NSString *totalBalanceStr = [totalBalance currencyString];
-        NSString *billAmountBalanceStr = [billAmountBalance currencyString];
-        NSString *tipBalanceStr = [tipBalance currencyString];
-        NSString *line2Str = [NSString stringWithFormat:@"Balance: %@ = %@ + tip %@",
-                              totalBalanceStr,
-                              billAmountBalanceStr,
-                              tipBalanceStr];
-        
-        adjustmentView.line1.text = line1Str;
-        adjustmentView.line2.text = line2Str;
-        
-        cell.accessoryView = adjustmentView;
-        
-        return cell;
-    }
-    
     NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {

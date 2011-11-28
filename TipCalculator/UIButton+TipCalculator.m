@@ -58,4 +58,5 @@
     button.adjustsImageWhenHighlighted = NO;
     return button;
 }
+
 @end

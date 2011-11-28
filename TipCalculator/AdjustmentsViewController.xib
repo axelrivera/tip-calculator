@@ -53,8 +53,8 @@
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<double key="IBUIContentInset.top">97</double>
-						<double key="IBUIContentInset.bottom">37</double>
+						<double key="IBUIContentInset.top">93</double>
+						<double key="IBUIContentInset.bottom">33</double>
 						<double key="IBUIContentInset.left">0.0</double>
 						<double key="IBUIContentInset.right">0.0</double>
 						<bool key="IBUIAlwaysBounceVertical">YES</bool>
