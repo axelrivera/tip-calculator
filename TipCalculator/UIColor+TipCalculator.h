@@ -14,6 +14,8 @@
 + (UIColor *)selectedViewHighlightedColor;
 
 + (UIColor *)purpleChalkColor;
++ (UIColor *)brightYellowChalkColor;
++ (UIColor *)yellowChalkColor;
 
 + (UIColor *)greenBoardColor;
 + (UIColor *)lightGreenBoardColor;

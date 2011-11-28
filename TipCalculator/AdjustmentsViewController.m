@@ -15,6 +15,8 @@
 #import "ControllerConstants.h"
 #import "UIColor+TipCalculator.h"
 #import "UIButton+TipCalculator.h"
+#import "AdjustmentViewCell.h"
+#import "AdjustmentView.h"
 
 @interface AdjustmentsViewController (Private)
 
@@ -95,7 +97,6 @@
     self.view.backgroundColor = [UIColor greenBoardColor];
 	
 	adjustmentsTable_.backgroundColor = [UIColor greenBoardColor];
-    adjustmentsTable_.allowsSelection = NO;
 	adjustmentsTable_.rowHeight = 65.0;
 	
 	CGSize screenSize = [UIScreen mainScreen].bounds.size;
@@ -147,7 +148,9 @@
 	questionButton_ = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 	questionButton_.frame = CGRectMake(10.0 + inputViewWidth + 10.0, 54.0, 30.0, 30.0);
 	[questionButton_ setBackgroundImage:[UIImage imageNamed:@"button_question.png"] forState:UIControlStateNormal];
+	[questionButton_ setBackgroundImage:[UIImage imageNamed:@"button_question_pressed.png"] forState:UIControlStateHighlighted];
 	[questionButton_ addTarget:self action:@selector(questionAction:) forControlEvents:UIControlEventTouchDown];
+	questionButton_.adjustsImageWhenHighlighted = NO;
 	[headerView_ addSubview:questionButton_];
 	
 	footerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, screenSize.height - (37.0 + 20.0), screenSize.width, 37.0)];
@@ -222,7 +225,7 @@
 
 - (void)resetConfirmationAction:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Delete All Adjustments?"
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:@"Reset Adjustments"
@@ -267,7 +270,8 @@
 - (void)deleteAdjustmentConfirmationAction:(id)sender
 {
     currentDeleteButton_ = (UIButton *)sender;
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+	NSString *title = [NSString stringWithFormat:@"Delete Adjustment #%d?", currentDeleteButton_.tag + 1];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:@"Delete Adjustment"
@@ -332,59 +336,73 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AdjustmentViewCell *cell = (AdjustmentViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[AdjustmentViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
+		AdjustmentView *adjustmentView = [[AdjustmentView alloc] initWithFrame:CGRectZero];
+		cell.adjustmentView = adjustmentView;
+		[adjustmentView release];
     }
     
-    NSString *textStr = nil;
-    NSString *detailTextStr = nil;
+    NSString *text1Str = nil;
+	NSString *text2Str = nil;
+    NSString *detailText1Str = nil;
+	NSString *detailText2Str = nil;
     
     if (indexPath.row < [check_.splitAdjustments count]) {
         Adjustment *adjustment = [check_.splitAdjustments objectAtIndex:indexPath.row];
-        textStr = [NSString stringWithFormat:@"%@ = %@ + tip %@",
-                   [[adjustment total] currencyString],
-                   [adjustment.amount currencyString],
-                   [adjustment.tip currencyString]];
-        
-        detailTextStr = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
+		
+		text1Str = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
+		
+		detailText1Str = [[adjustment total] currencyString];
+		detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
+						  [adjustment.amount currencyString],
+						  [adjustment.tip currencyString]];
         
         UIButton *deleteButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-        deleteButton.frame = CGRectMake(0.0, 0.0, 24.0, 24.0);
+        deleteButton.frame = CGRectMake(0.0, 0.0, 25.0, 30.0);
         deleteButton.tag = indexPath.row;
-        [deleteButton setBackgroundImage:[UIImage imageNamed:@"button_pressed.png"] forState:UIControlStateNormal];
+        [deleteButton setBackgroundImage:[UIImage imageNamed:@"button_delete.png"] forState:UIControlStateNormal];
         [deleteButton addTarget:self action:@selector(deleteAdjustmentConfirmationAction:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = deleteButton;
         [deleteButton release];
+		[cell.adjustmentView setRowTextColor];
     } else {
         NSDecimalNumber *totalBalancePerPerson = [check_ totalBalancePerPersonAfterAdjustments];
         NSDecimalNumber *billAmountBalancePerPerson = [check_ billAmountBalancePerPersonAfterAdjustments];
         NSDecimalNumber *tipBalancePerPerson = [check_ tipBalancePerPersonAfterAdjustments];
         
-        NSString *totalBalancePerPersonStr = [totalBalancePerPerson currencyString];
-        NSString *billAmountBalancePerPersonStr = [billAmountBalancePerPerson currencyString];
-        NSString *tipBalancePerPersonStr = [tipBalancePerPerson currencyString];
-        
-        textStr = [NSString stringWithFormat:@"%@ = %@ + tip %@",
-                   totalBalancePerPersonStr,
-                   billAmountBalancePerPersonStr,
-                   tipBalancePerPersonStr];
-        detailTextStr = [NSString stringWithFormat:@"Balance Per Person (%d Left)",
-                         [[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+		text1Str = @"Balance Per Person";
+		text2Str = [NSString stringWithFormat:@"%d People Left",
+					[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+		
+		detailText1Str = [totalBalancePerPerson currencyString];
+		detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
+						  [billAmountBalancePerPerson currencyString],
+						  [tipBalancePerPerson currencyString]];
+		
         cell.accessoryView = nil;
+		[cell.adjustmentView setSummaryTextColor];
     }
+    
+    cell.adjustmentView.textLabel1.text = text1Str;
+	cell.adjustmentView.textLabel2.text = text2Str;
+	cell.adjustmentView.detailTextLabel1.text = detailText1Str;
+	cell.adjustmentView.detailTextLabel2.text = detailText2Str;
 	
-	UIColor *backgroundColor = nil;
-	if ((indexPath.row % 2) == 0) {
-		backgroundColor = [UIColor greenBoardColor];
+	NSString *backgroundName = @"adjustment_row_first_bg.png";
+	if (indexPath.row % 2 == 0) {
+		if (indexPath.row > 0) {
+			backgroundName = @"adjustment_row_bg.png";
+		}
 	} else {
-		backgroundColor = [UIColor lightGreenBoardColor];
+		backgroundName = @"adjustment_row_alt_bg.png";
 	}
 	
-	cell.backgroundColor = backgroundColor;
-    
-    cell.textLabel.text = textStr;
-    cell.detailTextLabel.text = detailTextStr;
+	UIView *backgroundView = [[UIView alloc]initWithFrame:cell.frame];
+	backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:backgroundName]];
+	cell.backgroundView = backgroundView;
+	[backgroundView release];
     
     return cell;
 }

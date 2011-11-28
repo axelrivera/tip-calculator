@@ -25,6 +25,16 @@
     return [UIColor colorWithRed:88.0/255.0 green:90.0/255.0 blue:165.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)brightYellowChalkColor
+{
+	return [UIColor colorWithRed:251.0/255.0 green:183.0/255.0 blue:24.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)yellowChalkColor
+{
+	return [UIColor colorWithRed:251.0/255.0 green:216.0/255.0 blue:2.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)greenBoardColor
 {
     return [UIColor colorWithRed:3.0/255.0 green:91.0/255.0 blue:77.0/255.0 alpha:1.0];
