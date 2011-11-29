@@ -127,7 +127,7 @@ static NSDictionary *tipPercentagesDictionary;
 - (NSString *)stringForNumberOfSplitsWithDecimalNumber:(NSDecimalNumber *)number
 {
     NSString *string = nil;
-    if ([number integerValue] == 1) {
+    if ([number compare:[NSDecimalNumber one]] == NSOrderedSame) {
         string = @"No Split";
     } else {
         string = [NSString stringWithFormat:@"%d People", [number integerValue]];
@@ -138,7 +138,7 @@ static NSDictionary *tipPercentagesDictionary;
 - (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number
 {
     NSString *string = nil;
-    if ([number floatValue] == 0.0) {
+    if ([number compare:[NSDecimalNumber zero]] == NSOrderedSame) {
         string = @"No Tip (Included)";
     } else {
         string = [number percentString];

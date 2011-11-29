@@ -12,6 +12,9 @@
 @interface SettingsViewController (Private)
 
 + (NSArray *)tableDataSource;
+- (void)sendFeedback:(id)sender;
+- (void)goToWebsite:(id)sender;
+- (void)displayComposerSheet;
 
 @end
 
@@ -100,6 +103,7 @@
     NSDictionary *dictionary = nil;
     NSMutableArray *sectionOne = [[NSMutableArray alloc] initWithCapacity:3];
     NSMutableArray *sectionTwo = [[NSMutableArray alloc] initWithCapacity:2];
+	NSMutableArray *sectionThree = [[NSMutableArray alloc] initWithCapacity:2];
     
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Currency", kTextLabelKey,
@@ -132,11 +136,48 @@
                   [NSNull null], kDetailTextLabelKey,
                   nil];
     [sectionTwo addObject:dictionary];
+	
+	dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+				  @"Send Feedback", kTextLabelKey,
+				  [NSNull null], kDetailTextLabelKey,
+				  nil];
+	[sectionThree addObject:dictionary];
+	
+	dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+				  @"Rivera Labs Website", kTextLabelKey,
+				  [NSNull null], kDetailTextLabelKey,
+				  nil];
+	[sectionThree addObject:dictionary];
     
-    NSArray *data = [[NSArray alloc] initWithObjects:sectionOne, sectionTwo, nil];
+    NSArray *data = [[NSArray alloc] initWithObjects:sectionOne, sectionTwo, sectionThree, nil];
     [sectionOne release];
     [sectionTwo release];
+	[sectionThree release];
     return data;
+}
+
+- (void)sendFeedback:(id)sender
+{
+	[self displayComposerSheet];
+}
+
+- (void)goToWebsite:(id)sender
+{
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://riveralabs.com"]];
+}
+
+- (void)displayComposerSheet
+{
+	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+	picker.mailComposeDelegate = self;
+	
+	NSArray *toRecipients = [NSArray arrayWithObject:@"apps@riveralabs.com"];
+	[picker setToRecipients:toRecipients];
+	
+	[picker setSubject:@"Rivera Labs Tip Calculator Feedback"];
+	
+	[self presentModalViewController:picker animated:YES];
+    [picker release];
 }
 
 #pragma mark - Table view data source
@@ -169,41 +210,69 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;
-    }
+    } else if (indexPath.section == 1) {
     
-    NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    NSDictionary *dictionary = [[data objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
-    
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-    
-    BOOL onValue;
-    NSInteger tag;
-    if (indexPath.row == 0) {
-        onValue = settings_.sound;
-        tag = kSettingsControllerSoundTag;
-    } else {
-        onValue = settings_.shakeToClear;
-        tag = kSettingsControllerShakeToClearTag;
-    }
-    
-    [switchView setOn:onValue animated:NO];
-    switchView.tag = tag;
-    
-    cell.accessoryView = switchView;
-    [switchView release];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
+		NSString *CellIdentifier = @"Cell";
+		
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		if (cell == nil) {
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		}
+		
+		NSDictionary *dictionary = [[data objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+		
+		cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
+		
+		UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+		[switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+		
+		BOOL onValue;
+		NSInteger tag;
+		if (indexPath.row == 0) {
+			onValue = settings_.sound;
+			tag = kSettingsControllerSoundTag;
+		} else {
+			onValue = settings_.shakeToClear;
+			tag = kSettingsControllerShakeToClearTag;
+		}
+		
+		[switchView setOn:onValue animated:NO];
+		switchView.tag = tag;
+		
+		cell.accessoryView = switchView;
+		[switchView release];
+		
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		
+		return cell;
+	}
+	
+	NSString *CellIdentifier = @"OwnerCell";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+	}
+	
+	NSDictionary *dictionary = [[data objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	
+	cell.textLabel.text = [dictionary objectForKey:kTextLabelKey];
+	cell.textLabel.textAlignment = UITextAlignmentCenter;
+	cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+	
+	return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	NSString *title = nil;
+	if (section == 2) {
+		title = [NSString stringWithFormat:
+				 @"Rivera Labs Tip Calculator %@\n"
+				 @"Copyright © 2011; Axel Rivera.",
+				 [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+	}
+	return title;
 }
 
 #pragma mark - Table view delegate
@@ -243,7 +312,13 @@
             [self.navigationController pushViewController:taxController animated:YES];
             [taxController release];
         }
-    }
+    } else if (indexPath.section == 2) {
+		if (indexPath.row == 0) {
+			[self performSelector:@selector(sendFeedback:)];
+		} else {
+			[self performSelector:@selector(goToWebsite:)];
+		}
+	}
 }
 
 #pragma mark UIViewController Delegates
@@ -262,6 +337,50 @@
 - (void)taxViewControllerDidFinish:(TaxViewController *)controller
 {
     settings_.taxRate = controller.taxRate;
+}
+
+#pragma mark - MFMailComposeViewController Delegate
+
+// Dismisses the email composition interface when users tap Cancel or Send.
+// Proceeds to update the message field with the result of the operation.
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+		  didFinishWithResult:(MFMailComposeResult)result
+						error:(NSError*)error
+{	
+	NSString *errorString = nil;
+	
+	BOOL showAlert = NO;
+	// Notifies users about errors associated with the interface
+	switch (result)  {
+		case MFMailComposeResultCancelled:
+			break;
+		case MFMailComposeResultSaved:
+			break;
+		case MFMailComposeResultSent:
+			break;
+		case MFMailComposeResultFailed:
+			errorString = [NSString stringWithFormat:@"E-mail failed: %@", 
+						   [error localizedDescription]];
+			showAlert = YES;
+			break;
+		default:
+			errorString = [NSString stringWithFormat:@"E-mail was not sent: %@", 
+						   [error localizedDescription]];
+			showAlert = YES;
+			break;
+	}
+	
+	[self dismissModalViewControllerAnimated:YES];
+	
+	if (showAlert == YES) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"E-mail Error"
+														message:errorString
+													   delegate:self
+											  cancelButtonTitle:@"OK"
+											  otherButtonTitles: nil];
+		[alert show];
+		[alert release];
+	}
 }
 
 @end

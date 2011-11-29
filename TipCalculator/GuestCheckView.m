@@ -54,6 +54,8 @@
         totalTipLabel_.font = detailFont;
         totalTipLabel_.textColor = labelColor;
         totalTipLabel_.textAlignment = UITextAlignmentRight;
+		totalTipLabel_.minimumFontSize = 12.0;
+		totalTipLabel_.adjustsFontSizeToFitWidth = YES;
         [self addSubview:totalTipLabel_];
         
         totalToPayLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -61,6 +63,8 @@
         totalToPayLabel_.font = detailFont;
         totalToPayLabel_.textColor = labelColor;
         totalToPayLabel_.textAlignment = UITextAlignmentRight;
+		totalToPayLabel_.minimumFontSize = 12.0;
+		totalToPayLabel_.adjustsFontSizeToFitWidth = YES;
         [self addSubview:totalToPayLabel_];
         
         totalPerPersonLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -68,6 +72,8 @@
         totalPerPersonLabel_.font = detailFont;
         totalPerPersonLabel_.textColor = labelColor;
         totalPerPersonLabel_.textAlignment = UITextAlignmentRight;
+		totalPerPersonLabel_.minimumFontSize = 12.0;
+		totalPerPersonLabel_.adjustsFontSizeToFitWidth = YES;
         [self addSubview:totalPerPersonLabel_];
     }
     return self;

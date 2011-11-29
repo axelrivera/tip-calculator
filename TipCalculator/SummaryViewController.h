@@ -19,7 +19,7 @@
 typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPercent } SummaryViewControllerPickerType;
 
 @interface SummaryViewController : UIViewController
-<AdjustmentsViewControllerDelegate, SettingsViewControllerDelegate, RLNumberPadDelegate>
+<AdjustmentsViewControllerDelegate, SettingsViewControllerDelegate, RLNumberPadDelegate, UIPickerViewDelegate>
 {
     Check *check_;
     RLNumberPad *numberPad_;
@@ -33,7 +33,7 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
 @property (nonatomic, retain) InputDisplayView *tipInputView;
 @property (nonatomic, retain) InputDisplayView *billAmountInputView;
 
-@property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
+@property (nonatomic, retain) UIPickerView *pickerView;
 
 @property (nonatomic, assign) NSArray *currentPickerDataSource;
 @property (nonatomic, assign) SummaryViewControllerPickerType pickerType;

@@ -49,6 +49,8 @@
         detailTextLabel_.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:17.0];
         detailTextLabel_.backgroundColor = [UIColor clearColor];
         detailTextLabel_.textAlignment = UITextAlignmentRight;
+		detailTextLabel_.minimumFontSize = 12.0;
+		detailTextLabel_.adjustsFontSizeToFitWidth = YES;
         [self addSubview:detailTextLabel_];
         
         UIImage *normalImage = [UIImage imageNamed:@"select_view_black.png"];
@@ -58,11 +60,16 @@
         UIImage *selectedImage = [UIImage imageNamed:@"select_view_white.png"];
         UIImage *selectedBackground = [selectedImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37];
         [self setBackgroundImage:selectedBackground forState:UIControlStateSelected];
+		
+		UIImage *disabledImage = [UIImage imageNamed:@"select_view_disabled.png"];
+        UIImage *disabledBackground = [disabledImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:37];
+        [self setBackgroundImage:disabledBackground forState:UIControlStateDisabled];
         
 		accessoryView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kInputViewImage]];
 		[self addSubview:accessoryView_];
 		
         self.selected = NO;
+		self.adjustsImageWhenDisabled = YES;
     }
     return self;
 }
@@ -150,6 +157,14 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     // Disable Highlighting to avoid weird color issues in label colors
+}
+
+- (void)setEnabled:(BOOL)enabled
+{
+	[super setEnabled:enabled];
+	textLabel_.enabled = enabled;
+	detailTextLabel_.enabled = enabled;
+	accessoryView_.hidden = !enabled;
 }
 
 @end

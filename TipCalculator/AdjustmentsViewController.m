@@ -11,7 +11,6 @@
 #import "CheckData.h"
 #import "Adjustment.h"
 #import "NSDecimalNumber+Check.h"
-#import "AdjustmentBalanceView.h"
 #import "ControllerConstants.h"
 #import "UIColor+TipCalculator.h"
 #import "UIButton+TipCalculator.h"
@@ -43,7 +42,7 @@
 @synthesize adjustmentsInputView = adjustmentsInputView_;
 @synthesize totalToPayTitleLabel = totalToPayTitleLabel_;
 @synthesize totalToPayLabel = totalToPayLabel_;
-@synthesize peopleLeftLabel = peopleLeftLabel_;
+@synthesize numberOfPeopleLabel = numberOfPeopleLabel_;
 @synthesize currentAdjustment = currentAdjustment_;
 
 - (id)init
@@ -84,7 +83,7 @@
     [adjustmentsInputView_ release];
 	[totalToPayTitleLabel_ release];
 	[totalToPayLabel_ release];
-	[peopleLeftLabel_ release];
+	[numberOfPeopleLabel_ release];
     [currentAdjustment_ release];
     [super dealloc];
 }
@@ -171,16 +170,18 @@
 	totalToPayLabel_.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:16.0];
 	totalToPayLabel_.textColor = [UIColor greenBoardColor];
 	totalToPayLabel_.textAlignment = UITextAlignmentLeft;
-	totalToPayLabel_.text = @"$9,999,999.00";
+	totalToPayLabel_.minimumFontSize = 12.0;
+	totalToPayLabel_.adjustsFontSizeToFitWidth = YES;
 	[footerView_ addSubview:totalToPayLabel_];
 	
-	peopleLeftLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(250.0, 5.0, 60.0, 27.0)];
-	peopleLeftLabel_.backgroundColor = [UIColor clearColor];
-	peopleLeftLabel_.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:16.0];
-	peopleLeftLabel_.textColor = [UIColor greenBoardColor];
-	peopleLeftLabel_.textAlignment = UITextAlignmentRight;
-	peopleLeftLabel_.text = @"50 People";
-	[footerView_ addSubview:peopleLeftLabel_];
+	numberOfPeopleLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(250.0, 5.0, 60.0, 27.0)];
+	numberOfPeopleLabel_.backgroundColor = [UIColor clearColor];
+	numberOfPeopleLabel_.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:16.0];
+	numberOfPeopleLabel_.textColor = [UIColor greenBoardColor];
+	numberOfPeopleLabel_.textAlignment = UITextAlignmentRight;
+	numberOfPeopleLabel_.minimumFontSize = 12.0;
+	numberOfPeopleLabel_.adjustsFontSizeToFitWidth = YES;
+	[footerView_ addSubview:numberOfPeopleLabel_];
 }
 
 - (void)viewDidUnload
@@ -197,7 +198,7 @@
     self.adjustmentsInputView = nil;
 	self.totalToPayTitleLabel = nil;
 	self.totalToPayLabel = nil;
-	self.peopleLeftLabel = nil;
+	self.numberOfPeopleLabel = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -207,11 +208,17 @@
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
     adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
+	if ([[check_ numberOfSplits] compare:[NSDecimalNumber one]] == NSOrderedSame) {
+		adjustmentsInputView_.enabled = NO;
+	} else {
+		adjustmentsInputView_.enabled = YES;
+	}
+	
 	NSDecimalNumber *totalToPay = [check_ totalToPay];
 	NSDecimalNumber *numberOfPeople = [check_ numberOfSplits];
 	
 	totalToPayLabel_.text = [totalToPay currencyString];
-	peopleLeftLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:numberOfPeople];
+	numberOfPeopleLabel_.text = [check_ stringForNumberOfSplitsWithDecimalNumber:numberOfPeople];
 	
     [adjustmentsTable_ reloadData];
 }
@@ -372,9 +379,14 @@
         NSDecimalNumber *billAmountBalancePerPerson = [check_ billAmountBalancePerPersonAfterAdjustments];
         NSDecimalNumber *tipBalancePerPerson = [check_ tipBalancePerPersonAfterAdjustments];
         
-		text1Str = @"Balance Per Person";
-		text2Str = [NSString stringWithFormat:@"%d People Left",
-					[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+		if ([[check_ numberOfSplits] compare:[NSDecimalNumber one]] == NSOrderedSame) {
+			text1Str = @"Total To Pay";
+			text2Str = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+		} else {
+			text1Str = @"Balance Per Person";
+			text2Str = [NSString stringWithFormat:@"%d People Left",
+						[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+		}
 		
 		detailText1Str = [totalBalancePerPerson currencyString];
 		detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
