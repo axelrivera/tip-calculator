@@ -299,7 +299,8 @@
                 selectController.selectID = kTipOnTaxControllerTag;
                 selectController.currentIndex = (NSInteger)settings_.tipOnTax;
                 selectController.tableData = [NSArray arrayWithObjects:@"No", @"Yes", nil];
-                selectController.tableFooterTitle = @"Answer \"Yes\" to tip on the total amount including taxes.";
+                selectController.tableFooterTitle = @"Answer \"Yes\" to tip on the total amount including taxes. "
+													"You can set your local tax rate in the previous screen.";
                 selectController.title = @"Tip On Tax";
             }
             [self.navigationController pushViewController:selectController animated:YES];

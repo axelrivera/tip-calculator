@@ -180,7 +180,7 @@
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
-		[self becomeFirstResponder];
+		//[self becomeFirstResponder];
     } else {
         pickerType_ = SummaryViewControllerPickerSplit;
         currentPickerDataSource_ = [Check numberOfSplitsArray];
@@ -208,7 +208,7 @@
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
-		[self becomeFirstResponder];
+		//[self becomeFirstResponder];
     } else {
         pickerType_ = SummaryViewControllerPickerPercent;
         currentPickerDataSource_ = [Check tipPercentagesArray];
@@ -236,7 +236,7 @@
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
-		[self becomeFirstResponder];
+		//[self becomeFirstResponder];
     } else {
         [billAmountInputView_ becomeFirstResponder];
     }
@@ -394,7 +394,7 @@
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
-	if ([Settings sharedSettings].shakeToClear) {
+	if ([Settings sharedSettings].shakeToClear && [self isFirstResponder]) {
 		[self hideCheckSummary];
 		check_.billAmount = [NSDecimalNumber zero];
 		[numberPadDigits_ resetDigitsAndDecimals];

@@ -40,7 +40,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.opaque = YES;
-        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"numberpad_bg.png"]];
         [self setupButtons];
     }
     return self;
@@ -164,7 +164,23 @@
 - (void)setupButtons
 {
     for (NSInteger tag = 1; tag <= kNumberOfButtons; tag++) {
-        UIButton *button = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+		UIButton *button = nil;
+		if (tag >= 1 && tag <= 11) {
+			UIImage *image = [UIImage imageNamed:@"numberpad_button_normal.png"];
+			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
+			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_normal_pressed.png"];
+			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
+			button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+			[button setBackgroundImage:background forState:UIControlStateNormal];
+			[button setBackgroundImage:hBackground forState:UIControlStateHighlighted];
+			[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+			[button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+			button.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
+			button.titleLabel.font = [UIFont boldSystemFontOfSize:22.0];
+			button.adjustsImageWhenHighlighted = NO;
+		} else {
+			button = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+		}
         [button setTitle:[self stringForType:(RLNumberPadType)tag title:YES] forState:UIControlStateNormal];
         button.tag = tag;
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
