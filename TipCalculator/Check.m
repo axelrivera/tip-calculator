@@ -258,6 +258,7 @@ static NSDictionary *tipPercentagesDictionary;
     
     NSDecimalNumber *currentBalance = [self totalBalanceAfterAdjustments];
     NSDecimalNumber *futureBalance = [currentBalance decimalCurrencyBySubtracting:totalAdjustment];
+	NSLog(@"Current Balance: %@, Future Balance: %@, Total Adjustment: %@", currentBalance, futureBalance, totalAdjustment);
     
     if (![self canAddOneMoreAdjusment]) {
         // Number of adjustments is equal to the number of splits

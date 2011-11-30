@@ -115,6 +115,11 @@
                   [settings roundingString], kDetailTextLabelKey,
                   nil];
     [sectionOne addObject:dictionary];
+	dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+				  @"Confirm Adjustment", kTextLabelKey,
+				  [settings adjustmentConfirmationString], kDetailTextLabelKey,
+				  nil];
+	[sectionOne addObject:dictionary];
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Tip On Tax", kTextLabelKey,
                   [settings tipOnTaxString], kDetailTextLabelKey,
@@ -149,7 +154,7 @@
 				  nil];
 	[sectionThree addObject:dictionary];
     
-    NSArray *data = [[NSArray alloc] initWithObjects:sectionOne, sectionTwo, sectionThree, nil];
+    NSArray *data = [[[NSArray alloc] initWithObjects:sectionOne, sectionTwo, sectionThree, nil] autorelease];
     [sectionOne release];
     [sectionTwo release];
 	[sectionThree release];
@@ -295,7 +300,15 @@
                 selectController.currentIndex = settings_.rounding;
                 selectController.tableData = [Settings roundingTypeArray];
                 selectController.title = @"Rounding";
-            } else {
+            } else if (indexPath.row == 2) {
+				selectController.selectID = kAdjustmentConfirmationControllerTag;
+				selectController.currentIndex = settings_.adjustmentConfirmation;
+				selectController.tableData = [NSArray arrayWithObjects:@"No", @"Yes", nil];
+				selectController.tableFooterTitle = @"Answer \"Yes\" to show a confirmation screen when adding split adjustments. "
+													"You will be shown the tax, tip and total before saving every "
+													"split adjustment.";
+				selectController.title = @"Adjustment";
+			} else {
                 selectController.selectID = kTipOnTaxControllerTag;
                 selectController.currentIndex = (NSInteger)settings_.tipOnTax;
                 selectController.tableData = [NSArray arrayWithObjects:@"No", @"Yes", nil];
@@ -330,7 +343,9 @@
         settings_.currency = controller.currentIndex;
     } else if (controller.selectID == kRoundingControllerTag) {
         settings_.rounding = controller.currentIndex;
-    } else {
+    }  else if (controller.selectID == kAdjustmentConfirmationControllerTag) {
+		settings_.adjustmentConfirmation = (BOOL)controller.currentIndex;
+	} else {
         settings_.tipOnTax = (BOOL)controller.currentIndex;
     }
 }

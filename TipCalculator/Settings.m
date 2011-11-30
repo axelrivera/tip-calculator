@@ -29,6 +29,7 @@
 
 #define kSettingsCurrencyKey @"RLTipCalculatorCurrencyKey"
 #define kSettingsRoundingKey @"RLTipCalculatorRoundingKey"
+#define kSettingsAdjustmentConfirmationKey @"RLTipCalculatorAdjustmentConfirmationKey"
 #define kSettingsTipOnTaxKey @"RLTipCalculatorTipOnTaxKey"
 #define kSettingsSoundKey @"RLTipCalculatorSoundKey"
 #define kSettingsShakeToClearKey @"RLTipCalculatorShakeToClearKey"
@@ -39,6 +40,7 @@ static NSArray *roundingArray_;
 
 CurrencyType const kDefaultCurrency = CurrencyTypeAutomatic;
 RoundingType const kDefaultRounding = RoundingTypeNone;
+BOOL const kDefaultAdjustmentConfirmation = YES;
 BOOL const kDefaultTipOnTax = YES;
 BOOL const kDefaultSound = YES;
 BOOL const kDefaultShakeToClear = YES;
@@ -50,6 +52,7 @@ static Settings *sharedSettings_;
 
 @synthesize currency = currency_;
 @synthesize rounding = rounding_;
+@synthesize adjustmentConfirmation = adjustmentConfirmation_;
 @synthesize tipOnTax = tipOnTax_;
 @synthesize sound = sound_;
 @synthesize shakeToClear = shakeToClear_;
@@ -71,6 +74,12 @@ static Settings *sharedSettings_;
         }
         self.rounding = [Settings roundingTypeForKey:roundingStr];
         
+		NSNumber *adjustmentConfirmation = [[NSUserDefaults standardUserDefaults] objectForKey:kSettingsAdjustmentConfirmationKey];
+		if (adjustmentConfirmation == nil) {
+			adjustmentConfirmation = [NSNumber numberWithBool:kDefaultAdjustmentConfirmation];
+		}
+		self.adjustmentConfirmation = [adjustmentConfirmation boolValue];
+		
         NSNumber *tipOnTax = [[NSUserDefaults standardUserDefaults] objectForKey:kSettingsTipOnTaxKey];
         if (tipOnTax == nil) {
             tipOnTax = [NSNumber numberWithBool:kDefaultTipOnTax];
@@ -120,6 +129,14 @@ static Settings *sharedSettings_;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)setAdjustmentConfirmation:(BOOL)adjustmentConfirmation
+{
+	adjustmentConfirmation_ = adjustmentConfirmation;
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:adjustmentConfirmation]
+																	   forKey:kSettingsAdjustmentConfirmationKey];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)setTipOnTax:(BOOL)tipOnTax
 {
     tipOnTax_ = tipOnTax;
@@ -159,6 +176,17 @@ static Settings *sharedSettings_;
 - (NSString *)roundingString
 {
     return [Settings stringForRoundingType:rounding_];
+}
+
+- (NSString *)adjustmentConfirmationString
+{
+	NSString *string = nil;
+	if (adjustmentConfirmation_) {
+		string = @"Yes";
+	} else {
+		string = @"No";
+	}
+	return string;
 }
 
 - (NSString *)tipOnTaxString

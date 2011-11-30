@@ -27,6 +27,7 @@
 - (void)deleteAdjustmentAction:(id)sender;
 - (void)addAction:(id)sender;
 - (void)questionAction:(id)sender;
+- (void)alertViewWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
 
@@ -54,7 +55,7 @@
         numberPad_.delegate = self;
         numberPadDigits_ = [[RLNumberPadDigits alloc] initWithDigits:@"" andDecimals:@""];
         self.currentAdjustment = [NSDecimalNumber zero];
-        currentDeleteButton_ = currentDeleteButton_;
+        currentDeleteButton_ = nil;
     }
     return self;
 }
@@ -208,10 +209,14 @@
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
     adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
-	if ([[check_ numberOfSplits] compare:[NSDecimalNumber one]] == NSOrderedSame) {
+	if ([[check_ numberOfSplits] compare:[NSDecimalNumber one]] == NSOrderedSame ||
+		[[check_ totalToPay] compare:[NSDecimalNumber zero]] == NSOrderedSame)
+	{
 		adjustmentsInputView_.enabled = NO;
+		resetButton_.enabled = NO;
 	} else {
 		adjustmentsInputView_.enabled = YES;
+		resetButton_.enabled = YES;
 	}
 	
 	NSDecimalNumber *totalToPay = [check_ totalToPay];
@@ -263,12 +268,7 @@
         if ([check_ canAddOneMoreAdjusment]) {
             [adjustmentsInputView_ becomeFirstResponder];
         } else {
-            UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Adjustment Error"
-                                                                 message:@"Cannot add more adjustments"
-                                                                delegate:nil
-                                                       cancelButtonTitle:@"OK"
-                                                       otherButtonTitles:nil] autorelease];
-            [alertView show];
+			[self alertViewWithTitle:@"Adjustment Error" message:@"Cannot add more adjustments"];
             return;
         }
     }
@@ -301,10 +301,15 @@
 
 - (void)addAction:(id)sender
 {
-    Settings *settings = [Settings sharedSettings];
+	if ([currentAdjustment_ compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+		[adjustmentsInputView_ resignFirstResponder];
+		return;
+	}
+	
+	Settings *settings = [Settings sharedSettings];
     NSDecimalNumber *taxRate = [[NSDecimalNumber one] decimalNumberByAdding:[settings taxRatePercentage]];
-    NSDecimalNumber *newAdjustment = [currentAdjustment_ decimalCurrencyByMultiplyingBy:taxRate];
-    Adjustment *adjustment = [[Adjustment alloc] initWithAmount:newAdjustment tipRate:check_.tipPercentage];
+	NSDecimalNumber *newAdjustment = [currentAdjustment_ decimalCurrencyByMultiplyingBy:taxRate];
+    Adjustment *adjustment = [[[Adjustment alloc] initWithAmount:newAdjustment tipRate:check_.tipPercentage] autorelease];
     if ([check_ canAddAdjustment:[adjustment total]]) {
         [check_ addSplitAdjustment:adjustment];
         [adjustmentsTable_ beginUpdates];
@@ -313,20 +318,25 @@
         [self performSelector:@selector(adjustmentsAction:)];
         return;
     }
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Adjustment Error"
-                                                        message:@"Adjustment Error"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    [alertView release];
-    
-    [adjustment release];
+    [self alertViewWithTitle:@"Adjustment Error" message:@"Adjustment Error"];
 }
 
 - (void)questionAction:(id)sender
 {
 	
+}
+
+#pragma mark - Private Methods
+
+- (void)alertViewWithTitle:(NSString *)title message:(NSString *)message
+{
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+														message:message
+													   delegate:nil
+											  cancelButtonTitle:@"OK"
+											  otherButtonTitles:nil];
+	[alertView show];
+	[alertView release];
 }
 
 #pragma mark - UITableView Datasource Methods

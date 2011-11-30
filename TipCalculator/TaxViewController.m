@@ -200,7 +200,7 @@ static NSArray *decimalRange_;
     NSString *textLabelStr = nil;
     
     textLabelStr = @"Tax Rate";
-    RLInputLabel *inputLabel = [[RLInputLabel alloc] initWithFrame:CGRectMake(0.0, 7.0, 200.0, 30.0)];
+    RLInputLabel *inputLabel = [[[RLInputLabel alloc] initWithFrame:CGRectMake(0.0, 7.0, 200.0, 30.0)] autorelease];
     inputLabel.tag = kTaxControllerTaxRateTag;
     inputLabel.font = [UIFont systemFontOfSize:17.0];
     inputLabel.adjustsFontSizeToFitWidth = YES;

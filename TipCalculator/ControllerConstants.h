@@ -15,6 +15,7 @@
 #define kCurrencyControllerTag 200
 #define kRoundingControllerTag 201
 #define kTipOnTaxControllerTag 202
+#define kAdjustmentConfirmationControllerTag 203
 
 #define kSettingsControllerSoundTag 300
 #define kSettingsControllerShakeToClearTag 301

@@ -165,21 +165,45 @@
 {
     for (NSInteger tag = 1; tag <= kNumberOfButtons; tag++) {
 		UIButton *button = nil;
-		if (tag >= 1 && tag <= 11) {
-			UIImage *image = [UIImage imageNamed:@"numberpad_button_normal.png"];
+		if (tag >= 1 && tag <= 12) {
+			UIImage *image = [UIImage imageNamed:@"numberpad_button_black.png"];
 			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
-			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_normal_pressed.png"];
+			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_black_pressed.png"];
 			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
 			button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 			[button setBackgroundImage:background forState:UIControlStateNormal];
 			[button setBackgroundImage:hBackground forState:UIControlStateHighlighted];
 			[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-			[button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+			[button setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
 			button.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
 			button.titleLabel.font = [UIFont boldSystemFontOfSize:22.0];
 			button.adjustsImageWhenHighlighted = NO;
+		} else if (tag == 13) {
+			UIImage *image = [UIImage imageNamed:@"numberpad_button_yellow.png"];
+			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kBackButtonHeight];
+			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_yellow_pressed.png"];
+			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kBackButtonHeight];
+			button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+			[button setBackgroundImage:background forState:UIControlStateNormal];
+			[button setBackgroundImage:hBackground forState:UIControlStateHighlighted];
+			
+			UIImage *symbol = [UIImage imageNamed:@"back_symbol.png"];
+			[button setImage:symbol forState:UIControlStateNormal];
+			
+			button.adjustsImageWhenHighlighted = NO;
 		} else {
-			button = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+			UIImage *image = [UIImage imageNamed:@"numberpad_button_blue.png"];
+			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
+			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_blue_pressed.png"];
+			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
+			button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+			[button setBackgroundImage:background forState:UIControlStateNormal];
+			[button setBackgroundImage:hBackground forState:UIControlStateHighlighted];
+			[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+			[button setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+			button.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
+			button.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
+			button.adjustsImageWhenHighlighted = NO;
 		}
         [button setTitle:[self stringForType:(RLNumberPadType)tag title:YES] forState:UIControlStateNormal];
         button.tag = tag;
@@ -236,7 +260,7 @@
             break;
         case RLNumberPadBack:
             if (title) {
-                string = @"<<";
+                string = @"";
             } else {
                 string = @"";
             }
