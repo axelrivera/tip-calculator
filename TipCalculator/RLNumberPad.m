@@ -8,7 +8,7 @@
 
 #import "RLNumberPad.h"
 
-#define kNumberOfButtons 14
+#define kNumberOfButtons 13
 #define kPortraitWidth 320.0
 #define kPortraitHeight 236.0
 #define kHorizontalPadding 16.0
@@ -19,8 +19,8 @@
 #define kDefaultButtonHeight 44.0
 #define kZeroButtonWidth 140.0
 #define kZeroButtonHeight kDefaultButtonHeight
-#define kBackButtonWidth kDefaultButtonWidth
-#define kBackButtonHeight kDefaultButtonHeight + kVerticalOffset + kDefaultButtonHeight
+#define kDoneButtonWidth kDefaultButtonWidth
+#define kDoneButtonHeight (kDefaultButtonHeight * 3.0) + (kVerticalOffset * 2.0)
 
 @interface RLNumberPad (Private)
 
@@ -138,17 +138,11 @@
                                          kDefaultButtonWidth,
                                          kDefaultButtonHeight);
                 break;
-            case RLNumberPadBack:
-                buttonFrame = CGRectMake(kHorizontalPadding + (kDefaultButtonWidth * 3.0) + (kHorizontalOffset * 3.0),
-                                         kVerticalPadding + kDefaultButtonHeight + kVerticalOffset,
-                                         kBackButtonWidth,
-                                         kBackButtonHeight);
-                break;
             case RLNumberPadDone:
                 buttonFrame = CGRectMake(kHorizontalPadding + (kDefaultButtonWidth * 3.0) + (kHorizontalOffset * 3.0),
-                                         kVerticalPadding + (kDefaultButtonHeight * 3.0) + (kVerticalOffset * 3.0),
-                                         kDefaultButtonWidth,
-                                         kDefaultButtonHeight);
+                                         kVerticalPadding + kDefaultButtonHeight + kVerticalOffset,
+                                         kDoneButtonWidth,
+                                         kDoneButtonHeight);
                 break;
             default:
                 errorStr = [NSString stringWithFormat:@"%@: Unexpected Button Type", NSStringFromClass([self class])];
@@ -165,7 +159,7 @@
 {
     for (NSInteger tag = 1; tag <= kNumberOfButtons; tag++) {
 		UIButton *button = nil;
-		if (tag >= 1 && tag <= 12) {
+		if (tag >= 1 && tag <= 11) {
 			UIImage *image = [UIImage imageNamed:@"numberpad_button_black.png"];
 			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
 			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_black_pressed.png"];
@@ -178,24 +172,24 @@
 			button.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
 			button.titleLabel.font = [UIFont boldSystemFontOfSize:22.0];
 			button.adjustsImageWhenHighlighted = NO;
-		} else if (tag == 13) {
+		} else if (tag == 12) {
 			UIImage *image = [UIImage imageNamed:@"numberpad_button_yellow.png"];
-			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kBackButtonHeight];
+			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
 			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_yellow_pressed.png"];
-			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kBackButtonHeight];
+			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
 			button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 			[button setBackgroundImage:background forState:UIControlStateNormal];
 			[button setBackgroundImage:hBackground forState:UIControlStateHighlighted];
-			
-			UIImage *symbol = [UIImage imageNamed:@"back_symbol.png"];
-			[button setImage:symbol forState:UIControlStateNormal];
-			
+			[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+			[button setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+			button.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
+			button.titleLabel.font = [UIFont boldSystemFontOfSize:22.0];
 			button.adjustsImageWhenHighlighted = NO;
 		} else {
-			UIImage *image = [UIImage imageNamed:@"numberpad_button_blue.png"];
-			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
-			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_blue_pressed.png"];
-			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDefaultButtonHeight];
+			UIImage *image = [UIImage imageNamed:@"numberpad_button_done.png"];
+			UIImage *background = [image stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDoneButtonHeight];
+			UIImage *hImage = [UIImage imageNamed:@"numberpad_button_done_pressed.png"];
+			UIImage *hBackground = [hImage stretchableImageWithLeftCapWidth:10.0 topCapHeight:kDoneButtonHeight];
 			button = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
 			[button setBackgroundImage:background forState:UIControlStateNormal];
 			[button setBackgroundImage:hBackground forState:UIControlStateHighlighted];
@@ -254,13 +248,6 @@
         case RLNumberPadClear:
             if (title) {
                 string = @"C";
-            } else {
-                string = @"";
-            }
-            break;
-        case RLNumberPadBack:
-            if (title) {
-                string = @"";
             } else {
                 string = @"";
             }

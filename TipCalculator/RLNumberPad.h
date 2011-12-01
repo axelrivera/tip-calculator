@@ -21,8 +21,7 @@ typedef enum {
     RLNumberPadZero = 10,
     RLNumberPadPeriod = 11,
     RLNumberPadClear = 12,
-    RLNumberPadBack = 13,
-    RLNumberPadDone = 14
+    RLNumberPadDone = 13
 } RLNumberPadType;
 
 @protocol RLNumberPadDelegate <NSObject>

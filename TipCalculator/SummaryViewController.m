@@ -156,6 +156,7 @@
     tipInputView_.detailTextLabel.text = [check_.tipPercentage percentString];
     
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:check_.billAmount];
+	[numberPadDigits_ validateAndFixDecimalSeparator];
     billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
     [self reloadCheckSummaryAndResetAdjustments:NO];
@@ -171,7 +172,7 @@
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
     if ([billAmountInputView_ isFirstResponder]) {
-        [numberPadDigits_ validateAndFixDecimalSeparator];
+		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
@@ -180,7 +181,6 @@
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
-		//[self becomeFirstResponder];
     } else {
         pickerType_ = SummaryViewControllerPickerSplit;
         currentPickerDataSource_ = [Check numberOfSplitsArray];
@@ -199,7 +199,7 @@
         [self reloadCheckSummaryAndResetAdjustments:YES];
     }
     if ([billAmountInputView_ isFirstResponder]) {
-        [numberPadDigits_ validateAndFixDecimalSeparator];
+		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
@@ -208,7 +208,6 @@
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
         [self reloadCheckSummaryAndResetAdjustments:YES];
-		//[self becomeFirstResponder];
     } else {
         pickerType_ = SummaryViewControllerPickerPercent;
         currentPickerDataSource_ = [Check tipPercentagesArray];
@@ -232,12 +231,11 @@
     }
     
     if ([billAmountInputView_ isFirstResponder]) {
-        [numberPadDigits_ validateAndFixDecimalSeparator];
+		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
-		//[self becomeFirstResponder];
-    } else {
+		[self reloadCheckSummaryAndResetAdjustments:YES];
+	} else {
         [billAmountInputView_ becomeFirstResponder];
     }
 }

@@ -21,11 +21,8 @@ static NSNumberFormatter *digitsFormatter_;
 - (void)addNumberToDigits:(NSString *)string;
 - (void)addNumberToDecimals:(NSString *)string;
 
-- (void)removeLastDigit;
-- (void)removeLastDecimal;
+- (void)addPaddingToDecimals;
 
-+ (NSString *)defaultCurrencySymbol;
-+ (NSString *)defaultDecimalSeparator;
 + (NSNumberFormatter *)digitsFormatter;
 
 @end
@@ -40,7 +37,7 @@ static NSNumberFormatter *digitsFormatter_;
 {
     self = [super init];
     if (self) {
-        self.enteredDigits = @"";
+        self.enteredDigits = @"0";
         self.enteredDecimals = @"";
         self.useDecimalSeparator = NO;
     }
@@ -82,7 +79,7 @@ static NSNumberFormatter *digitsFormatter_;
     NSComparisonResult decimalCompare = [decimalNumber compare:[NSDecimalNumber zero]];
     if (decimalCompare != NSOrderedSame) {
         NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
-                                                                                                  scale:2
+                                                                                                  scale:0
                                                                                        raiseOnExactness:NO
                                                                                         raiseOnOverflow:NO
                                                                                        raiseOnUnderflow:NO
@@ -91,13 +88,13 @@ static NSNumberFormatter *digitsFormatter_;
         cents = [decimalNumber decimalNumberBySubtracting:dollars];
         cents = [cents decimalNumberByMultiplyingByPowerOf10:abs(kCurrencyScale)];
     }
-    [self setEnteredDigitsWithDecimalNumber:dollars];
+	[self setEnteredDigitsWithDecimalNumber:dollars];
     [self setEnteredDecimalsWithDecimalNumber:cents];
 }
 
 - (void)resetDigitsAndDecimals
 {
-    self.enteredDigits = @"";
+    self.enteredDigits = @"0";
     self.enteredDecimals = @"";
     useDecimalSeparator_ = NO;
 }
@@ -108,11 +105,16 @@ static NSNumberFormatter *digitsFormatter_;
 		return;
 	}
     
-    if (![string isEqualToString:@""] && useDecimalSeparator_ == YES && [enteredDecimals_ length] >= abs(kCurrencyScale)) {
+    if (![string isEqualToString:@""] &&
+		useDecimalSeparator_ == YES &&
+		[enteredDecimals_ length] >= abs(kCurrencyScale))
+	{
         return;
     }
     
-    if (useDecimalSeparator_ == NO && [string isEqualToString:@"."]) {
+    if (useDecimalSeparator_ == NO &&
+		[string isEqualToString:@"."])
+	{
         useDecimalSeparator_ = YES;
     }
 	
@@ -122,12 +124,6 @@ static NSNumberFormatter *digitsFormatter_;
             [self addNumberToDigits:string];
         } else {
             [self addNumberToDecimals:string];
-        }
-	} else {
-		if (!useDecimalSeparator_) {
-            [self removeLastDigit];
-        } else {
-            [self removeLastDecimal];
         }
 	}	
 }
@@ -139,19 +135,21 @@ static NSNumberFormatter *digitsFormatter_;
 
 - (void)validateAndFixDecimalSeparator
 {
-    if (useDecimalSeparator_ && [enteredDecimals_ length] == 0) {
-        useDecimalSeparator_ = NO;
-    }
+	NSString *numberStr = [[NSArray arrayWithObjects:enteredDigits_, enteredDecimals_, nil] componentsJoinedByString:@"."];
+	NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:numberStr];
+	NSComparisonResult compareNumber = [decimalNumber compare:[NSDecimalNumber zero]];
+	if (compareNumber == NSOrderedSame) {
+		[self resetDigitsAndDecimals];
+	} else {
+		useDecimalSeparator_ = YES;
+		[self addPaddingToDecimals];
+	}
 }
 
 - (NSDecimalNumber *)decimalNumber
 {
     NSMutableString *decimalStr = [NSMutableString string];
-	if (![enteredDigits_ isEqualToString:@""]) {
-		[decimalStr appendString:enteredDigits_];
-	} else {
-		[decimalStr appendString:@"0"];
-	}
+	[decimalStr appendString:enteredDigits_];
     if (useDecimalSeparator_ && ![enteredDecimals_ isEqualToString:@""]) {
         [decimalStr appendFormat:@".%@", enteredDecimals_];
     }
@@ -162,10 +160,7 @@ static NSNumberFormatter *digitsFormatter_;
 {
     NSNumberFormatter *formatter = [[NSDecimalNumber currencyFormatter] copy];
     
-    NSString *dollarsStr = @"0";
-    if (![enteredDigits_ isEqualToString:@""]) {
-        dollarsStr = enteredDigits_;
-    }
+    NSString *dollarsStr = enteredDigits_;
     NSString *centsStr  = enteredDecimals_;
     
     NSString *string = [[NSArray arrayWithObjects:dollarsStr, centsStr, nil] componentsJoinedByString:@"."];
@@ -199,7 +194,7 @@ static NSNumberFormatter *digitsFormatter_;
 
 - (void)setEnteredDigitsWithDecimalNumber:(NSDecimalNumber *)decimalNumber
 {
-    NSString *string = @"";
+    NSString *string = @"0";
     if (![decimalNumber isEqualToZero]) {
         string = [decimalNumber stringValue];
     }
@@ -217,7 +212,12 @@ static NSNumberFormatter *digitsFormatter_;
 
 - (void)addNumberToDigits:(NSString *)string
 {
-    NSMutableString *digits = [NSMutableString stringWithString:enteredDigits_];
+    NSMutableString *digits = nil;
+	if ([enteredDigits_ isEqualToString:@"0"]) {
+		digits = [NSMutableString stringWithCapacity:0];
+	} else {
+		digits = [NSMutableString stringWithString:enteredDigits_];
+	}
     [digits appendString:string];
     self.enteredDigits = digits;
 }
@@ -232,33 +232,11 @@ static NSNumberFormatter *digitsFormatter_;
     self.enteredDecimals = decimals;
 }
 
-- (void)removeLastDigit
+- (void)addPaddingToDecimals
 {
-    if ([enteredDigits_ length] > 0) {
-        NSString *digits = [enteredDigits_ substringToIndex:[enteredDigits_ length] - 1];
-        self.enteredDigits = digits;
-    } 
-}
-
-- (void)removeLastDecimal
-{
-    if ([enteredDecimals_ length] > 0) {
-        NSString *decimals = [enteredDecimals_ substringToIndex:[enteredDecimals_ length] - 1];
-        if ([decimals length] == 0) {
-            useDecimalSeparator_ = NO;
-        }
-        self.enteredDecimals = decimals;
-    }
-}
-
-+ (NSString *)defaultCurrencySymbol
-{
-    return @"$";
-}
-
-+ (NSString *)defaultDecimalSeparator
-{
-    return @".";
+	if ([enteredDigits_ length] > 0) {
+		self.enteredDecimals = [enteredDecimals_ stringByPaddingToLength:abs(kCurrencyScale) withString:@"0" startingAtIndex:0];
+	}
 }
 
 + (NSNumberFormatter *)digitsFormatter
