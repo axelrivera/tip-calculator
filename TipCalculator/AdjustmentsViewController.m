@@ -32,6 +32,9 @@
 - (void)validateAdjustments;
 - (void)clearAdjustmentInput;
 
+- (NSString *)stringForAmount:(NSString *)amount tip:(NSString *)tip;
+- (NSString *)stringForPeopleLeft;
+
 @end
 
 @implementation AdjustmentsViewController
@@ -375,6 +378,17 @@
 	adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
+- (NSString *)stringForAmount:(NSString *)amount tip:(NSString *)tip
+{
+	return [NSString stringWithFormat:@"%@ + tip %@", amount, tip];
+}
+
+- (NSString *)stringForPeopleLeft
+{
+	return [NSString stringWithFormat:@"%d People Left",
+			[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+}
+
 #pragma mark - UITableView Datasource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -408,9 +422,8 @@
 		text1Str = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
 		
 		detailText1Str = [[adjustment total] currencyString];
-		detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
-						  [adjustment.amount currencyString],
-						  [adjustment.tip currencyString]];
+		detailText2Str = [self stringForAmount:[adjustment.amount currencyString]
+										   tip:[adjustment.tip currencyString]];
         
         UIButton *deleteButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
         deleteButton.frame = CGRectMake(0.0, 0.0, 25.0, 30.0);
@@ -429,9 +442,8 @@
 			text1Str = @"Total To Pay";
 			text2Str = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
 			detailText1Str = [totalBalancePerPerson currencyString];
-			detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
-							  [billAmountBalancePerPerson currencyString],
-							  [tipBalancePerPerson currencyString]];
+			detailText2Str = [self stringForAmount:[billAmountBalancePerPerson currencyString]
+											   tip:[tipBalancePerPerson currencyString]];
 		} else {
 			if ([check_ currentBalanceEqualToZeroOrNegative]) {
 				if ([check_ currentBalanceEqualToZero]) {
@@ -439,18 +451,15 @@
 				} else {
 					text1Str = @"Negative Balance";
 				}
-				text2Str = [NSString stringWithFormat:@"%d People Left",
-							[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+				text2Str = [self stringForPeopleLeft];
 				detailText1Str = [[check_ totalBalanceAfterAdjustments] currencyString];
 				detailText2Str = nil;
 			} else {
 				text1Str = @"Balance Per Person";
-				text2Str = [NSString stringWithFormat:@"%d People Left",
-							[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+				text2Str = [self stringForPeopleLeft];
 				detailText1Str = [totalBalancePerPerson currencyString];
-				detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
-								  [billAmountBalancePerPerson currencyString],
-								  [tipBalancePerPerson currencyString]];
+				detailText2Str = [self stringForAmount:[billAmountBalancePerPerson currencyString]
+												   tip:[tipBalancePerPerson currencyString]];
 			}
 		}
 		
