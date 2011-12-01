@@ -213,6 +213,7 @@
     [super viewWillAppear:animated];
     
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
+	[numberPadDigits_ validateAndFixDecimalSeparator];
     adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
 	[self validateAdjustments];
@@ -293,7 +294,7 @@
 - (void)addAdjustmentConfirmationAction:(id)sender
 {
 	if ([currentAdjustment_ compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-		[adjustmentsInputView_ resignFirstResponder];
+		[self clearAdjustmentInput];
 		return;
 	}
 	
@@ -371,10 +372,10 @@
 
 - (void)clearAdjustmentInput
 {
-	[numberPadDigits_ validateAndFixDecimalSeparator];
 	[adjustmentsInputView_ resignFirstResponder];
 	self.currentAdjustment = [NSDecimalNumber zero];
 	[numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
+	[numberPadDigits_ validateAndFixDecimalSeparator];
 	adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
