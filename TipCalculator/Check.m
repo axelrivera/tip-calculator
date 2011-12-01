@@ -243,40 +243,38 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (BOOL)canAddOneMoreAdjusment
 {
-    if ([self numberOfAdjustmentsPlusOne] > [numberOfSplits_ integerValue]) {
+    if ([self numberOfAdjustmentsPlusOne] >= [numberOfSplits_ integerValue]) {
         return NO;
     }
     return YES;
 }
 
-- (BOOL)canAddAdjustment:(NSDecimalNumber *)totalAdjustment
+- (BOOL)currentBalanceEqualToZero
 {
-    // Adjustment cannot be zero
-    if ([totalAdjustment compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-        return NO;
-    }
-    
-    NSDecimalNumber *currentBalance = [self totalBalanceAfterAdjustments];
-    NSDecimalNumber *futureBalance = [currentBalance decimalCurrencyBySubtracting:totalAdjustment];
-	NSLog(@"Current Balance: %@, Future Balance: %@, Total Adjustment: %@", currentBalance, futureBalance, totalAdjustment);
-    
-    if (![self canAddOneMoreAdjusment]) {
-        // Number of adjustments is equal to the number of splits
-        return NO;
-    } else if ([self numberOfAdjustmentsPlusOne] == [numberOfSplits_ integerValue]) {
-        // Only 1 adjusment left
-        NSComparisonResult zeroBalance = [[NSDecimalNumber zero] compare:futureBalance];
-        if (zeroBalance != NSOrderedSame) {
-            return NO;
-        }
+	NSDecimalNumber *currentBalance = [self totalBalanceAfterAdjustments];
+	NSComparisonResult compareCurrentBalance = [currentBalance compare:[NSDecimalNumber zero]];
+	if (compareCurrentBalance == NSOrderedSame) {
         return YES;
     }
-    
-    NSComparisonResult compareBalance = [futureBalance compare:[NSDecimalNumber zero]];
-    if (compareBalance == NSOrderedAscending || compareBalance == NSOrderedSame) {
-        return NO;
+    return NO ;
+}
+
+- (BOOL)currentBalanceIsNegative
+{
+	NSDecimalNumber *currentBalance = [self totalBalanceAfterAdjustments];
+	NSComparisonResult compareCurrentBalance = [currentBalance compare:[NSDecimalNumber zero]];
+	if (compareCurrentBalance == NSOrderedAscending) {
+        return YES;
     }
-    return YES;
+    return NO ;
+}
+
+- (BOOL)currentBalanceEqualToZeroOrNegative
+{
+	if ([self currentBalanceEqualToZero] || [self currentBalanceIsNegative]) {
+        return YES;
+    }
+    return NO ;
 }
 
 - (NSDecimalNumber *)decimalNumberOfSplitAdjustments

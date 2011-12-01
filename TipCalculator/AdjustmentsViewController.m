@@ -16,6 +16,7 @@
 #import "UIButton+TipCalculator.h"
 #import "AdjustmentViewCell.h"
 #import "AdjustmentView.h"
+#import "Settings.h"
 
 @interface AdjustmentsViewController (Private)
 
@@ -25,9 +26,11 @@
 - (void)adjustmentsAction:(id)sender;
 - (void)deleteAdjustmentConfirmationAction:(id)sender;
 - (void)deleteAdjustmentAction:(id)sender;
-- (void)addAction:(id)sender;
+- (void)addAdjustmentConfirmationAction:(id)sender;
+- (void)addAdjustmentAction:(id)sender;
 - (void)questionAction:(id)sender;
-- (void)alertViewWithTitle:(NSString *)title message:(NSString *)message;
+- (void)validateAdjustments;
+- (void)clearAdjustmentInput;
 
 @end
 
@@ -209,15 +212,7 @@
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
     adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
     
-	if ([[check_ numberOfSplits] compare:[NSDecimalNumber one]] == NSOrderedSame ||
-		[[check_ totalToPay] compare:[NSDecimalNumber zero]] == NSOrderedSame)
-	{
-		adjustmentsInputView_.enabled = NO;
-		resetButton_.enabled = NO;
-	} else {
-		adjustmentsInputView_.enabled = YES;
-		resetButton_.enabled = YES;
-	}
+	[self validateAdjustments];
 	
 	NSDecimalNumber *totalToPay = [check_ totalToPay];
 	NSDecimalNumber *numberOfPeople = [check_ numberOfSplits];
@@ -250,6 +245,7 @@
 - (void)resetAction:(id)sender
 {
     [check_ removeAllSplitAdjustments];
+	[self validateAdjustments];
     [adjustmentsTable_ beginUpdates];
     [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]
                      withRowAnimation:UITableViewRowAnimationFade];
@@ -259,18 +255,9 @@
 - (void)adjustmentsAction:(id)sender
 {
     if ([adjustmentsInputView_ isFirstResponder]) {
-        [numberPadDigits_ validateAndFixDecimalSeparator];
-        [adjustmentsInputView_ resignFirstResponder];
-        self.currentAdjustment = [NSDecimalNumber zero];
-        [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
-        adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
+        [self clearAdjustmentInput];
     } else {
-        if ([check_ canAddOneMoreAdjusment]) {
-            [adjustmentsInputView_ becomeFirstResponder];
-        } else {
-			[self alertViewWithTitle:@"Adjustment Error" message:@"Cannot add more adjustments"];
-            return;
-        }
+        [adjustmentsInputView_ becomeFirstResponder];
     }
 }
 
@@ -293,32 +280,65 @@
     NSInteger row = currentDeleteButton_.tag;
     currentDeleteButton_ = nil;
     [check_ removeSplitAdjustmentAtIndex:row];
+	[self validateAdjustments];
     [adjustmentsTable_ beginUpdates];
     [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]
                      withRowAnimation:UITableViewRowAnimationFade];
     [adjustmentsTable_ endUpdates];
 }
 
-- (void)addAction:(id)sender
+- (void)addAdjustmentConfirmationAction:(id)sender
 {
 	if ([currentAdjustment_ compare:[NSDecimalNumber zero]] == NSOrderedSame) {
 		[adjustmentsInputView_ resignFirstResponder];
 		return;
 	}
 	
+	if ([Settings sharedSettings].adjustmentConfirmation) {
+		Settings *settings = [Settings sharedSettings];
+		NSDecimalNumber *tax = [currentAdjustment_ decimalCurrencyByMultiplyingBy:[settings taxRatePercentage]];
+		NSDecimalNumber *taxRate = [[NSDecimalNumber one] decimalNumberByAdding:[settings taxRatePercentage]];
+		NSDecimalNumber *newAdjustment = [currentAdjustment_ decimalCurrencyByMultiplyingBy:taxRate];
+		Adjustment *adjustment = [[[Adjustment alloc] initWithAmount:newAdjustment tipRate:check_.tipPercentage] autorelease];
+		
+		NSString *adjustmentString = [currentAdjustment_ currencyString];
+		NSString *taxString = [tax currencyString];
+		NSString *tipString = [adjustment.tip currencyString];
+		NSString *totalString = [adjustment.total currencyString];
+		
+		NSString *message = [NSString stringWithFormat:
+							 @"Adjustment: %@\n"
+							 @"Tax: %@\n"
+							 @"Tip: %@\n"
+							 @"Total: %@",
+							 adjustmentString,
+							 taxString,
+							 tipString,
+							 totalString];
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Adjustment Confirmation"
+															message:message
+														   delegate:self
+												  cancelButtonTitle:@"Cancel"
+												  otherButtonTitles:@"Add", nil];
+		[alertView show];
+		[alertView release];
+	} else {
+		[self performSelector:@selector(addAdjustmentAction:)];
+	}
+}
+
+- (void)addAdjustmentAction:(id)sender
+{	
 	Settings *settings = [Settings sharedSettings];
     NSDecimalNumber *taxRate = [[NSDecimalNumber one] decimalNumberByAdding:[settings taxRatePercentage]];
 	NSDecimalNumber *newAdjustment = [currentAdjustment_ decimalCurrencyByMultiplyingBy:taxRate];
     Adjustment *adjustment = [[[Adjustment alloc] initWithAmount:newAdjustment tipRate:check_.tipPercentage] autorelease];
-    if ([check_ canAddAdjustment:[adjustment total]]) {
-        [check_ addSplitAdjustment:adjustment];
-        [adjustmentsTable_ beginUpdates];
-        [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-        [adjustmentsTable_ endUpdates];
-        [self performSelector:@selector(adjustmentsAction:)];
-        return;
-    }
-    [self alertViewWithTitle:@"Adjustment Error" message:@"Adjustment Error"];
+	[check_ addSplitAdjustment:adjustment];
+	[self validateAdjustments];
+	[adjustmentsTable_ beginUpdates];
+	[adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+	[adjustmentsTable_ endUpdates];
+	[self clearAdjustmentInput];
 }
 
 - (void)questionAction:(id)sender
@@ -328,15 +348,31 @@
 
 #pragma mark - Private Methods
 
-- (void)alertViewWithTitle:(NSString *)title message:(NSString *)message
+- (void)validateAdjustments
 {
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
-														message:message
-													   delegate:nil
-											  cancelButtonTitle:@"OK"
-											  otherButtonTitles:nil];
-	[alertView show];
-	[alertView release];
+	NSComparisonResult hasNoSplit = [[check_ numberOfSplits] compare:[NSDecimalNumber one]];
+	NSComparisonResult hasZeroTotal = [[check_ totalToPay] compare:[NSDecimalNumber zero]];
+	if (hasNoSplit == NSOrderedSame ||
+		hasZeroTotal == NSOrderedSame ||
+		[check_ canAddOneMoreAdjusment] == NO ||
+		[check_ currentBalanceEqualToZeroOrNegative] == YES) {
+		adjustmentsInputView_.enabled = NO;
+		if (hasNoSplit == NSOrderedSame || hasZeroTotal == NSOrderedSame) {
+			resetButton_.enabled = NO;
+		}
+	} else {
+		adjustmentsInputView_.enabled = YES;
+		resetButton_.enabled = YES;
+	}
+}
+
+- (void)clearAdjustmentInput
+{
+	[numberPadDigits_ validateAndFixDecimalSeparator];
+	[adjustmentsInputView_ resignFirstResponder];
+	self.currentAdjustment = [NSDecimalNumber zero];
+	[numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:currentAdjustment_];
+	adjustmentsInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 }
 
 #pragma mark - UITableView Datasource Methods
@@ -392,16 +428,31 @@
 		if ([[check_ numberOfSplits] compare:[NSDecimalNumber one]] == NSOrderedSame) {
 			text1Str = @"Total To Pay";
 			text2Str = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+			detailText1Str = [totalBalancePerPerson currencyString];
+			detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
+							  [billAmountBalancePerPerson currencyString],
+							  [tipBalancePerPerson currencyString]];
 		} else {
-			text1Str = @"Balance Per Person";
-			text2Str = [NSString stringWithFormat:@"%d People Left",
-						[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+			if ([check_ currentBalanceEqualToZeroOrNegative]) {
+				if ([check_ currentBalanceEqualToZero]) {
+					text1Str = @"Balance";
+				} else {
+					text1Str = @"Negative Balance";
+				}
+				text2Str = [NSString stringWithFormat:@"%d People Left",
+							[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+				detailText1Str = [[check_ totalBalanceAfterAdjustments] currencyString];
+				detailText2Str = nil;
+			} else {
+				text1Str = @"Balance Per Person";
+				text2Str = [NSString stringWithFormat:@"%d People Left",
+							[[check_ numberOfSplitsLeftAfterAdjustment] integerValue]];
+				detailText1Str = [totalBalancePerPerson currencyString];
+				detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
+								  [billAmountBalancePerPerson currencyString],
+								  [tipBalancePerPerson currencyString]];
+			}
 		}
-		
-		detailText1Str = [totalBalancePerPerson currencyString];
-		detailText2Str = [NSString stringWithFormat:@"%@ + tip %@",
-						  [billAmountBalancePerPerson currencyString],
-						  [tipBalancePerPerson currencyString]];
 		
         cell.accessoryView = nil;
 		[cell.adjustmentView setSummaryTextColor];
@@ -440,7 +491,7 @@
 
 - (void)didPressReturnButtonForCallerView:(UIView *)callerView
 {
-    [self performSelector:@selector(addAction:)];
+    [self performSelector:@selector(addAdjustmentConfirmationAction:)];
 }
 
 - (void)didPressButtonWithString:(NSString *)string callerView:(UIView *)callerView
@@ -463,6 +514,17 @@
             [self performSelector:@selector(deleteAdjustmentAction:)];
         }
     }
+}
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0) {
+		[self clearAdjustmentInput];
+	} else {
+		[self performSelector:@selector(addAdjustmentAction:)];
+	}
 }
 
 @end
