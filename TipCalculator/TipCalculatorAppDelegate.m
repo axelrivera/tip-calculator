@@ -8,6 +8,8 @@
 
 #import "TipCalculatorAppDelegate.h"
 #import "SummaryViewController.h"
+#import "FileHelpers.h"
+#import "CheckData.h"
 
 @implementation TipCalculatorAppDelegate
 
@@ -15,6 +17,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	CheckData *checkData = [NSKeyedUnarchiver unarchiveObjectWithFile:[self checkDataFilePath]];
+	if (checkData == nil) {
+		[CheckData sharedCheckData];
+	}
+	
     SummaryViewController *controller = [[SummaryViewController alloc] init];
     [self.window setRootViewController:controller];
     [controller release];
@@ -36,6 +43,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+	[self archiveCheckData];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -59,7 +67,19 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+	[self archiveCheckData];
 }
+
+- (NSString *)checkDataFilePath
+{
+	return pathInDocumentDirectory(@"checkData.data");
+}
+
+- (void)archiveCheckData
+{
+	[NSKeyedArchiver archiveRootObject:[CheckData sharedCheckData] toFile:[self checkDataFilePath]];
+}
+
 
 - (void)dealloc
 {

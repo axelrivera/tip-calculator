@@ -10,7 +10,7 @@
 #import "Adjustment.h"
 #import "Settings.h"
 
-@interface Check : NSObject
+@interface Check : NSObject <NSCoding>
 {
     Settings *settings_;
     NSMutableArray *splitAdjustments_;

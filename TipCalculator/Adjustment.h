@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Adjustment : NSObject
+@interface Adjustment : NSObject <NSCoding>
 
-@property (nonatomic, copy) NSString *name;
 @property (nonatomic, readonly) NSDecimalNumber *amount;
 @property (nonatomic, readonly) NSDecimalNumber *tip;
 

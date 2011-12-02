@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Check.h"
 
-@interface CheckData : NSObject
+@interface CheckData : NSObject <NSCoding>
 
 @property (nonatomic, retain) Check *currentCheck;
 

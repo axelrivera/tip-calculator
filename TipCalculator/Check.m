@@ -18,9 +18,9 @@
 #define kMaximumTipPercentage 50
 #define kTipPercentageFactor -2
 
-#define kDefaultNumberOfSplits @"2"
+#define kDefaultNumberOfSplits @"1"
 #define kDefaultTipPercentage  @"0.15"
-#define kDefaultBillAmount @"100.00"
+#define kDefaultBillAmount @"0.00"
 
 static NSArray *numberOfSplitsArray;
 static NSArray *tipPercentagesArray;
@@ -86,6 +86,27 @@ static NSDictionary *tipPercentagesDictionary;
         [self setSplitAdjustments:[NSMutableArray arrayWithCapacity:0]];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+	self = [super init];  // this needs to be [super initWithCoder:aDecoder] if the superclass implements NSCoding
+	if (self) {
+		self.numberOfSplits = [decoder decodeObjectForKey:@"checkNumberOfSplits"];
+		self.tipPercentage = [decoder decodeObjectForKey:@"checkTipPercentage"];
+		self.billAmount = [decoder decodeObjectForKey:@"checkBillAmount"];
+		splitAdjustments_ = [[decoder decodeObjectForKey:@"checkSplitAdjustments"] retain];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+	// add [super encodeWithCoder:encoder] if the superclass implements NSCoding
+	[encoder encodeObject:numberOfSplits_ forKey:@"checkNumberOfSplits"];
+	[encoder encodeObject:tipPercentage_ forKey:@"checkTipPercentage"];
+	[encoder encodeObject:billAmount_ forKey:@"checkBillAmount"];
+	[encoder encodeObject:splitAdjustments_ forKey:@"checkSplitAdjustments"];
 }
 
 - (void)dealloc

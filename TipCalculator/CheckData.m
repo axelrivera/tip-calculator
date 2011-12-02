@@ -24,6 +24,21 @@ static CheckData *sharedCheckData;
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder
+{
+	self = [super init];  // this needs to be [super initWithCoder:aDecoder] if the superclass implements NSCoding
+	if (self) {
+		self.currentCheck = [decoder decodeObjectForKey:@"checkDataCurrentCheck"];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+	// add [super encodeWithCoder:encoder] if the superclass implements NSCoding
+	[encoder encodeObject:currentCheck_ forKey:@"checkDataCurrentCheck"];
+}
+
 - (void)dealloc
 {
     [currentCheck_ release];

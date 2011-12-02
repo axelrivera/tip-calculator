@@ -287,7 +287,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2) {
+        if (indexPath.row >= 0 && indexPath.row <= 3) {
             TableSelectViewController *selectController = [[TableSelectViewController alloc] init];
             selectController.delegate = self;
             if (indexPath.row == 0) {

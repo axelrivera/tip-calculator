@@ -14,4 +14,7 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
+- (NSString *)checkDataFilePath;
+- (void)archiveCheckData;
+
 @end

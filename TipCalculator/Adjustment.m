@@ -19,7 +19,6 @@
 
 @implementation Adjustment
 
-@synthesize name = name_;
 @synthesize amount = amount_;
 @synthesize tip = tip_;
 
@@ -27,7 +26,6 @@
 {
     self = [super init];
     if (self) {
-        self.name = [NSString stringWithString:@""];
         [self setAmount:amount];
         [self setTip:tip];
     }
@@ -41,9 +39,28 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder
+{
+	self = [super init];  // this needs to be [super initWithCoder:aDecoder] if the superclass implements NSCoding
+	if (self) {
+		[self setAmount:[decoder decodeObjectForKey:@"adjustmentAmount"]];
+		[self setTip:[decoder decodeObjectForKey:@"adjustmentTip"]];
+		
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+	// add [super encodeWithCoder:encoder] if the superclass implements NSCoding
+	[encoder encodeObject:amount_ forKey:@"adjustmentAmount"];
+	[encoder encodeObject:tip_ forKey:@"adjustmentTip"];
+	
+}
+
+
 - (void)dealloc
 {
-    [name_ release];
     [amount_ release];
     [tip_ release];
     [super dealloc];
