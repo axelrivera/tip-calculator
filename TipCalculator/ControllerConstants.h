@@ -9,6 +9,9 @@
 #define kTextLabelKey @"TextLabelKey"
 #define kDetailTextLabelKey @"DetailTextLabelKey"
 
+#define kSummaryBackgroundViewTag 50
+#define kAdjustmentsBackgroundViewTag 51
+
 #define kResetAdjustmentsActionSheetTag 100
 #define kDeleteAdjustmentActionSheetTag 101
 

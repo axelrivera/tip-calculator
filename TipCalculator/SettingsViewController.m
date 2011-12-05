@@ -12,9 +12,7 @@
 @interface SettingsViewController (Private)
 
 + (NSArray *)tableDataSource;
-- (void)sendFeedback:(id)sender;
 - (void)goToWebsite:(id)sender;
-- (void)displayComposerSheet;
 
 @end
 
@@ -84,10 +82,7 @@
 {
     UISwitch *switchView = (UISwitch *)sender;
     switch (switchView.tag) {
-        case kSettingsControllerSoundTag:
-            settings_.sound = switchView.on;
-            break;
-        case kSettingsControllerShakeToClearTag:
+		case kSettingsControllerShakeToClearTag:
             settings_.shakeToClear = switchView.on;
             break;
         default:
@@ -132,21 +127,10 @@
     [sectionOne addObject:dictionary];
     
     dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                  @"Sound", kTextLabelKey,
-                  [NSNull null], kDetailTextLabelKey,
-                  nil];
-    [sectionTwo addObject:dictionary];
-    dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                   @"Shake to Clear", kTextLabelKey,
                   [NSNull null], kDetailTextLabelKey,
                   nil];
     [sectionTwo addObject:dictionary];
-	
-	dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-				  @"Send Feedback", kTextLabelKey,
-				  [NSNull null], kDetailTextLabelKey,
-				  nil];
-	[sectionThree addObject:dictionary];
 	
 	dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 				  @"Rivera Labs Website", kTextLabelKey,
@@ -161,28 +145,9 @@
     return data;
 }
 
-- (void)sendFeedback:(id)sender
-{
-	[self displayComposerSheet];
-}
-
 - (void)goToWebsite:(id)sender
 {
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://riveralabs.com"]];
-}
-
-- (void)displayComposerSheet
-{
-	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-	picker.mailComposeDelegate = self;
-	
-	NSArray *toRecipients = [NSArray arrayWithObject:@"apps@riveralabs.com"];
-	[picker setToRecipients:toRecipients];
-	
-	[picker setSubject:@"Rivera Labs Tip Calculator Feedback"];
-	
-	[self presentModalViewController:picker animated:YES];
-    [picker release];
 }
 
 #pragma mark - Table view data source
@@ -231,15 +196,8 @@
 		UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
 		[switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
 		
-		BOOL onValue;
-		NSInteger tag;
-		if (indexPath.row == 0) {
-			onValue = settings_.sound;
-			tag = kSettingsControllerSoundTag;
-		} else {
-			onValue = settings_.shakeToClear;
-			tag = kSettingsControllerShakeToClearTag;
-		}
+		BOOL onValue = settings_.shakeToClear;
+		NSInteger tag = kSettingsControllerShakeToClearTag;
 		
 		[switchView setOn:onValue animated:NO];
 		switchView.tag = tag;
@@ -327,11 +285,7 @@
             [taxController release];
         }
     } else if (indexPath.section == 2) {
-		if (indexPath.row == 0) {
-			[self performSelector:@selector(sendFeedback:)];
-		} else {
-			[self performSelector:@selector(goToWebsite:)];
-		}
+		[self performSelector:@selector(goToWebsite:)];
 	}
 }
 
@@ -353,50 +307,6 @@
 - (void)taxViewControllerDidFinish:(TaxViewController *)controller
 {
     settings_.taxRate = controller.taxRate;
-}
-
-#pragma mark - MFMailComposeViewController Delegate
-
-// Dismisses the email composition interface when users tap Cancel or Send.
-// Proceeds to update the message field with the result of the operation.
-- (void)mailComposeController:(MFMailComposeViewController*)controller
-		  didFinishWithResult:(MFMailComposeResult)result
-						error:(NSError*)error
-{	
-	NSString *errorString = nil;
-	
-	BOOL showAlert = NO;
-	// Notifies users about errors associated with the interface
-	switch (result)  {
-		case MFMailComposeResultCancelled:
-			break;
-		case MFMailComposeResultSaved:
-			break;
-		case MFMailComposeResultSent:
-			break;
-		case MFMailComposeResultFailed:
-			errorString = [NSString stringWithFormat:@"E-mail failed: %@", 
-						   [error localizedDescription]];
-			showAlert = YES;
-			break;
-		default:
-			errorString = [NSString stringWithFormat:@"E-mail was not sent: %@", 
-						   [error localizedDescription]];
-			showAlert = YES;
-			break;
-	}
-	
-	[self dismissModalViewControllerAnimated:YES];
-	
-	if (showAlert == YES) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"E-mail Error"
-														message:errorString
-													   delegate:self
-											  cancelButtonTitle:@"OK"
-											  otherButtonTitles: nil];
-		[alert show];
-		[alert release];
-	}
 }
 
 @end

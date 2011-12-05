@@ -77,13 +77,17 @@
 
 - (void)setAmount:(NSDecimalNumber *)amount
 {
-    [amount_ autorelease];
+    if (amount_ != nil) {
+		[amount_ release];
+	}
     amount_ = [amount copy];
 }
                                 
 - (void)setTip:(NSDecimalNumber *)tip
 {
-    [tip_ autorelease];
+    if (tip_ != nil) {
+		[tip_ release];
+	}
     tip_ = [tip copy];
 }
 

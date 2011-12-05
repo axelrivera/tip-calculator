@@ -42,7 +42,7 @@ CurrencyType const kDefaultCurrency = CurrencyTypeAutomatic;
 RoundingType const kDefaultRounding = RoundingTypeNone;
 BOOL const kDefaultAdjustmentConfirmation = YES;
 BOOL const kDefaultTipOnTax = YES;
-BOOL const kDefaultSound = YES;
+BOOL const kDefaultSound = NO;
 BOOL const kDefaultShakeToClear = YES;
 NSString * const kDefaultTaxRate = @"0.0";
 
@@ -160,7 +160,9 @@ static Settings *sharedSettings_;
 
 - (void)setTaxRate:(NSDecimalNumber *)taxRate
 {
-    [taxRate_ autorelease];
+    if (taxRate_ != nil) {
+		[taxRate_ release];
+	}
 	taxRate_ = [taxRate retain];
 	[[NSUserDefaults standardUserDefaults] setObject:[taxRate stringValue] forKey:kSettingsTaxRateKey];
 	[[NSUserDefaults standardUserDefaults] synchronize];

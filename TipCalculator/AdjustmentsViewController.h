@@ -42,5 +42,3 @@
 - (void)adjustmentsViewControllerDidFinish:(AdjustmentsViewController *)controller;
 
 @end
-
-

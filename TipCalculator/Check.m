@@ -328,7 +328,9 @@ static NSDictionary *tipPercentagesDictionary;
 
 - (void)setSplitAdjustments:(NSMutableArray *)splitAdjustments
 {
-    [splitAdjustments_ autorelease];
+	if (splitAdjustments_ != nil) {
+		[splitAdjustments_ release];
+	}
     splitAdjustments_ = [splitAdjustments retain];
 }
 

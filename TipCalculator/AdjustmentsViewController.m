@@ -17,6 +17,7 @@
 #import "AdjustmentViewCell.h"
 #import "AdjustmentView.h"
 #import "Settings.h"
+#import "ControllerConstants.h"
 
 @interface AdjustmentsViewController (Private)
 
@@ -107,6 +108,7 @@
 	
 	CGSize screenSize = [UIScreen mainScreen].bounds.size;
 	headerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenSize.width, 97.0)];
+	headerView_.tag = kAdjustmentsBackgroundViewTag;
 	headerView_.opaque = NO;
 	headerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_header_bg.png"]];
 	[self.view addSubview:headerView_];
@@ -347,6 +349,15 @@
 
 - (void)questionAction:(id)sender
 {
+	NSString *message = @"Adjustments provide you with the option of informally splitting a check into separate values."
+						@"The App will automatically calculate the tax and tip when the values are entered.";
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Split Adjustments"
+														message:message
+													   delegate:nil
+											  cancelButtonTitle:@"OK"
+											  otherButtonTitles:nil];
+	[alertView show];
+	[alertView release];
 	
 }
 
@@ -534,6 +545,17 @@
 		[self clearAdjustmentInput];
 	} else {
 		[self performSelector:@selector(addAdjustmentAction:)];
+	}
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for (UITouch *touch in touches) {
+		if (touch.view.tag == kAdjustmentsBackgroundViewTag) {
+			if ([adjustmentsInputView_ isFirstResponder]) {
+				[self performSelector:@selector(adjustmentsAction:)];
+			}
+		}
 	}
 }
 

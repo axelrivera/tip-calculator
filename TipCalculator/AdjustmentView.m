@@ -32,7 +32,7 @@
 		detailTextLabel1_ = [[UILabel alloc] initWithFrame:CGRectZero];
 		detailTextLabel1_.backgroundColor = [UIColor clearColor];
 		detailTextLabel1_.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:16.0];
-		detailTextLabel1_.textColor = [UIColor colorWithWhite:1.0 alpha:0.95];
+		detailTextLabel1_.textColor = [UIColor colorWithWhite:1.0 alpha:1.0];
 		detailTextLabel1_.textAlignment = UITextAlignmentRight;
 		detailTextLabel1_.minimumFontSize = 12.0;
 		detailTextLabel1_.adjustsFontSizeToFitWidth = YES;
@@ -47,7 +47,7 @@
 		detailTextLabel2_ = [[UILabel alloc] initWithFrame:CGRectZero];
 		detailTextLabel2_.backgroundColor = [UIColor clearColor];
 		detailTextLabel2_.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:16.0];
-		detailTextLabel2_.textColor = [UIColor colorWithWhite:1.0 alpha:0.60];
+		detailTextLabel2_.textColor = [UIColor colorWithWhite:1.0 alpha:0.85];
 		detailTextLabel2_.textAlignment = UITextAlignmentRight;
 		detailTextLabel2_.minimumFontSize = 12.0;
 		detailTextLabel2_.adjustsFontSizeToFitWidth = YES;

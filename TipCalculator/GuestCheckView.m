@@ -22,7 +22,7 @@
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"guest_check_background.png"]];
         
         UIFont *titleFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
-        UIFont *detailFont = [UIFont fontWithName:@"MarkerFelt-Wide" size:14.0];
+        UIFont *detailFont = [UIFont fontWithName:@"MarkerFelt-Wide" size:16.0];
         UIColor *labelColor = [UIColor whiteColor];
         
         totalTipTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];

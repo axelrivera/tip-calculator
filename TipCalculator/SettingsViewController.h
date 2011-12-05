@@ -10,13 +10,11 @@
 #import "Settings.h"
 #import "TableSelectViewController.h"
 #import "TaxViewController.h"
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
 
 @protocol SettingsViewControllerDelegate;
 
 @interface SettingsViewController : UITableViewController
-<TableSelectViewControllerDelegate, TaxViewControllerDelegate, MFMailComposeViewControllerDelegate>
+<TableSelectViewControllerDelegate, TaxViewControllerDelegate>
 {
     Settings *settings_;
 }

@@ -12,6 +12,7 @@
 #import "CheckHelper.h"
 #import "NSDecimalNumber+Check.h"
 #import "UIButton+TipCalculator.h"
+#import "ControllerConstants.h"
 
 #define kInputLabelWidth 266.0
 
@@ -79,6 +80,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.view.tag = kSummaryBackgroundViewTag;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainscreen_background.png"]]];
     
@@ -398,6 +401,21 @@
 		[numberPadDigits_ resetDigitsAndDecimals];
 		billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 		[self reloadCheckSummaryAndResetAdjustments:YES];
+	}
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for (UITouch *touch in touches) {
+		if (touch.view.tag == kSummaryBackgroundViewTag) {
+			if ([splitInputView_ isFirstResponder]) {
+				[self performSelector:@selector(splitAction:)];
+			} else if ([tipInputView_ isFirstResponder]) {
+				[self performSelector:@selector(tipAction:)];
+			} else if ([billAmountInputView_ isFirstResponder]) {
+				[self performSelector:@selector(amountAction:)];
+			}
+		}
 	}
 }
 
