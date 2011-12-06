@@ -271,7 +271,13 @@
         guestCheckView_.alpha = 1.0;
         guestCheckView_.totalTipLabel.text = [[check_ totalTip] currencyString];
         guestCheckView_.totalToPayLabel.text = [[check_ totalToPay] currencyString];
-        guestCheckView_.totalPerPersonLabel.text = [[check_ totalPerPerson] currencyString];
+		NSString *totalPerPersonStr = nil;
+		if ([check_.numberOfSplits compare:[NSDecimalNumber one]] == NSOrderedSame) {
+			totalPerPersonStr = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
+		} else {
+			totalPerPersonStr = [[check_ totalPerPerson] currencyString];
+		}
+		guestCheckView_.totalPerPersonLabel.text = totalPerPersonStr;
     } else {
         guestCheckView_.alpha = 0.0;
     }

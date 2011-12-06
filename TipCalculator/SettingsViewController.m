@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Tip Calculator";
+    self.title = @"Friendly Tip Calculator";
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                target:self
@@ -231,8 +231,8 @@
 	NSString *title = nil;
 	if (section == 2) {
 		title = [NSString stringWithFormat:
-				 @"Rivera Labs Tip Calculator %@\n"
-				 @"Copyright © 2011; Axel Rivera.",
+				 @"Friendly Tip Calculator %@\n"
+				 @"Copyright © 2011; Rivera Labs.",
 				 [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 	}
 	return title;
