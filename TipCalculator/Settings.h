@@ -19,8 +19,10 @@ typedef enum {
 
 typedef enum {
     RoundingTypeNone,
-    RoundingTypeTotal,
-    RoundingTypeTip,
+    RoundingTypeTotalUp,
+    RoundingTypeTipUp,
+	RoundingTypeTotalDown,
+	RoundingTypeTipDown
 } RoundingType;
 
 @interface Settings : NSObject

@@ -12,6 +12,7 @@
 @interface NSDecimalNumber (Private)
 
 - (NSDecimalNumberHandler *)currencyBehavior;
+- (NSDecimalNumberHandler *)currencyBehaviorWithRounding:(NSRoundingMode)rounding;
 
 @end
 
@@ -37,6 +38,11 @@
     return [self decimalNumberByDividingBy:decimalNumber withBehavior:[self currencyBehavior]];
 }
 
+- (NSDecimalNumber *)decimalCurrencyByDividingBy:(NSDecimalNumber *)decimalNumber rounding:(NSRoundingMode)rounding
+{
+	return [self decimalNumberByDividingBy:decimalNumber withBehavior:[self currencyBehaviorWithRounding:rounding]];
+}
+
 - (NSDecimalNumber *)decimalNumberByModuloDivision:(NSDecimalNumber *)decimal
 {
     NSDecimalNumber *dividend = [NSDecimalNumber decimalNumberWithDecimal:[self decimalValue]];
@@ -56,6 +62,17 @@
 - (NSDecimalNumber *)decimalCurrencyByRoundingDown
 {
     NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown
+                                                                                              scale:0
+                                                                                   raiseOnExactness:NO
+                                                                                    raiseOnOverflow:NO
+                                                                                   raiseOnUnderflow:NO
+                                                                                raiseOnDivideByZero:NO];
+    return [self decimalNumberByRoundingAccordingToBehavior:behavior];
+}
+
+- (NSDecimalNumber *)decimalCurrencyByRoundingUp
+{
+    NSDecimalNumberHandler *behavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp
                                                                                               scale:0
                                                                                    raiseOnExactness:NO
                                                                                     raiseOnOverflow:NO
@@ -91,7 +108,17 @@
 
 - (NSDecimalNumberHandler *)currencyBehavior
 {
-    return [[[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundUp
+    return [[[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundPlain
+                                                           scale:2
+                                                raiseOnExactness:NO
+                                                 raiseOnOverflow:NO
+                                                raiseOnUnderflow:NO
+                                             raiseOnDivideByZero:NO] autorelease];
+}
+
+- (NSDecimalNumberHandler *)currencyBehaviorWithRounding:(NSRoundingMode)rounding
+{
+    return [[[NSDecimalNumberHandler alloc] initWithRoundingMode:rounding
                                                            scale:2
                                                 raiseOnExactness:NO
                                                  raiseOnOverflow:NO

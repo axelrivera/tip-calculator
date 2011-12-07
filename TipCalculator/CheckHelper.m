@@ -22,17 +22,23 @@
     }
     
     NSDecimalNumber *tip = [newAmount decimalCurrencyByMultiplyingBy:rate];
-    //NSDecimalNumber *tip = [CheckHelper calculateTipWithAmount:amount andRate:rate];
     
     if (settings.rounding == RoundingTypeNone) {
         return tip;
     }
     
-    if (settings.rounding == RoundingTypeTip) {
-        tip = [tip decimalCurrencyByRoundingDown];
-    } else if (settings.rounding == RoundingTypeTotal) {
+    if (settings.rounding == RoundingTypeTipUp) {
+        tip = [tip decimalCurrencyByRoundingUp];
+	} else if (settings.rounding == RoundingTypeTipDown) {
+		tip = [tip decimalCurrencyByRoundingDown];
+    } else {
         NSDecimalNumber *totalBill = [CheckHelper calculateTotalWithAmount:amount andTip:tip];
-        NSDecimalNumber *newTotal = [totalBill decimalCurrencyByRoundingDown];
+		NSDecimalNumber *newTotal = nil;
+		if (settings.rounding == RoundingTypeTotalUp) {
+			newTotal = [totalBill decimalCurrencyByRoundingUp];
+		} else {
+			newTotal = [totalBill decimalCurrencyByRoundingDown];
+		}
         NSDecimalNumber *totalOffset = [totalBill decimalCurrencyBySubtracting:newTotal];
         tip = [tip decimalCurrencyBySubtracting:totalOffset];
     }
@@ -47,7 +53,7 @@
 
 + (NSDecimalNumber *)calculatePersonAmount:(NSDecimalNumber *)amount withSplit:(NSDecimalNumber *)split
 {
-    return [amount decimalCurrencyByDividingBy:split];
+    return [amount decimalCurrencyByDividingBy:split rounding:NSRoundUp];
 }
 
 @end

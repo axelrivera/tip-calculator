@@ -31,7 +31,7 @@
 - (NSDecimalNumber *)billAmountPerPerson;
 
 - (NSString *)stringForNumberOfSplitsWithDecimalNumber:(NSDecimalNumber *)number;
-- (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number;
+- (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number picker:(BOOL)picker;
 
 - (NSInteger)rowForCurrentNumberOfSplits;
 - (NSInteger)rowForCurrentTipPercentage;

@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "ControllerConstants.h"
+#import "CheckData.h"
 
 @interface SettingsViewController (Private)
 
@@ -232,7 +233,7 @@
 	if (section == 2) {
 		title = [NSString stringWithFormat:
 				 @"Friendly Tip Calculator %@\n"
-				 @"Copyright © 2011; Rivera Labs.",
+				 @"Copyright © 2011; Rivera Labs",
 				 [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 	}
 	return title;
@@ -271,7 +272,7 @@
                 selectController.currentIndex = (NSInteger)settings_.tipOnTax;
                 selectController.tableData = [NSArray arrayWithObjects:@"No", @"Yes", nil];
                 selectController.tableFooterTitle = @"Answer \"Yes\" to tip on the total amount including taxes. "
-													"You can set your local tax rate in the previous screen.";
+													"If you answer \"No\", you should set your local tax rate in the previous screen.";
                 selectController.title = @"Tip On Tax";
             }
             [self.navigationController pushViewController:selectController animated:YES];
@@ -293,20 +294,27 @@
 
 - (void)tableSelectViewControllerDidFinish:(TableSelectViewController *)controller
 {
+	BOOL removeSplits = NO;
     if (controller.selectID == kCurrencyControllerTag) {
         settings_.currency = controller.currentIndex;
     } else if (controller.selectID == kRoundingControllerTag) {
         settings_.rounding = controller.currentIndex;
+		removeSplits = YES;
     }  else if (controller.selectID == kAdjustmentConfirmationControllerTag) {
 		settings_.adjustmentConfirmation = (BOOL)controller.currentIndex;
 	} else {
         settings_.tipOnTax = (BOOL)controller.currentIndex;
+		removeSplits = YES;
     }
+	if (removeSplits) {
+		[[CheckData sharedCheckData].currentCheck removeAllSplitAdjustments];
+	}
 }
 
 - (void)taxViewControllerDidFinish:(TaxViewController *)controller
 {
     settings_.taxRate = controller.taxRate;
+	[[CheckData sharedCheckData].currentCheck removeAllSplitAdjustments];
 }
 
 @end

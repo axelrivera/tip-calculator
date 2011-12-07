@@ -18,14 +18,16 @@
 #define kCurrencyTypeKrone @"CurrencyTypeKrone"
 
 #define kRoundingTypeNone @"RoundingTypeNone"
-#define kRoundingTypeTotal @"RoundingTypeTotal"
-#define kRoundingTypeTip @"RoundingTypeTip"
+#define kRoundingTypeTotalUp @"RoundingTypeTotalUp"
+#define kRoundingTypeTipUp @"RoundingTypeTipUp"
+#define kRoundingTypeTotalDown @"RoundingTypeTotalDown"
+#define kRoundingTypeTipDown @"RoundingTypeTipDown"
 
 #define kTaxRateDecimalPlacesFactor -2
 
 // The order of the arguments must match the order of the enum types
 #define kCurrencyStringArgs @"Auto",@"Dollar ($)",@"Pound (£)",@"Euro (€)",@"Swiss Franc (CHF)",@"Krone/Krona (Kr)",nil
-#define kRoundingStringsArgs @"No Rounding",@"Round Total",@"Round Tip",nil
+#define kRoundingStringsArgs @"No Rounding",@"Round Total Up",@"Round Tip Up",@"Round Total Down",@"Round Tip Down",nil
 
 #define kSettingsCurrencyKey @"RLTipCalculatorCurrencyKey"
 #define kSettingsRoundingKey @"RLTipCalculatorRoundingKey"
@@ -323,10 +325,14 @@ static Settings *sharedSettings_;
     RoundingType type;
     if ([key isEqualToString:kRoundingTypeNone]) {
         type = RoundingTypeNone;
-    } else if ([key isEqualToString:kRoundingTypeTotal]) {
-        type = RoundingTypeTotal;
-    } else if ([key isEqualToString:kRoundingTypeTip]) {
-        type = RoundingTypeTip;
+    } else if ([key isEqualToString:kRoundingTypeTotalUp]) {
+        type = RoundingTypeTotalUp;
+    } else if ([key isEqualToString:kRoundingTypeTipUp]) {
+        type = RoundingTypeTipUp;
+	} else if ([key isEqualToString:kRoundingTypeTotalDown]) {
+		type = RoundingTypeTotalDown;
+	} else if ([key isEqualToString:kRoundingTypeTipDown]) {
+		type = RoundingTypeTipDown;
     } else {
         type = RoundingTypeNone;
     }
@@ -340,11 +346,17 @@ static Settings *sharedSettings_;
         case RoundingTypeNone:
             key = kRoundingTypeNone;
             break;
-        case RoundingTypeTotal:
-            key = kRoundingTypeTotal;
+        case RoundingTypeTotalUp:
+            key = kRoundingTypeTotalUp;
             break;
-        case RoundingTypeTip:
-            key = kRoundingTypeTip;
+        case RoundingTypeTipUp:
+            key = kRoundingTypeTipUp;
+            break;
+		case RoundingTypeTotalDown:
+            key = kRoundingTypeTotalDown;
+            break;
+        case RoundingTypeTipDown:
+            key = kRoundingTypeTipDown;
             break;
         default:
             key = kRoundingTypeNone;

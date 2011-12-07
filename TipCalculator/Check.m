@@ -35,6 +35,7 @@ static NSDictionary *tipPercentagesDictionary;
 - (NSInteger)numberOfAdjustmentsPlusOne;
 
 - (void)setSplitAdjustments:(NSMutableArray *)splitAdjustments;
+- (NSString *)percentSuffixForInteger:(NSInteger)integerValue;
 
 @end
 
@@ -156,13 +157,31 @@ static NSDictionary *tipPercentagesDictionary;
     return string;
 }
 
-- (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number
+- (NSString *)stringForTipPercentageWithDecimalNumber:(NSDecimalNumber *)number picker:(BOOL)picker
 {
+	NSInteger integerValue = [[number decimalNumberByMultiplyingByPowerOf10:2] integerValue];
+	NSString *suffix = nil;
+	
+	if (picker) {
+		if (integerValue == 5 ||
+			integerValue == 10 ||
+			integerValue == 15 ||
+			integerValue == 20 ||
+			integerValue == 25)
+		{
+			suffix = [self percentSuffixForInteger:integerValue];
+		} else {
+			suffix = @"";
+		}
+	} else {
+		suffix = [self percentSuffixForInteger:integerValue];
+	}
+	
     NSString *string = nil;
     if ([number compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-        string = @"No Tip (Included)";
+        string = [NSString stringWithFormat:@"%@ (Included)", [number percentString]];
     } else {
-        string = [number percentString];
+        string = [NSString stringWithFormat:@"%@%@", [number percentString], suffix];
     }
     return string;
 }
@@ -339,6 +358,25 @@ static NSDictionary *tipPercentagesDictionary;
 - (NSInteger)numberOfAdjustmentsPlusOne
 {
     return [splitAdjustments_ count] + 1;
+}
+
+- (NSString *)percentSuffixForInteger:(NSInteger)integerValue
+{
+	NSString *suffix = nil;
+	if (integerValue >= 0 && integerValue <= 5) {
+		suffix = @" (Poor)";
+	} else if (integerValue >= 6 && integerValue <= 10) {
+		suffix = @" (Fair)";
+	} else if (integerValue >= 11 && integerValue <= 15) {
+		suffix = @" (Good)";
+	} else if (integerValue >= 16 && integerValue <= 20) {
+		suffix = @" (Great)";
+	} else if (integerValue >= 21) {
+		suffix = @" (Super)";
+	} else {
+		suffix = @"";
+	}
+	return suffix;
 }
 
 + (NSDictionary *)numberOfSplitsDictionary

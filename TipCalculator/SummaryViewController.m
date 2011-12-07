@@ -156,7 +156,7 @@
     [super viewWillAppear:animated];
 	
     splitInputView_.detailTextLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
-    tipInputView_.detailTextLabel.text = [check_.tipPercentage percentString];
+    tipInputView_.detailTextLabel.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage picker:NO];
     
     [numberPadDigits_ setDigitsAndDecimalsWithDecimalNumber:check_.billAmount];
 	[numberPadDigits_ validateAndFixDecimalSeparator];
@@ -323,7 +323,7 @@
         splitInputView_.detailTextLabel.text = [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits];
     } else {
         check_.tipPercentage = number;
-        tipInputView_.detailTextLabel.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage];
+        tipInputView_.detailTextLabel.text = [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage picker:NO];
     }
 }
 
@@ -347,16 +347,7 @@
     if (pickerType_ == SummaryViewControllerPickerSplit) {
         string = [check_ stringForNumberOfSplitsWithDecimalNumber:currentNumber];
     } else {
-        NSComparisonResult isZero = [currentNumber compare:[NSDecimalNumber zero]];
-        if (isZero == NSOrderedSame) {
-            string = [check_ stringForTipPercentageWithDecimalNumber:currentNumber];
-        } else {
-            NSString *tmpStr = nil;
-            NSString *percentage = [check_ stringForTipPercentageWithDecimalNumber:currentNumber];
-            tmpStr = [percentage stringByPaddingToLength:15 withString:@" " startingAtIndex:0];
-            NSString *tip = [[CheckHelper calculateTipWithAmount:check_.billAmount andRate:currentNumber] currencyString];
-            string = [NSString stringWithFormat:@"%@%@", tmpStr, tip];
-        }
+		string = [check_ stringForTipPercentageWithDecimalNumber:currentNumber picker:YES];
     }
     return string;
 }
@@ -364,11 +355,7 @@
 // tell the picker the width of each row for a given component
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-	CGFloat width = 280.0;
-	if (pickerType_ == SummaryViewControllerPickerSplit) {
-		width = 180.0;
-	}
-	return width;
+	return 180.0;
 }
 
 #pragma mark - RLNumberPad Delegate Methods
