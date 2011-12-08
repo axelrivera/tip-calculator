@@ -166,15 +166,15 @@
 	footerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_footer_bg.png"]];
 	[self.view addSubview:footerView_];
 	
-	totalToPayTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 5.0, 110.0, 27.0)];
+	totalToPayTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 5.0, 100.0, 27.0)];
 	totalToPayTitleLabel_.backgroundColor = [UIColor clearColor];
-	totalToPayTitleLabel_.font = [UIFont fontWithName:@"ChalkboardSE-Bold" size:16.0];
+	totalToPayTitleLabel_.font = [UIFont fontWithName:@"Noteworthy-Bold" size:16.0];
 	totalToPayTitleLabel_.textColor = [UIColor purpleChalkColor];
 	totalToPayTitleLabel_.textAlignment = UITextAlignmentLeft;
 	totalToPayTitleLabel_.text = @"Total to Pay:";
 	[footerView_ addSubview:totalToPayTitleLabel_];
 	
-	totalToPayLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(120.0, 5.0, 125.0, 27.0)];
+	totalToPayLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(110.0, 5.0, 125.0, 27.0)];
 	totalToPayLabel_.backgroundColor = [UIColor clearColor];
 	totalToPayLabel_.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:16.0];
 	totalToPayLabel_.textColor = [UIColor greenBoardColor];
