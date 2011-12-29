@@ -107,10 +107,12 @@
 	adjustmentsTable_.rowHeight = 65.0;
 	
 	CGSize screenSize = [UIScreen mainScreen].bounds.size;
-	headerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenSize.width, 97.0)];
+	headerView_ = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, screenSize.width, 97.0)];
+	headerView_.userInteractionEnabled = YES;
 	headerView_.tag = kAdjustmentsBackgroundViewTag;
 	headerView_.opaque = NO;
-	headerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_header_bg.png"]];
+	headerView_.backgroundColor = [UIColor clearColor];
+	headerView_.image = [UIImage imageNamed:@"adjustment_header_bg.png"];
 	[self.view addSubview:headerView_];
 	
 	backButton_ = [[UIButton greenButtonAtPoint:CGPointMake(10.0, 10.0)] retain];
@@ -161,9 +163,10 @@
 	questionButton_.adjustsImageWhenHighlighted = NO;
 	[headerView_ addSubview:questionButton_];
 	
-	footerView_ = [[UIView alloc] initWithFrame:CGRectMake(0.0, screenSize.height - (37.0 + 20.0), screenSize.width, 37.0)];
+	footerView_ = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, screenSize.height - (37.0 + 20.0), screenSize.width, 37.0)];
 	footerView_.opaque = NO;
-	footerView_.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"adjustment_footer_bg.png"]];
+	footerView_.backgroundColor = [UIColor clearColor];
+	footerView_.image = [UIImage imageNamed:@"adjustment_footer_bg.png"];
 	[self.view addSubview:footerView_];
 	
 	totalToPayTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 5.0, 100.0, 27.0)];

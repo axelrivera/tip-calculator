@@ -10,6 +10,7 @@
 
 @interface GuestCheckView : UIView
 {
+	UIImageView *imageView_;
     UILabel *totalTipTitleLabel_;
     UILabel *totalToPayTitleLabel_;
     UILabel *totalPerPersonTitleLabel_;

@@ -18,8 +18,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.opaque = YES;
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"guest_check_background.png"]];
+        self.opaque = NO;
+        self.backgroundColor = [UIColor clearColor];
+		
+		imageView_ = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"guest_check_background.png"]];
+		[self addSubview:imageView_];
         
         UIFont *titleFont = [UIFont fontWithName:@"MarkerFelt-Thin" size:17.0];
         UIFont *detailFont = [UIFont fontWithName:@"MarkerFelt-Wide" size:16.0];
@@ -31,7 +34,7 @@
         totalTipTitleLabel_.textColor = labelColor;
         totalTipTitleLabel_.text = @"Total Tip";
         totalTipTitleLabel_.textAlignment = UITextAlignmentLeft;
-        [self addSubview:totalTipTitleLabel_];
+        [imageView_ addSubview:totalTipTitleLabel_];
         
         totalToPayTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
         totalToPayTitleLabel_.backgroundColor = [UIColor clearColor];
@@ -39,7 +42,7 @@
         totalToPayTitleLabel_.textColor = labelColor;
         totalToPayTitleLabel_.text = @"Total to Pay";
         totalToPayTitleLabel_.textAlignment = UITextAlignmentLeft;
-        [self addSubview:totalToPayTitleLabel_];
+        [imageView_ addSubview:totalToPayTitleLabel_];
         
         totalPerPersonTitleLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
         totalPerPersonTitleLabel_.backgroundColor = [UIColor clearColor];
@@ -47,7 +50,7 @@
         totalPerPersonTitleLabel_.textColor = labelColor;
         totalPerPersonTitleLabel_.text = @"Total per Person";
         totalPerPersonTitleLabel_.textAlignment = UITextAlignmentLeft;
-        [self addSubview:totalPerPersonTitleLabel_];
+        [imageView_ addSubview:totalPerPersonTitleLabel_];
         
         totalTipLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
         totalTipLabel_.backgroundColor = [UIColor clearColor];
@@ -56,7 +59,7 @@
         totalTipLabel_.textAlignment = UITextAlignmentRight;
 		totalTipLabel_.minimumFontSize = 12.0;
 		totalTipLabel_.adjustsFontSizeToFitWidth = YES;
-        [self addSubview:totalTipLabel_];
+        [imageView_ addSubview:totalTipLabel_];
         
         totalToPayLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
         totalToPayLabel_.backgroundColor = [UIColor clearColor];
@@ -65,7 +68,7 @@
         totalToPayLabel_.textAlignment = UITextAlignmentRight;
 		totalToPayLabel_.minimumFontSize = 12.0;
 		totalToPayLabel_.adjustsFontSizeToFitWidth = YES;
-        [self addSubview:totalToPayLabel_];
+        [imageView_ addSubview:totalToPayLabel_];
         
         totalPerPersonLabel_ = [[UILabel alloc] initWithFrame:CGRectZero];
         totalPerPersonLabel_.backgroundColor = [UIColor clearColor];
@@ -74,13 +77,14 @@
         totalPerPersonLabel_.textAlignment = UITextAlignmentRight;
 		totalPerPersonLabel_.minimumFontSize = 12.0;
 		totalPerPersonLabel_.adjustsFontSizeToFitWidth = YES;
-        [self addSubview:totalPerPersonLabel_];
+        [imageView_ addSubview:totalPerPersonLabel_];
     }
     return self;
 }
 
 - (void)dealloc
 {
+	[imageView_ release];
     [totalTipTitleLabel_ release];
     [totalToPayTitleLabel_ release];
     [totalPerPersonTitleLabel_ release];

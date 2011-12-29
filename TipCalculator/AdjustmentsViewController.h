@@ -24,8 +24,8 @@
 
 @property (nonatomic, assign) id <AdjustmentsViewControllerDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITableView *adjusmentsTable;
-@property (nonatomic, retain) UIView *headerView;
-@property (nonatomic, retain) UIView *footerView;
+@property (nonatomic, retain) UIImageView *headerView;
+@property (nonatomic, retain) UIImageView *footerView;
 @property (nonatomic, retain) UIButton *backButton;
 @property (nonatomic, retain) UIButton *resetButton;
 @property (nonatomic, retain) UIButton *questionButton;
