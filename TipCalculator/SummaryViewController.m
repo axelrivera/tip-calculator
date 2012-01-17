@@ -13,6 +13,7 @@
 #import "NSDecimalNumber+Check.h"
 #import "UIButton+TipCalculator.h"
 #import "ControllerConstants.h"
+#import "FullVersionViewController.h"
 
 #define kInputLabelWidth 266.0
 
@@ -68,6 +69,7 @@
     [guestCheckView_ release];
     [splitsButton_ release];
     [settingsButton_ release];
+	[fullVersionButton_ release];
     [splitInputView_ release];
     [tipInputView_ release];
     [billAmountInputView_ release];
@@ -117,6 +119,12 @@
     guestCheckView_ = [[GuestCheckView alloc] initWithFrame:CGRectMake(27.0, 225.0, kInputLabelWidth, 168.0)];
     [self.view addSubview:guestCheckView_];
     
+#ifdef LITE_VERSION
+	fullVersionButton_ = [[UIButton buttonWithType:UIButtonTypeInfoLight] retain];
+	[fullVersionButton_ addTarget:self action:@selector(showFullVersionAction:) forControlEvents:UIControlEventTouchDown];
+	fullVersionButton_.frame = CGRectMake(262.0, 406.0, 18.0, 19.0);
+	[self.view addSubview:fullVersionButton_];
+#else
     splitsButton_ = [[UIButton orangeButtonAtPoint:CGPointMake(27.0, 400.0)] retain];
     [splitsButton_ setTitle:@"Splits" forState:UIControlStateNormal];
     [splitsButton_ addTarget:self action:@selector(showAdjustmentsAction:) forControlEvents:UIControlEventTouchDown];
@@ -131,6 +139,7 @@
     [settingsButton_ setTitle:@"Settings" forState:UIControlStateNormal];
     [settingsButton_ addTarget:self action:@selector(showSettingsAction:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:settingsButton_];
+#endif
 }
 
 - (void)viewDidUnload
@@ -145,6 +154,8 @@
     splitsButton_ = nil;
     [settingsButton_ release];
     settingsButton_ = nil;
+	[fullVersionButton_ release];
+	fullVersionButton_ = nil;
     self.splitInputView = nil;
     self.tipInputView = nil;
     self.billAmountInputView = nil;
@@ -261,6 +272,14 @@
 	[settingsViewController release];
 	[self presentModalViewController:navController animated:YES];
 	[navController release];
+}
+
+- (void)showFullVersionAction:(id)sender
+{
+	FullVersionViewController *fullVersionContoller = [[FullVersionViewController alloc] init];
+	fullVersionContoller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	[self presentModalViewController:fullVersionContoller animated:YES];
+	[fullVersionContoller release];
 }
 
 #pragma mark - Private Methods

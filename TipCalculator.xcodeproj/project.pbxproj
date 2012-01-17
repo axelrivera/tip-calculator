@@ -16,6 +16,12 @@
 		16190FFE148D4F0400FD7CA0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 16190FFC148D4F0400FD7CA0 /* Default.png */; };
 		16190FFF148D4F0400FD7CA0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16190FFD148D4F0400FD7CA0 /* Default@2x.png */; };
 		16215253149798BC00B403CC /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 16215252149798BC00B403CC /* iTunesArtwork */; };
+		16375AD714C5003200B10B96 /* back_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 16375AD314C5003200B10B96 /* back_button.png */; };
+		16375AD814C5003200B10B96 /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16375AD414C5003200B10B96 /* back_button@2x.png */; };
+		16375AD914C5003200B10B96 /* full_version.png in Resources */ = {isa = PBXBuildFile; fileRef = 16375AD514C5003200B10B96 /* full_version.png */; };
+		16375ADA14C5003200B10B96 /* full_version@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16375AD614C5003200B10B96 /* full_version@2x.png */; };
+		16375ADB14C500B700B10B96 /* AdjustmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1638C5AE1483FF750055CF64 /* AdjustmentView.m */; };
+		16375ADC14C500B700B10B96 /* AdjustmentViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1638C5B114840A910055CF64 /* AdjustmentViewCell.m */; };
 		1638C5AA1483F0C80055CF64 /* button_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 1638C5A81483F0C50055CF64 /* button_delete.png */; };
 		1638C5AB1483F0C80055CF64 /* button_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1638C5A91483F0C70055CF64 /* button_delete@2x.png */; };
 		1638C5AF1483FF750055CF64 /* AdjustmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1638C5AE1483FF750055CF64 /* AdjustmentView.m */; };
@@ -75,6 +81,106 @@
 		166F0DD11480020A009882A5 /* input_accessory_up_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 166F0DC91480020A009882A5 /* input_accessory_up_blue.png */; };
 		166F0DD21480020A009882A5 /* input_accessory_up_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 166F0DCA1480020A009882A5 /* input_accessory_up_blue@2x.png */; };
 		166F5D591461B188000742F2 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 166F5D581461B188000742F2 /* Settings.m */; };
+		1677636714C4FD0500B147BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662572D1434BAA4006CA328 /* main.m */; };
+		1677636814C4FD0500B147BA /* TipCalculatorAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */; };
+		1677636914C4FD0500B147BA /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257561434D624006CA328 /* SummaryViewController.m */; };
+		1677636A14C4FD0500B147BA /* AdjustmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662575B1434D66C006CA328 /* AdjustmentsViewController.m */; };
+		1677636B14C4FD0500B147BA /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
+		1677636C14C4FD0500B147BA /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AECE14362FD100D47637 /* Check.m */; };
+		1677636D14C4FD0500B147BA /* CheckData.m in Sources */ = {isa = PBXBuildFile; fileRef = 16165363143A350200BA2DCB /* CheckData.m */; };
+		1677636E14C4FD0500B147BA /* Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* Adjustment.m */; };
+		1677636F14C4FD0500B147BA /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
+		1677637014C4FD0500B147BA /* NSDecimalNumber+Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */; };
+		1677637114C4FD0500B147BA /* RLNumberPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 166A2FE7145859E200D23870 /* RLNumberPad.m */; };
+		1677637214C4FD0500B147BA /* RLNumberPadDigits.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */; };
+		1677637314C4FD0500B147BA /* InputDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1664FCE41459E69F0032CE0D /* InputDisplayView.m */; };
+		1677637414C4FD0500B147BA /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 166F5D581461B188000742F2 /* Settings.m */; };
+		1677637514C4FD0500B147BA /* TableSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1689F898146326B50040A33D /* TableSelectViewController.m */; };
+		1677637614C4FD0500B147BA /* TaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167FB56E1464236300967E4F /* TaxViewController.m */; };
+		1677637714C4FD0500B147BA /* RLInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 163DA35A14647B400007727F /* RLInputLabel.m */; };
+		1677637814C4FD0500B147BA /* UIColor+TipCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 165741B3147C5C53001F93EA /* UIColor+TipCalculator.m */; };
+		1677637914C4FD0500B147BA /* GuestCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16559059147D4BB300BA6D15 /* GuestCheckView.m */; };
+		1677637A14C4FD0500B147BA /* UIButton+TipCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1655905C147D571600BA6D15 /* UIButton+TipCalculator.m */; };
+		1677637D14C4FD0500B147BA /* FileHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 16181D74148877B2004251BC /* FileHelpers.m */; };
+		1677637F14C4FD0500B147BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257211434BAA4006CA328 /* UIKit.framework */; };
+		1677638014C4FD0500B147BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257231434BAA4006CA328 /* Foundation.framework */; };
+		1677638114C4FD0500B147BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166257251434BAA4006CA328 /* CoreGraphics.framework */; };
+		1677638314C4FD0500B147BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1662572A1434BAA4006CA328 /* InfoPlist.strings */; };
+		1677638414C4FD0500B147BA /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257331434BAA4006CA328 /* MainWindow.xib */; };
+		1677638514C4FD0500B147BA /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 166257571434D624006CA328 /* SummaryViewController.xib */; };
+		1677638614C4FD0500B147BA /* AdjustmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1662575C1434D66C006CA328 /* AdjustmentsViewController.xib */; };
+		1677638714C4FD0500B147BA /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
+		1677638814C4FD0500B147BA /* TableSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1689F899146326B50040A33D /* TableSelectViewController.xib */; };
+		1677638914C4FD0500B147BA /* TaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 167FB56F1464236300967E4F /* TaxViewController.xib */; };
+		1677638A14C4FD0500B147BA /* select_view_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741A9147C58A7001F93EA /* select_view_white.png */; };
+		1677638B14C4FD0500B147BA /* select_view_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741AA147C58A7001F93EA /* select_view_white@2x.png */; };
+		1677638C14C4FD0500B147BA /* select_view_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741AB147C58A7001F93EA /* select_view_black.png */; };
+		1677638D14C4FD0500B147BA /* select_view_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165741AC147C58A7001F93EA /* select_view_black@2x.png */; };
+		1677638E14C4FD0500B147BA /* button_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 1655905E147D575400BA6D15 /* button_white.png */; };
+		1677638F14C4FD0500B147BA /* button_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1655905F147D575400BA6D15 /* button_white@2x.png */; };
+		1677639014C4FD0500B147BA /* button_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2812147DA1A800DE8785 /* button_yellow.png */; };
+		1677639114C4FD0500B147BA /* button_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2813147DA1A800DE8785 /* button_yellow@2x.png */; };
+		1677639214C4FD0500B147BA /* mainscreen_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2816147DA5D700DE8785 /* mainscreen_background.png */; };
+		1677639314C4FD0500B147BA /* mainscreen_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2817147DA5D700DE8785 /* mainscreen_background@2x.png */; };
+		1677639414C4FD0500B147BA /* button_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 1601C6EE147DB1AC0036651E /* button_orange.png */; };
+		1677639514C4FD0500B147BA /* button_orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1601C6EF147DB1AC0036651E /* button_orange@2x.png */; };
+		1677639614C4FD0500B147BA /* input_accessory_down_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 166F0DC71480020A009882A5 /* input_accessory_down_white.png */; };
+		1677639714C4FD0500B147BA /* input_accessory_down_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 166F0DC81480020A009882A5 /* input_accessory_down_white@2x.png */; };
+		1677639814C4FD0500B147BA /* input_accessory_up_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 166F0DC91480020A009882A5 /* input_accessory_up_blue.png */; };
+		1677639914C4FD0500B147BA /* input_accessory_up_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 166F0DCA1480020A009882A5 /* input_accessory_up_blue@2x.png */; };
+		1677639A14C4FD0500B147BA /* button_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0B814806F470045AC45 /* button_green.png */; };
+		1677639B14C4FD0500B147BA /* button_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0B914806F470045AC45 /* button_green@2x.png */; };
+		1677639C14C4FD0500B147BA /* button_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0BA14806F470045AC45 /* button_red.png */; };
+		1677639D14C4FD0500B147BA /* button_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0BB14806F480045AC45 /* button_red@2x.png */; };
+		1677639E14C4FD0500B147BA /* input_accessory_up_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0BC14806F480045AC45 /* input_accessory_up_green.png */; };
+		1677639F14C4FD0500B147BA /* input_accessory_up_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0BD14806F480045AC45 /* input_accessory_up_green@2x.png */; };
+		167763A014C4FD0500B147BA /* button_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0BE14806F490045AC45 /* button_question.png */; };
+		167763A114C4FD0500B147BA /* button_question@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0BF14806F490045AC45 /* button_question@2x.png */; };
+		167763A214C4FD0500B147BA /* select_view_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0C114806F490045AC45 /* select_view_green.png */; };
+		167763A314C4FD0500B147BA /* select_view_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0C214806F490045AC45 /* select_view_green@2x.png */; };
+		167763A414C4FD0500B147BA /* select_view_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0C314806F4A0045AC45 /* select_view_yellow.png */; };
+		167763A514C4FD0500B147BA /* select_view_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1660E0C414806F4A0045AC45 /* select_view_yellow@2x.png */; };
+		167763A614C4FD0500B147BA /* button_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 1638C5A81483F0C50055CF64 /* button_delete.png */; };
+		167763A714C4FD0500B147BA /* button_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1638C5A91483F0C70055CF64 /* button_delete@2x.png */; };
+		167763A814C4FD0500B147BA /* adjustment_row_alt_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1658733A148429A400D02E16 /* adjustment_row_alt_bg.png */; };
+		167763A914C4FD0500B147BA /* adjustment_row_alt_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1658733B148429A400D02E16 /* adjustment_row_alt_bg@2x.png */; };
+		167763AA14C4FD0500B147BA /* adjustment_row_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1658733C148429A400D02E16 /* adjustment_row_bg.png */; };
+		167763AB14C4FD0500B147BA /* adjustment_row_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1658733D148429A400D02E16 /* adjustment_row_bg@2x.png */; };
+		167763AC14C4FD0500B147BA /* adjustment_row_first_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1658733E148429A400D02E16 /* adjustment_row_first_bg.png */; };
+		167763AD14C4FD0500B147BA /* adjustment_row_first_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1658733F148429A400D02E16 /* adjustment_row_first_bg@2x.png */; };
+		167763AE14C4FD0500B147BA /* button_question_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 163BF17814844A4B00F8C038 /* button_question_pressed.png */; };
+		167763AF14C4FD0500B147BA /* button_question_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 163BF17914844A4B00F8C038 /* button_question_pressed@2x.png */; };
+		167763B014C4FD0500B147BA /* adjustment_footer_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 16A9D0F5148503B800DED5A5 /* adjustment_footer_bg.png */; };
+		167763B114C4FD0500B147BA /* adjustment_footer_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16A9D0F6148503B800DED5A5 /* adjustment_footer_bg@2x.png */; };
+		167763B214C4FD0500B147BA /* adjustment_header_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 16A9D0F7148503B800DED5A5 /* adjustment_header_bg.png */; };
+		167763B314C4FD0500B147BA /* adjustment_header_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16A9D0F8148503B800DED5A5 /* adjustment_header_bg@2x.png */; };
+		167763B414C4FD0500B147BA /* select_view_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DCE288148531F6009BD6D0 /* select_view_disabled.png */; };
+		167763B514C4FD0500B147BA /* select_view_disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DCE289148531F6009BD6D0 /* select_view_disabled@2x.png */; };
+		167763B614C4FD0500B147BA /* numberpad_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 165E32F11485822B00724752 /* numberpad_button_black.png */; };
+		167763B714C4FD0500B147BA /* numberpad_button_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165E32F21485822B00724752 /* numberpad_button_black@2x.png */; };
+		167763B814C4FD0500B147BA /* numberpad_button_black_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 165E32F5148583E500724752 /* numberpad_button_black_pressed.png */; };
+		167763B914C4FD0500B147BA /* numberpad_button_black_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165E32F6148583E500724752 /* numberpad_button_black_pressed@2x.png */; };
+		167763BA14C4FD0500B147BA /* numberpad_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 165E330614858FAE00724752 /* numberpad_bg.png */; };
+		167763BB14C4FD0500B147BA /* numberpad_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 165E330714858FAE00724752 /* numberpad_bg@2x.png */; };
+		167763BC14C4FD0500B147BA /* numberpad_button_done_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B592C1487C517004F3D4A /* numberpad_button_done_pressed.png */; };
+		167763BD14C4FD0500B147BA /* numberpad_button_done_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B592D1487C517004F3D4A /* numberpad_button_done_pressed@2x.png */; };
+		167763BE14C4FD0500B147BA /* numberpad_button_done.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B592E1487C517004F3D4A /* numberpad_button_done.png */; };
+		167763BF14C4FD0500B147BA /* numberpad_button_done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B592F1487C517004F3D4A /* numberpad_button_done@2x.png */; };
+		167763C014C4FD0500B147BA /* numberpad_button_yellow_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B59301487C517004F3D4A /* numberpad_button_yellow_pressed.png */; };
+		167763C114C4FD0500B147BA /* numberpad_button_yellow_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B59311487C517004F3D4A /* numberpad_button_yellow_pressed@2x.png */; };
+		167763C214C4FD0500B147BA /* numberpad_button_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B59321487C517004F3D4A /* numberpad_button_yellow.png */; };
+		167763C314C4FD0500B147BA /* numberpad_button_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 169B59331487C517004F3D4A /* numberpad_button_yellow@2x.png */; };
+		167763C414C4FD0500B147BA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1690E0D5148D313100D7ECD3 /* Icon.png */; };
+		167763C514C4FD0500B147BA /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1690E0D6148D313100D7ECD3 /* Icon@2x.png */; };
+		167763C614C4FD0500B147BA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 16190FFC148D4F0400FD7CA0 /* Default.png */; };
+		167763C714C4FD0500B147BA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16190FFD148D4F0400FD7CA0 /* Default@2x.png */; };
+		167763C814C4FD0500B147BA /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 16C9ECAB148D5192000C026F /* Icon-72.png */; };
+		167763C914C4FD0500B147BA /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 16C9ECAC148D5192000C026F /* Icon-Small-50.png */; };
+		167763CA14C4FD0500B147BA /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 16C9ECAD148D5192000C026F /* Icon-Small.png */; };
+		167763CB14C4FD0500B147BA /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16C9ECAE148D5192000C026F /* Icon-Small@2x.png */; };
+		167763CC14C4FD0500B147BA /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 16215252149798BC00B403CC /* iTunesArtwork */; };
+		167763CD14C4FD0500B147BA /* guest_check_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1602D89D14AC2129003149A6 /* guest_check_background.png */; };
+		167763CE14C4FD0500B147BA /* guest_check_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1602D89E14AC2129003149A6 /* guest_check_background@2x.png */; };
 		167FB5701464236300967E4F /* TaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167FB56E1464236300967E4F /* TaxViewController.m */; };
 		167FB5711464236300967E4F /* TaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 167FB56F1464236300967E4F /* TaxViewController.xib */; };
 		1689F89A146326B50040A33D /* TableSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1689F898146326B50040A33D /* TableSelectViewController.m */; };
@@ -109,6 +215,10 @@
 		16E6AEBA1435EB5800D47637 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AEB81435EB5800D47637 /* SettingsViewController.m */; };
 		16E6AEBB1435EB5800D47637 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16E6AEB91435EB5800D47637 /* SettingsViewController.xib */; };
 		16E6AECF14362FD100D47637 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6AECE14362FD100D47637 /* Check.m */; };
+		16FC13B314C59EEA0071F30C /* FullVersionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16FC13B114C59EEA0071F30C /* FullVersionViewController.m */; };
+		16FC13B414C59EEA0071F30C /* FullVersionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16FC13B114C59EEA0071F30C /* FullVersionViewController.m */; };
+		16FC13B514C59EEA0071F30C /* FullVersionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FC13B214C59EEA0071F30C /* FullVersionViewController.xib */; };
+		16FC13B614C59EEA0071F30C /* FullVersionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FC13B214C59EEA0071F30C /* FullVersionViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +233,10 @@
 		16190FFC148D4F0400FD7CA0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		16190FFD148D4F0400FD7CA0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		16215252149798BC00B403CC /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		16375AD314C5003200B10B96 /* back_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_button.png; sourceTree = "<group>"; };
+		16375AD414C5003200B10B96 /* back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_button@2x.png"; sourceTree = "<group>"; };
+		16375AD514C5003200B10B96 /* full_version.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = full_version.png; sourceTree = "<group>"; };
+		16375AD614C5003200B10B96 /* full_version@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "full_version@2x.png"; sourceTree = "<group>"; };
 		1638C5A81483F0C50055CF64 /* button_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_delete.png; sourceTree = "<group>"; };
 		1638C5A91483F0C70055CF64 /* button_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_delete@2x.png"; sourceTree = "<group>"; };
 		1638C5AD1483FF750055CF64 /* AdjustmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustmentView.h; sourceTree = "<group>"; };
@@ -198,6 +312,8 @@
 		166F0DCA1480020A009882A5 /* input_accessory_up_blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input_accessory_up_blue@2x.png"; sourceTree = "<group>"; };
 		166F5D571461B188000742F2 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		166F5D581461B188000742F2 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
+		167763D314C4FD0500B147BA /* TipCalculatorFree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculatorFree.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TipCalculatorFree-Info.plist"; sourceTree = "<group>"; };
 		167FB56D1464236300967E4F /* TaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxViewController.h; sourceTree = "<group>"; };
 		167FB56E1464236300967E4F /* TaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxViewController.m; sourceTree = "<group>"; };
 		167FB56F1464236300967E4F /* TaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaxViewController.xib; sourceTree = "<group>"; };
@@ -241,6 +357,9 @@
 		16E6AEB91435EB5800D47637 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		16E6AECD14362FD000D47637 /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
 		16E6AECE14362FD100D47637 /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
+		16FC13B014C59EEA0071F30C /* FullVersionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullVersionViewController.h; sourceTree = "<group>"; };
+		16FC13B114C59EEA0071F30C /* FullVersionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullVersionViewController.m; sourceTree = "<group>"; };
+		16FC13B214C59EEA0071F30C /* FullVersionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullVersionViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +370,16 @@
 				166257221434BAA4006CA328 /* UIKit.framework in Frameworks */,
 				166257241434BAA4006CA328 /* Foundation.framework in Frameworks */,
 				166257261434BAA4006CA328 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1677637E14C4FD0500B147BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1677637F14C4FD0500B147BA /* UIKit.framework in Frameworks */,
+				1677638014C4FD0500B147BA /* Foundation.framework in Frameworks */,
+				1677638114C4FD0500B147BA /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +408,10 @@
 		164794621436A0390095C658 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				16375AD314C5003200B10B96 /* back_button.png */,
+				16375AD414C5003200B10B96 /* back_button@2x.png */,
+				16375AD514C5003200B10B96 /* full_version.png */,
+				16375AD614C5003200B10B96 /* full_version@2x.png */,
 				1602D89D14AC2129003149A6 /* guest_check_background.png */,
 				1602D89E14AC2129003149A6 /* guest_check_background@2x.png */,
 				169B592C1487C517004F3D4A /* numberpad_button_done_pressed.png */,
@@ -356,6 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				1662571D1434BAA4006CA328 /* TipCalculator.app */,
+				167763D314C4FD0500B147BA /* TipCalculatorFree.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -388,6 +522,7 @@
 		166257281434BAA4006CA328 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */,
 				16215252149798BC00B403CC /* iTunesArtwork */,
 				16190FFC148D4F0400FD7CA0 /* Default.png */,
 				16190FFD148D4F0400FD7CA0 /* Default@2x.png */,
@@ -415,6 +550,7 @@
 				16E6AEB91435EB5800D47637 /* SettingsViewController.xib */,
 				1689F899146326B50040A33D /* TableSelectViewController.xib */,
 				167FB56F1464236300967E4F /* TaxViewController.xib */,
+				16FC13B214C59EEA0071F30C /* FullVersionViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -433,6 +569,8 @@
 				1689F898146326B50040A33D /* TableSelectViewController.m */,
 				167FB56D1464236300967E4F /* TaxViewController.h */,
 				167FB56E1464236300967E4F /* TaxViewController.m */,
+				16FC13B014C59EEA0071F30C /* FullVersionViewController.h */,
+				16FC13B114C59EEA0071F30C /* FullVersionViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -484,6 +622,23 @@
 			productReference = 1662571D1434BAA4006CA328 /* TipCalculator.app */;
 			productType = "com.apple.product-type.application";
 		};
+		1677636514C4FD0500B147BA /* TipCalculatorFree */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 167763CF14C4FD0500B147BA /* Build configuration list for PBXNativeTarget "TipCalculatorFree" */;
+			buildPhases = (
+				1677636614C4FD0500B147BA /* Sources */,
+				1677637E14C4FD0500B147BA /* Frameworks */,
+				1677638214C4FD0500B147BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TipCalculatorFree;
+			productName = TipCalculator;
+			productReference = 167763D314C4FD0500B147BA /* TipCalculatorFree.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -505,6 +660,7 @@
 			projectRoot = "";
 			targets = (
 				1662571C1434BAA4006CA328 /* TipCalculator */,
+				1677636514C4FD0500B147BA /* TipCalculatorFree */,
 			);
 		};
 /* End PBXProject section */
@@ -590,6 +746,95 @@
 				16215253149798BC00B403CC /* iTunesArtwork in Resources */,
 				1602D89F14AC2129003149A6 /* guest_check_background.png in Resources */,
 				1602D8A014AC2129003149A6 /* guest_check_background@2x.png in Resources */,
+				16FC13B514C59EEA0071F30C /* FullVersionViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1677638214C4FD0500B147BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1677638314C4FD0500B147BA /* InfoPlist.strings in Resources */,
+				1677638414C4FD0500B147BA /* MainWindow.xib in Resources */,
+				1677638514C4FD0500B147BA /* SummaryViewController.xib in Resources */,
+				1677638614C4FD0500B147BA /* AdjustmentsViewController.xib in Resources */,
+				1677638714C4FD0500B147BA /* SettingsViewController.xib in Resources */,
+				1677638814C4FD0500B147BA /* TableSelectViewController.xib in Resources */,
+				1677638914C4FD0500B147BA /* TaxViewController.xib in Resources */,
+				1677638A14C4FD0500B147BA /* select_view_white.png in Resources */,
+				1677638B14C4FD0500B147BA /* select_view_white@2x.png in Resources */,
+				1677638C14C4FD0500B147BA /* select_view_black.png in Resources */,
+				1677638D14C4FD0500B147BA /* select_view_black@2x.png in Resources */,
+				1677638E14C4FD0500B147BA /* button_white.png in Resources */,
+				1677638F14C4FD0500B147BA /* button_white@2x.png in Resources */,
+				1677639014C4FD0500B147BA /* button_yellow.png in Resources */,
+				1677639114C4FD0500B147BA /* button_yellow@2x.png in Resources */,
+				1677639214C4FD0500B147BA /* mainscreen_background.png in Resources */,
+				1677639314C4FD0500B147BA /* mainscreen_background@2x.png in Resources */,
+				1677639414C4FD0500B147BA /* button_orange.png in Resources */,
+				1677639514C4FD0500B147BA /* button_orange@2x.png in Resources */,
+				1677639614C4FD0500B147BA /* input_accessory_down_white.png in Resources */,
+				1677639714C4FD0500B147BA /* input_accessory_down_white@2x.png in Resources */,
+				1677639814C4FD0500B147BA /* input_accessory_up_blue.png in Resources */,
+				1677639914C4FD0500B147BA /* input_accessory_up_blue@2x.png in Resources */,
+				1677639A14C4FD0500B147BA /* button_green.png in Resources */,
+				1677639B14C4FD0500B147BA /* button_green@2x.png in Resources */,
+				1677639C14C4FD0500B147BA /* button_red.png in Resources */,
+				1677639D14C4FD0500B147BA /* button_red@2x.png in Resources */,
+				1677639E14C4FD0500B147BA /* input_accessory_up_green.png in Resources */,
+				1677639F14C4FD0500B147BA /* input_accessory_up_green@2x.png in Resources */,
+				167763A014C4FD0500B147BA /* button_question.png in Resources */,
+				167763A114C4FD0500B147BA /* button_question@2x.png in Resources */,
+				167763A214C4FD0500B147BA /* select_view_green.png in Resources */,
+				167763A314C4FD0500B147BA /* select_view_green@2x.png in Resources */,
+				167763A414C4FD0500B147BA /* select_view_yellow.png in Resources */,
+				167763A514C4FD0500B147BA /* select_view_yellow@2x.png in Resources */,
+				167763A614C4FD0500B147BA /* button_delete.png in Resources */,
+				167763A714C4FD0500B147BA /* button_delete@2x.png in Resources */,
+				167763A814C4FD0500B147BA /* adjustment_row_alt_bg.png in Resources */,
+				167763A914C4FD0500B147BA /* adjustment_row_alt_bg@2x.png in Resources */,
+				167763AA14C4FD0500B147BA /* adjustment_row_bg.png in Resources */,
+				167763AB14C4FD0500B147BA /* adjustment_row_bg@2x.png in Resources */,
+				167763AC14C4FD0500B147BA /* adjustment_row_first_bg.png in Resources */,
+				167763AD14C4FD0500B147BA /* adjustment_row_first_bg@2x.png in Resources */,
+				167763AE14C4FD0500B147BA /* button_question_pressed.png in Resources */,
+				167763AF14C4FD0500B147BA /* button_question_pressed@2x.png in Resources */,
+				167763B014C4FD0500B147BA /* adjustment_footer_bg.png in Resources */,
+				167763B114C4FD0500B147BA /* adjustment_footer_bg@2x.png in Resources */,
+				167763B214C4FD0500B147BA /* adjustment_header_bg.png in Resources */,
+				167763B314C4FD0500B147BA /* adjustment_header_bg@2x.png in Resources */,
+				167763B414C4FD0500B147BA /* select_view_disabled.png in Resources */,
+				167763B514C4FD0500B147BA /* select_view_disabled@2x.png in Resources */,
+				167763B614C4FD0500B147BA /* numberpad_button_black.png in Resources */,
+				167763B714C4FD0500B147BA /* numberpad_button_black@2x.png in Resources */,
+				167763B814C4FD0500B147BA /* numberpad_button_black_pressed.png in Resources */,
+				167763B914C4FD0500B147BA /* numberpad_button_black_pressed@2x.png in Resources */,
+				167763BA14C4FD0500B147BA /* numberpad_bg.png in Resources */,
+				167763BB14C4FD0500B147BA /* numberpad_bg@2x.png in Resources */,
+				167763BC14C4FD0500B147BA /* numberpad_button_done_pressed.png in Resources */,
+				167763BD14C4FD0500B147BA /* numberpad_button_done_pressed@2x.png in Resources */,
+				167763BE14C4FD0500B147BA /* numberpad_button_done.png in Resources */,
+				167763BF14C4FD0500B147BA /* numberpad_button_done@2x.png in Resources */,
+				167763C014C4FD0500B147BA /* numberpad_button_yellow_pressed.png in Resources */,
+				167763C114C4FD0500B147BA /* numberpad_button_yellow_pressed@2x.png in Resources */,
+				167763C214C4FD0500B147BA /* numberpad_button_yellow.png in Resources */,
+				167763C314C4FD0500B147BA /* numberpad_button_yellow@2x.png in Resources */,
+				167763C414C4FD0500B147BA /* Icon.png in Resources */,
+				167763C514C4FD0500B147BA /* Icon@2x.png in Resources */,
+				167763C614C4FD0500B147BA /* Default.png in Resources */,
+				167763C714C4FD0500B147BA /* Default@2x.png in Resources */,
+				167763C814C4FD0500B147BA /* Icon-72.png in Resources */,
+				167763C914C4FD0500B147BA /* Icon-Small-50.png in Resources */,
+				167763CA14C4FD0500B147BA /* Icon-Small.png in Resources */,
+				167763CB14C4FD0500B147BA /* Icon-Small@2x.png in Resources */,
+				167763CC14C4FD0500B147BA /* iTunesArtwork in Resources */,
+				167763CD14C4FD0500B147BA /* guest_check_background.png in Resources */,
+				167763CE14C4FD0500B147BA /* guest_check_background@2x.png in Resources */,
+				16375AD714C5003200B10B96 /* back_button.png in Resources */,
+				16375AD814C5003200B10B96 /* back_button@2x.png in Resources */,
+				16375AD914C5003200B10B96 /* full_version.png in Resources */,
+				16375ADA14C5003200B10B96 /* full_version@2x.png in Resources */,
+				16FC13B614C59EEA0071F30C /* FullVersionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +868,38 @@
 				1638C5AF1483FF750055CF64 /* AdjustmentView.m in Sources */,
 				1638C5B214840A910055CF64 /* AdjustmentViewCell.m in Sources */,
 				16181D75148877B2004251BC /* FileHelpers.m in Sources */,
+				16FC13B314C59EEA0071F30C /* FullVersionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1677636614C4FD0500B147BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16375ADB14C500B700B10B96 /* AdjustmentView.m in Sources */,
+				16375ADC14C500B700B10B96 /* AdjustmentViewCell.m in Sources */,
+				1677636714C4FD0500B147BA /* main.m in Sources */,
+				1677636814C4FD0500B147BA /* TipCalculatorAppDelegate.m in Sources */,
+				1677636914C4FD0500B147BA /* SummaryViewController.m in Sources */,
+				1677636A14C4FD0500B147BA /* AdjustmentsViewController.m in Sources */,
+				1677636B14C4FD0500B147BA /* SettingsViewController.m in Sources */,
+				1677636C14C4FD0500B147BA /* Check.m in Sources */,
+				1677636D14C4FD0500B147BA /* CheckData.m in Sources */,
+				1677636E14C4FD0500B147BA /* Adjustment.m in Sources */,
+				1677636F14C4FD0500B147BA /* CheckHelper.m in Sources */,
+				1677637014C4FD0500B147BA /* NSDecimalNumber+Check.m in Sources */,
+				1677637114C4FD0500B147BA /* RLNumberPad.m in Sources */,
+				1677637214C4FD0500B147BA /* RLNumberPadDigits.m in Sources */,
+				1677637314C4FD0500B147BA /* InputDisplayView.m in Sources */,
+				1677637414C4FD0500B147BA /* Settings.m in Sources */,
+				1677637514C4FD0500B147BA /* TableSelectViewController.m in Sources */,
+				1677637614C4FD0500B147BA /* TaxViewController.m in Sources */,
+				1677637714C4FD0500B147BA /* RLInputLabel.m in Sources */,
+				1677637814C4FD0500B147BA /* UIColor+TipCalculator.m in Sources */,
+				1677637914C4FD0500B147BA /* GuestCheckView.m in Sources */,
+				1677637A14C4FD0500B147BA /* UIButton+TipCalculator.m in Sources */,
+				1677637D14C4FD0500B147BA /* FileHelpers.m in Sources */,
+				16FC13B414C59EEA0071F30C /* FullVersionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,6 +1043,68 @@
 			};
 			name = Release;
 		};
+		167763D014C4FD0500B147BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					LITE_VERSION,
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = TipCalculatorFree;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		167763D114C4FD0500B147BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = LITE_VERSION;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = TipCalculatorFree;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		167763D214C4FD0500B147BA /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = LITE_VERSION;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = TipCalculatorFree;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Beta;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -785,6 +1124,16 @@
 				166257391434BAA4006CA328 /* Debug */,
 				1662573A1434BAA4006CA328 /* Release */,
 				166040F7148E64070015DCFB /* Beta */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		167763CF14C4FD0500B147BA /* Build configuration list for PBXNativeTarget "TipCalculatorFree" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				167763D014C4FD0500B147BA /* Debug */,
+				167763D114C4FD0500B147BA /* Release */,
+				167763D214C4FD0500B147BA /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

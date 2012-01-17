@@ -27,6 +27,7 @@ typedef enum { SummaryViewControllerPickerSplit, SummaryViewControllerPickerPerc
     GuestCheckView *guestCheckView_;
     UIButton *splitsButton_;
     UIButton *settingsButton_;
+	UIButton *fullVersionButton_;
 }
 
 @property (nonatomic, retain) InputDisplayView *splitInputView;
