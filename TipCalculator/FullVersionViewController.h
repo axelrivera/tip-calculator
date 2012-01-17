@@ -10,8 +10,9 @@
 
 @interface FullVersionViewController : UIViewController
 
-@property (nonatomic, retain) IBOutlet UIImageView *imageView;
+@property (nonatomic, retain) IBOutlet UIButton *downloadButton;
 
 - (IBAction)dismissAction:(id)sender;
+- (IBAction)downloadAction:(id)sender;
 
 @end

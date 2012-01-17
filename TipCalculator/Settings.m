@@ -40,13 +40,23 @@
 static NSArray *currencyArray_;
 static NSArray *roundingArray_;
 
-CurrencyType const kDefaultCurrency = CurrencyTypeAutomatic;
-RoundingType const kDefaultRounding = RoundingTypeNone;
-BOOL const kDefaultAdjustmentConfirmation = YES;
-BOOL const kDefaultTipOnTax = YES;
-BOOL const kDefaultSound = NO;
-BOOL const kDefaultShakeToClear = YES;
-NSString * const kDefaultTaxRate = @"0.0";
+#ifdef LITE_VERSION
+	CurrencyType const kDefaultCurrency = CurrencyTypeDollar;
+	RoundingType const kDefaultRounding = RoundingTypeNone;
+	BOOL const kDefaultAdjustmentConfirmation = NO;
+	BOOL const kDefaultTipOnTax = YES;
+	BOOL const kDefaultSound = NO;
+	BOOL const kDefaultShakeToClear = NO;
+	NSString * const kDefaultTaxRate = @"0.0";
+#else
+	CurrencyType const kDefaultCurrency = CurrencyTypeAutomatic;
+	RoundingType const kDefaultRounding = RoundingTypeNone;
+	BOOL const kDefaultAdjustmentConfirmation = YES;
+	BOOL const kDefaultTipOnTax = YES;
+	BOOL const kDefaultSound = NO;
+	BOOL const kDefaultShakeToClear = YES;
+	NSString * const kDefaultTaxRate = @"0.0";
+#endif
 
 static Settings *sharedSettings_;
 
