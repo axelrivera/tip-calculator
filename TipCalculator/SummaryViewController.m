@@ -14,6 +14,8 @@
 #import "UIButton+TipCalculator.h"
 #import "ControllerConstants.h"
 #import "FullVersionViewController.h"
+#import "FlurryAnalytics.h"
+#import "Constants.h"
 
 #define kInputLabelWidth 266.0
 
@@ -43,6 +45,7 @@
 {
     self = [super initWithNibName:@"SummaryViewController" bundle:nil];
     if (self) {
+		[FlurryAnalytics logPageView];
         check_ = [CheckData sharedCheckData].currentCheck;
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
@@ -249,6 +252,19 @@
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
 		[self reloadCheckSummaryAndResetAdjustments:YES];
+		if (![[check_ billAmount] isEqualToZero]) {
+			NSDictionary *flurryDictionary =
+			[[NSDictionary alloc] initWithObjectsAndKeys:
+			 [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits], FLURRY_SPLIT_CHECK_KEY,
+			 [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage picker:NO], FLURRY_TIP_PERCENTAGE_KEY,
+			 billAmountInputView_.detailTextLabel.text, FLURRY_CHECK_AMOUNT_KEY,
+			 [[check_ totalTip] currencyString], FLURRY_TOTAL_TIP_KEY,
+			 [[check_ totalToPay] currencyString], FLURRY_TOTAL_TO_PAY_KEY,
+			 [[check_ totalPerPerson] currencyString], FLURRY_TOTAL_PER_PERSON_KEY,
+			 nil];
+			[FlurryAnalytics logEvent:FLURRY_CALCULATE_TIP_EVENT withParameters:flurryDictionary];
+			[flurryDictionary release];
+		}
 	} else {
         [billAmountInputView_ becomeFirstResponder];
     }

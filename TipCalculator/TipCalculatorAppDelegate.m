@@ -10,6 +10,8 @@
 #import "SummaryViewController.h"
 #import "FileHelpers.h"
 #import "CheckData.h"
+#import "FlurryAnalytics.h"
+#import "Constants.h"
 
 @implementation TipCalculatorAppDelegate
 
@@ -17,6 +19,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifndef LITE_VERSION
+	[FlurryAnalytics startSession:FLURRY_FREE_VERSION_KEY];
+#else
+	[FlurryAnalytics startSession:FLURRY_FULL_VERSION_KEY];
+#endif
+	
 	CheckData *checkData = [NSKeyedUnarchiver unarchiveObjectWithFile:[self checkDataFilePath]];
 	if (checkData == nil) {
 		[CheckData sharedCheckData];

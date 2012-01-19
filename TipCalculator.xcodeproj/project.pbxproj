@@ -35,6 +35,8 @@
 		163BF17B14844A4B00F8C038 /* button_question_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 163BF17914844A4B00F8C038 /* button_question_pressed@2x.png */; };
 		163DA35B14647B400007727F /* RLInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 163DA35A14647B400007727F /* RLInputLabel.m */; };
 		163FBAD41450628800906BB5 /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
+		1643AFB914C884AD0085E17E /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */; };
+		1643AFBB14C884F60085E17E /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */; };
 		164D724C14C5FF1C00DB9954 /* button_back_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D724A14C5FF1C00DB9954 /* button_back_light.png */; };
 		164D724D14C5FF1C00DB9954 /* button_back_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D724A14C5FF1C00DB9954 /* button_back_light.png */; };
 		164D724E14C5FF1C00DB9954 /* buttun_back_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D724B14C5FF1C00DB9954 /* buttun_back_light@2x.png */; };
@@ -268,6 +270,9 @@
 		163DA35A14647B400007727F /* RLInputLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputLabel.m; sourceTree = "<group>"; };
 		163FBAD21450628800906BB5 /* CheckHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckHelper.h; sourceTree = "<group>"; };
 		163FBAD31450628800906BB5 /* CheckHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckHelper.m; sourceTree = "<group>"; };
+		1643AFB714C884AD0085E17E /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
+		1643AFBF14C88C560085E17E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		164D724A14C5FF1C00DB9954 /* button_back_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_back_light.png; sourceTree = "<group>"; };
 		164D724B14C5FF1C00DB9954 /* buttun_back_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttun_back_light@2x.png"; sourceTree = "<group>"; };
 		164D725014C6031F00DB9954 /* full_version.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = full_version.png; sourceTree = "<group>"; };
@@ -397,6 +402,7 @@
 				166257221434BAA4006CA328 /* UIKit.framework in Frameworks */,
 				166257241434BAA4006CA328 /* Foundation.framework in Frameworks */,
 				166257261434BAA4006CA328 /* CoreGraphics.framework in Frameworks */,
+				1643AFB914C884AD0085E17E /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +413,7 @@
 				1677637F14C4FD0500B147BA /* UIKit.framework in Frameworks */,
 				1677638014C4FD0500B147BA /* Foundation.framework in Frameworks */,
 				1677638114C4FD0500B147BA /* CoreGraphics.framework in Frameworks */,
+				1643AFBB14C884F60085E17E /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +432,52 @@
 				16357BC514C5C109001DCA77 /* iTunesArtwork */,
 			);
 			path = "Free Version";
+			sourceTree = "<group>";
+		};
+		1643AFB614C884AD0085E17E /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				1643AFB714C884AD0085E17E /* FlurryAnalytics.h */,
+				1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
+			sourceTree = "<group>";
+		};
+		1643AFBC14C88BD30085E17E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				16181D73148877B2004251BC /* FileHelpers.h */,
+				16181D74148877B2004251BC /* FileHelpers.m */,
+				163FBAD21450628800906BB5 /* CheckHelper.h */,
+				163FBAD31450628800906BB5 /* CheckHelper.m */,
+				165741B2147C5C53001F93EA /* UIColor+TipCalculator.h */,
+				165741B3147C5C53001F93EA /* UIColor+TipCalculator.m */,
+				1655905B147D571600BA6D15 /* UIButton+TipCalculator.h */,
+				1655905C147D571600BA6D15 /* UIButton+TipCalculator.m */,
+				1695D06E1450897C004C18EB /* NSDecimalNumber+Check.h */,
+				1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		1643AFBD14C88BE30085E17E /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				16165362143A350100BA2DCB /* CheckData.h */,
+				16165363143A350200BA2DCB /* CheckData.m */,
+				166257301434BAA4006CA328 /* TipCalculatorAppDelegate.h */,
+				166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		1643AFBE14C88BEC0085E17E /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				167FB5731464295E00967E4F /* ControllerConstants.h */,
+				1643AFBF14C88C560085E17E /* Constants.h */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 		16479452143692DE0095C658 /* Custom Views */ = {
@@ -528,6 +581,7 @@
 			children = (
 				166257271434BAA4006CA328 /* TipCalculator */,
 				166257201434BAA4006CA328 /* Frameworks */,
+				1643AFB614C884AD0085E17E /* FlurryAnalytics */,
 				1662571E1434BAA4006CA328 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -555,8 +609,9 @@
 		166257271434BAA4006CA328 /* TipCalculator */ = {
 			isa = PBXGroup;
 			children = (
-				166257301434BAA4006CA328 /* TipCalculatorAppDelegate.h */,
-				166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */,
+				1643AFBE14C88BEC0085E17E /* Constants */,
+				1643AFBD14C88BE30085E17E /* Singletons */,
+				1643AFBC14C88BD30085E17E /* Helpers */,
 				1662573C1434BAD0006CA328 /* View Controllers */,
 				1662573D1434BADE006CA328 /* Model + Data */,
 				16479452143692DE0095C658 /* Custom Views */,
@@ -606,7 +661,6 @@
 		1662573C1434BAD0006CA328 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				167FB5731464295E00967E4F /* ControllerConstants.h */,
 				166257551434D624006CA328 /* SummaryViewController.h */,
 				166257561434D624006CA328 /* SummaryViewController.m */,
 				1662575A1434D66C006CA328 /* AdjustmentsViewController.h */,
@@ -626,26 +680,14 @@
 		1662573D1434BADE006CA328 /* Model + Data */ = {
 			isa = PBXGroup;
 			children = (
-				16181D73148877B2004251BC /* FileHelpers.h */,
-				16181D74148877B2004251BC /* FileHelpers.m */,
-				16E6AECD14362FD000D47637 /* Check.h */,
-				16E6AECE14362FD100D47637 /* Check.m */,
-				16165362143A350100BA2DCB /* CheckData.h */,
-				16165363143A350200BA2DCB /* CheckData.m */,
-				16CE4CB8143DEEF80075342C /* Adjustment.h */,
-				16CE4CB9143DEEF80075342C /* Adjustment.m */,
-				163FBAD21450628800906BB5 /* CheckHelper.h */,
-				163FBAD31450628800906BB5 /* CheckHelper.m */,
-				1695D06E1450897C004C18EB /* NSDecimalNumber+Check.h */,
-				1695D06F1450897C004C18EB /* NSDecimalNumber+Check.m */,
 				16DD3A5F1459AF68001FBF59 /* RLNumberPadDigits.h */,
 				16DD3A601459AF68001FBF59 /* RLNumberPadDigits.m */,
+				16E6AECD14362FD000D47637 /* Check.h */,
+				16E6AECE14362FD100D47637 /* Check.m */,
+				16CE4CB8143DEEF80075342C /* Adjustment.h */,
+				16CE4CB9143DEEF80075342C /* Adjustment.m */,
 				166F5D571461B188000742F2 /* Settings.h */,
 				166F5D581461B188000742F2 /* Settings.m */,
-				165741B2147C5C53001F93EA /* UIColor+TipCalculator.h */,
-				165741B3147C5C53001F93EA /* UIColor+TipCalculator.m */,
-				1655905B147D571600BA6D15 /* UIButton+TipCalculator.h */,
-				1655905C147D571600BA6D15 /* UIButton+TipCalculator.m */,
 			);
 			name = "Model + Data";
 			sourceTree = "<group>";
@@ -1020,6 +1062,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1081,6 +1127,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1099,6 +1149,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "${TARGET_NAME}";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1122,6 +1176,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = TipCalculatorFree;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1141,6 +1199,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = TipCalculatorFree;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1161,6 +1223,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = TipCalculatorFree;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;

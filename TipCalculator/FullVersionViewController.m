@@ -7,6 +7,8 @@
 //
 
 #import "FullVersionViewController.h"
+#import "FlurryAnalytics.h"
+#import "Constants.h"
 
 @implementation FullVersionViewController
 
@@ -16,7 +18,7 @@
 {
 	self = [super initWithNibName:@"FullVersionViewController" bundle:nil];
 	if (self) {
-		// Initialization Code
+		[FlurryAnalytics logPageView];
 	}
 	return self;
 }
@@ -81,6 +83,7 @@
 
 - (IBAction)downloadAction:(id)sender
 {
+	[FlurryAnalytics logEvent:FLURRY_DOWNLOAD_FULL_VERSION_EVENT];
 	NSString *iTunesLink = @"http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=487270554&mt=8";
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
 }

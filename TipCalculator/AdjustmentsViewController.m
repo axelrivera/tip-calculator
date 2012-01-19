@@ -18,6 +18,8 @@
 #import "AdjustmentView.h"
 #import "Settings.h"
 #import "ControllerConstants.h"
+#import "FlurryAnalytics.h"
+#import "Constants.h"
 
 @interface AdjustmentsViewController (Private)
 
@@ -57,6 +59,7 @@
 {
     self = [super initWithNibName:@"AdjustmentsViewController" bundle:nil];
     if (self) {
+		[FlurryAnalytics logPageView];
         check_ = [CheckData sharedCheckData].currentCheck;
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
@@ -259,6 +262,8 @@
     [adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]
                      withRowAnimation:UITableViewRowAnimationFade];
     [adjustmentsTable_ endUpdates];
+	
+	[FlurryAnalytics logEvent:FLURRY_RESET_ADJUSTMENT_EVENT];
 }
 
 - (void)adjustmentsAction:(id)sender
@@ -347,6 +352,16 @@
 	[adjustmentsTable_ beginUpdates];
 	[adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 	[adjustmentsTable_ endUpdates];
+	
+	NSDictionary *flurryDictionary =
+	[[NSDictionary alloc] initWithObjectsAndKeys:
+	 [[adjustment total] currencyString], FLURRY_ADJUSTMENT_TOTAL_KEY,
+	 [adjustment.amount currencyString], FLURRY_ADJUSTMENT_SUBTOTAL_KEY,
+	 [adjustment.tip currencyString], FLURRY_ADJUSTMENT_TIP_KEY,
+	 nil];
+	[FlurryAnalytics logEvent:FLURRY_CALCULATE_ADJUSTMENT_EVENT withParameters:flurryDictionary];
+	[flurryDictionary release];
+	
 	[self clearAdjustmentInput];
 }
 

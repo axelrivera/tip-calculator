@@ -17,6 +17,8 @@ VersionX-revision.h
 # build products
 build/
 *.[oa]
+# Add exception for Flurry Library
+!libFlurryAnalytics.a
 # Other source repository archive directories (protects when importing)
 .hg
 .svn

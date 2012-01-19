@@ -1,0 +1,26 @@
+//
+//  Constants.h
+//  TipCalculator
+//
+//  Created by Axel Rivera on 1/19/12.
+//  Copyright (c) 2012 Axel Rivera. All rights reserved.
+//
+
+#define FLURRY_FULL_VERSION_KEY @"1KBFSQ8VZ4PL5LYB3CMS"
+#define FLURRY_FREE_VERSION_KEY @"P43WY5TT8KGZBVTDTC1Z"
+
+#define FLURRY_CALCULATE_TIP_EVENT @"CALCULATE_TIP"
+#define FLURRY_CALCULATE_ADJUSTMENT_EVENT @"CALCULATE_ADJUSTMENT"
+#define FLURRY_RESET_ADJUSTMENT_EVENT @"RESET_ADJUSTMENT"
+#define FLURRY_DOWNLOAD_FULL_VERSION_EVENT @"DOWNLOAD_FULL_VERSION"
+
+#define FLURRY_SPLIT_CHECK_KEY @"Split Check"
+#define FLURRY_TIP_PERCENTAGE_KEY @"Tip Percentage"
+#define FLURRY_CHECK_AMOUNT_KEY @"Check Amount"
+#define FLURRY_TOTAL_TIP_KEY @"Total Tip"
+#define FLURRY_TOTAL_TO_PAY_KEY @"Total To Pay"
+#define FLURRY_TOTAL_PER_PERSON_KEY @"Total Per Person"
+
+#define FLURRY_ADJUSTMENT_TOTAL_KEY @"Adjustment Total"
+#define FLURRY_ADJUSTMENT_SUBTOTAL_KEY @"Adjustment Subtotal"
+#define FLURRY_ADJUSTMENT_TIP_KEY @"Adjustment Tip"
