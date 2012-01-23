@@ -13,17 +13,33 @@
 #import "FlurryAnalytics.h"
 #import "Constants.h"
 
+@interface TipCalculatorAppDelegate (Private)
+
+void uncaughtExceptionHandler(NSException *exception);
+
+@end
+
 @implementation TipCalculatorAppDelegate
 
 @synthesize window = _window;
 
+void uncaughtExceptionHandler(NSException *exception) {
+	[FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-#ifndef LITE_VERSION
-	[FlurryAnalytics startSession:FLURRY_FREE_VERSION_KEY];
+{	
+	NSString *flurryKey = nil;
+#ifdef LITE_VERSION
+	flurryKey = FLURRY_FREE_VERSION_KEY;
 #else
-	[FlurryAnalytics startSession:FLURRY_FULL_VERSION_KEY];
+	flurryKey = FLURRY_FULL_VERSION_KEY;
 #endif
+	
+	if (flurryKey && [flurryKey length] > 0) {
+		NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+		[FlurryAnalytics startSession:flurryKey];
+	}
 	
 	CheckData *checkData = [NSKeyedUnarchiver unarchiveObjectWithFile:[self checkDataFilePath]];
 	if (checkData == nil) {
@@ -87,7 +103,6 @@
 {
 	[NSKeyedArchiver archiveRootObject:[CheckData sharedCheckData] toFile:[self checkDataFilePath]];
 }
-
 
 - (void)dealloc
 {

@@ -104,6 +104,8 @@
 		16710AD514C5EF8E006E27D6 /* button_green_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 16710ACE14C5EF8E006E27D6 /* button_green_default.png */; };
 		16710AD614C5EF8E006E27D6 /* button_green_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16710ACF14C5EF8E006E27D6 /* button_green_default@2x.png */; };
 		16710AD714C5EF8E006E27D6 /* button_green_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16710ACF14C5EF8E006E27D6 /* button_green_default@2x.png */; };
+		16741D5014C9CD5600E08BC4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16741D4F14C9CD5600E08BC4 /* AudioToolbox.framework */; };
+		16741D5214C9CD5F00E08BC4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16741D4F14C9CD5600E08BC4 /* AudioToolbox.framework */; };
 		1677636714C4FD0500B147BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1662572D1434BAA4006CA328 /* main.m */; };
 		1677636814C4FD0500B147BA /* TipCalculatorAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257311434BAA4006CA328 /* TipCalculatorAppDelegate.m */; };
 		1677636914C4FD0500B147BA /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166257561434D624006CA328 /* SummaryViewController.m */; };
@@ -344,6 +346,7 @@
 		16710ACD14C5EF8E006E27D6 /* button_blue_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_blue_default@2x.png"; sourceTree = "<group>"; };
 		16710ACE14C5EF8E006E27D6 /* button_green_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_green_default.png; sourceTree = "<group>"; };
 		16710ACF14C5EF8E006E27D6 /* button_green_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_green_default@2x.png"; sourceTree = "<group>"; };
+		16741D4F14C9CD5600E08BC4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		167763D314C4FD0500B147BA /* TipCalculatorFree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculatorFree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TipCalculatorFree-Info.plist"; sourceTree = "<group>"; };
 		167FB56D1464236300967E4F /* TaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxViewController.h; sourceTree = "<group>"; };
@@ -399,6 +402,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16741D5014C9CD5600E08BC4 /* AudioToolbox.framework in Frameworks */,
 				166257221434BAA4006CA328 /* UIKit.framework in Frameworks */,
 				166257241434BAA4006CA328 /* Foundation.framework in Frameworks */,
 				166257261434BAA4006CA328 /* CoreGraphics.framework in Frameworks */,
@@ -410,6 +414,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16741D5214C9CD5F00E08BC4 /* AudioToolbox.framework in Frameworks */,
 				1677637F14C4FD0500B147BA /* UIKit.framework in Frameworks */,
 				1677638014C4FD0500B147BA /* Foundation.framework in Frameworks */,
 				1677638114C4FD0500B147BA /* CoreGraphics.framework in Frameworks */,
@@ -598,6 +603,7 @@
 		166257201434BAA4006CA328 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				16741D4F14C9CD5600E08BC4 /* AudioToolbox.framework */,
 				168DEFA91486700B00FA958E /* QuartzCore.framework */,
 				166257211434BAA4006CA328 /* UIKit.framework */,
 				166257231434BAA4006CA328 /* Foundation.framework */,

@@ -353,14 +353,8 @@
 	[adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 	[adjustmentsTable_ endUpdates];
 	
-	NSDictionary *flurryDictionary =
-	[[NSDictionary alloc] initWithObjectsAndKeys:
-	 [[adjustment total] currencyString], FLURRY_ADJUSTMENT_TOTAL_KEY,
-	 [adjustment.amount currencyString], FLURRY_ADJUSTMENT_SUBTOTAL_KEY,
-	 [adjustment.tip currencyString], FLURRY_ADJUSTMENT_TIP_KEY,
-	 nil];
-	[FlurryAnalytics logEvent:FLURRY_CALCULATE_ADJUSTMENT_EVENT withParameters:flurryDictionary];
-	[flurryDictionary release];
+	// Log Flurry Event
+	[FlurryAnalytics logEvent:FLURRY_CALCULATE_ADJUSTMENT_EVENT];
 	
 	[self clearAdjustmentInput];
 }
@@ -449,7 +443,7 @@
     if (indexPath.row < [check_.splitAdjustments count]) {
         Adjustment *adjustment = [check_.splitAdjustments objectAtIndex:indexPath.row];
 		
-		text1Str = [NSString stringWithFormat:@"Adjustment #%d", indexPath.row + 1];
+		text1Str = [NSString stringWithFormat:@"Check #%d", indexPath.row + 1];
 		
 		detailText1Str = [[adjustment total] currencyString];
 		detailText2Str = [self stringForAmount:[adjustment.amount currencyString]

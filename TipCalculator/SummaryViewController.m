@@ -27,6 +27,7 @@
 - (void)showAdjustmentsAction:(id)sender;
 - (void)showSettingsAction:(id)sender;
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments;
+- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments flurry:(BOOL)flurry;
 - (void)hideCheckSummary;
 - (void)showCheckSummary;
 
@@ -186,18 +187,18 @@
 {
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     }
     if ([billAmountInputView_ isFirstResponder]) {
 		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     }
     
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     } else {
         pickerType_ = SummaryViewControllerPickerSplit;
         currentPickerDataSource_ = [Check numberOfSplitsArray];
@@ -213,18 +214,18 @@
 {
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     }
     if ([billAmountInputView_ isFirstResponder]) {
 		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     }
     
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     } else {
         pickerType_ = SummaryViewControllerPickerPercent;
         currentPickerDataSource_ = [Check tipPercentagesArray];
@@ -240,31 +241,18 @@
 {
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     }
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
     }
     
     if ([billAmountInputView_ isFirstResponder]) {
 		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-		[self reloadCheckSummaryAndResetAdjustments:YES];
-		if (![[check_ billAmount] isEqualToZero]) {
-			NSDictionary *flurryDictionary =
-			[[NSDictionary alloc] initWithObjectsAndKeys:
-			 [check_ stringForNumberOfSplitsWithDecimalNumber:check_.numberOfSplits], FLURRY_SPLIT_CHECK_KEY,
-			 [check_ stringForTipPercentageWithDecimalNumber:check_.tipPercentage picker:NO], FLURRY_TIP_PERCENTAGE_KEY,
-			 billAmountInputView_.detailTextLabel.text, FLURRY_CHECK_AMOUNT_KEY,
-			 [[check_ totalTip] currencyString], FLURRY_TOTAL_TIP_KEY,
-			 [[check_ totalToPay] currencyString], FLURRY_TOTAL_TO_PAY_KEY,
-			 [[check_ totalPerPerson] currencyString], FLURRY_TOTAL_PER_PERSON_KEY,
-			 nil];
-			[FlurryAnalytics logEvent:FLURRY_CALCULATE_TIP_EVENT withParameters:flurryDictionary];
-			[flurryDictionary release];
-		}
+		[self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
 	} else {
         [billAmountInputView_ becomeFirstResponder];
     }
@@ -302,7 +290,12 @@
 
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments
 {
-    if (![check_.billAmount isEqualToZero]) {
+	[self reloadCheckSummaryAndResetAdjustments:adjustments flurry:NO];
+}
+
+- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments flurry:(BOOL)flurry
+{
+	if (![check_.billAmount isEqualToZero]) {
         guestCheckView_.alpha = 1.0;
         guestCheckView_.totalTipLabel.text = [[check_ totalTip] currencyString];
         guestCheckView_.totalToPayLabel.text = [[check_ totalToPay] currencyString];
@@ -313,6 +306,11 @@
 			totalPerPersonStr = [[check_ totalPerPerson] currencyString];
 		}
 		guestCheckView_.totalPerPersonLabel.text = totalPerPersonStr;
+		
+		// Log Flurry Event
+		if (flurry) {
+			[FlurryAnalytics logEvent:FLURRY_CALCULATE_TIP_EVENT];
+		}
     } else {
         guestCheckView_.alpha = 0.0;
     }
@@ -429,6 +427,7 @@
 		[numberPadDigits_ resetDigitsAndDecimals];
 		billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
 		[self reloadCheckSummaryAndResetAdjustments:YES];
+		AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 	}
 }
 
