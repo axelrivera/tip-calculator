@@ -18,7 +18,7 @@
 #import "AdjustmentView.h"
 #import "Settings.h"
 #import "ControllerConstants.h"
-#import "FlurryAnalytics.h"
+#import "LocalyticsSession.h"
 #import "Constants.h"
 
 @interface AdjustmentsViewController (Private)
@@ -59,7 +59,6 @@
 {
     self = [super initWithNibName:@"AdjustmentsViewController" bundle:nil];
     if (self) {
-		[FlurryAnalytics logPageView];
         check_ = [CheckData sharedCheckData].currentCheck;
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
@@ -263,7 +262,8 @@
                      withRowAnimation:UITableViewRowAnimationFade];
     [adjustmentsTable_ endUpdates];
 	
-	[FlurryAnalytics logEvent:FLURRY_RESET_ADJUSTMENT_EVENT];
+	// Log Analytics Event
+	[[LocalyticsSession sharedLocalyticsSession] tagEvent:ANALYTICS_RESET_ADJUSTMENT_EVENT];
 }
 
 - (void)adjustmentsAction:(id)sender
@@ -353,8 +353,8 @@
 	[adjustmentsTable_ reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 	[adjustmentsTable_ endUpdates];
 	
-	// Log Flurry Event
-	[FlurryAnalytics logEvent:FLURRY_CALCULATE_ADJUSTMENT_EVENT];
+	// Log Analytics Event
+	[[LocalyticsSession sharedLocalyticsSession] tagEvent:ANALYTICS_CALCULATE_ADJUSTMENT_EVENT];
 	
 	[self clearAdjustmentInput];
 }

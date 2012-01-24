@@ -57,8 +57,6 @@
 {
     [super layoutSubviews];
     
-    NSString *errorStr = nil;
-    
     for (NSInteger tag = 1; tag <= kNumberOfButtons; tag++) {
         UIButton *button = (UIButton *)[self viewWithTag:tag];
         NSAssert(button != nil, @"Button is Nil");
@@ -145,8 +143,8 @@
                                          kDoneButtonHeight);
                 break;
             default:
-                errorStr = [NSString stringWithFormat:@"%@: Unexpected Button Type", NSStringFromClass([self class])];
-                [NSException raise:NSGenericException format:errorStr];
+                [NSException raise:NSGenericException
+							format:@"%@: Unexpected Button Type", NSStringFromClass([self class])];
                 break;
         }
         button.frame = buttonFrame;
@@ -209,7 +207,6 @@
 
 - (NSString *)stringForType:(RLNumberPadType)type title:(BOOL)title;
 {
-    NSString *errorStr = nil;
     NSString *string = nil;
     switch (type) {
         case RLNumberPadOne:
@@ -260,8 +257,8 @@
             }
             break;
         default:
-            errorStr = [NSString stringWithFormat:@"%@: Unexpected Button Type", NSStringFromClass([self class])];
-            [NSException raise:NSGenericException format:errorStr];
+            [NSException raise:NSGenericException
+						format:@"%@: Unexpected Button Type", NSStringFromClass([self class])];
             break;
     }
     return string;

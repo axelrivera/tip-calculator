@@ -14,7 +14,7 @@
 #import "UIButton+TipCalculator.h"
 #import "ControllerConstants.h"
 #import "FullVersionViewController.h"
-#import "FlurryAnalytics.h"
+#import "LocalyticsSession.h"
 #import "Constants.h"
 
 #define kInputLabelWidth 266.0
@@ -27,7 +27,7 @@
 - (void)showAdjustmentsAction:(id)sender;
 - (void)showSettingsAction:(id)sender;
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments;
-- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments flurry:(BOOL)flurry;
+- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments analytics:(BOOL)analytics event:(NSString *)event;
 - (void)hideCheckSummary;
 - (void)showCheckSummary;
 
@@ -46,7 +46,6 @@
 {
     self = [super initWithNibName:@"SummaryViewController" bundle:nil];
     if (self) {
-		[FlurryAnalytics logPageView];
         check_ = [CheckData sharedCheckData].currentCheck;
         numberPad_ = [[RLNumberPad alloc] initDefaultNumberPad];
         numberPad_.delegate = self;
@@ -187,18 +186,18 @@
 {
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_TIP_PERCENTAGE_EVENT];
     }
     if ([billAmountInputView_ isFirstResponder]) {
 		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_CHECK_AMOUNT_EVENT];
     }
     
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_SPLIT_CHECK_EVENT];
     } else {
         pickerType_ = SummaryViewControllerPickerSplit;
         currentPickerDataSource_ = [Check numberOfSplitsArray];
@@ -214,18 +213,18 @@
 {
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_SPLIT_CHECK_EVENT];
     }
     if ([billAmountInputView_ isFirstResponder]) {
 		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_CHECK_AMOUNT_EVENT];
     }
     
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_TIP_PERCENTAGE_EVENT];
     } else {
         pickerType_ = SummaryViewControllerPickerPercent;
         currentPickerDataSource_ = [Check tipPercentagesArray];
@@ -241,18 +240,18 @@
 {
     if ([splitInputView_ isFirstResponder]) {
         [splitInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_SPLIT_CHECK_EVENT];
     }
     if ([tipInputView_ isFirstResponder]) {
         [tipInputView_ resignFirstResponder];
-        [self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+        [self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_TIP_PERCENTAGE_EVENT];
     }
     
     if ([billAmountInputView_ isFirstResponder]) {
 		[numberPadDigits_ validateAndFixDecimalSeparator];
         billAmountInputView_.detailTextLabel.text = [numberPadDigits_ stringValue];
         [billAmountInputView_ resignFirstResponder];
-		[self reloadCheckSummaryAndResetAdjustments:YES flurry:YES];
+		[self reloadCheckSummaryAndResetAdjustments:YES analytics:YES event:ANALYTICS_CHECK_AMOUNT_EVENT];
 	} else {
         [billAmountInputView_ becomeFirstResponder];
     }
@@ -290,10 +289,10 @@
 
 - (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments
 {
-	[self reloadCheckSummaryAndResetAdjustments:adjustments flurry:NO];
+	[self reloadCheckSummaryAndResetAdjustments:adjustments analytics:NO event:nil];
 }
 
-- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments flurry:(BOOL)flurry
+- (void)reloadCheckSummaryAndResetAdjustments:(BOOL)adjustments analytics:(BOOL)analytics event:(NSString *)event
 {
 	if (![check_.billAmount isEqualToZero]) {
         guestCheckView_.alpha = 1.0;
@@ -307,9 +306,9 @@
 		}
 		guestCheckView_.totalPerPersonLabel.text = totalPerPersonStr;
 		
-		// Log Flurry Event
-		if (flurry) {
-			[FlurryAnalytics logEvent:FLURRY_CALCULATE_TIP_EVENT];
+		// Log Analytics Event
+		if (analytics) {
+			[[LocalyticsSession sharedLocalyticsSession] tagEvent:event];
 		}
     } else {
         guestCheckView_.alpha = 0.0;

@@ -10,7 +10,7 @@
 #import "SummaryViewController.h"
 #import "FileHelpers.h"
 #import "CheckData.h"
-#import "FlurryAnalytics.h"
+#import "LocalyticsSession.h"
 #import "Constants.h"
 
 @interface TipCalculatorAppDelegate (Private)
@@ -23,22 +23,17 @@ void uncaughtExceptionHandler(NSException *exception);
 
 @synthesize window = _window;
 
-void uncaughtExceptionHandler(NSException *exception) {
-	[FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {	
-	NSString *flurryKey = nil;
+	NSString *analyticsKey = nil;
 #ifdef LITE_VERSION
-	flurryKey = FLURRY_FREE_VERSION_KEY;
+	analyticsKey = ANALYTICS_FREE_VERSION_KEY;
 #else
-	flurryKey = FLURRY_FULL_VERSION_KEY;
+	analyticsKey = ANALYTICS_FULL_VERSION_KEY;
 #endif
 	
-	if (flurryKey && [flurryKey length] > 0) {
-		NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-		[FlurryAnalytics startSession:flurryKey];
+	if (analyticsKey && [analyticsKey length] > 0) {
+		[[LocalyticsSession sharedLocalyticsSession] startSession:analyticsKey];
 	}
 	
 	CheckData *checkData = [NSKeyedUnarchiver unarchiveObjectWithFile:[self checkDataFilePath]];
@@ -68,6 +63,8 @@ void uncaughtExceptionHandler(NSException *exception) {
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
 	[self archiveCheckData];
+	[[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -75,6 +72,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     /*
      Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
      */
+	[[LocalyticsSession sharedLocalyticsSession] resume];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -92,6 +91,8 @@ void uncaughtExceptionHandler(NSException *exception) {
      See also applicationDidEnterBackground:.
      */
 	[self archiveCheckData];
+	[[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (NSString *)checkDataFilePath

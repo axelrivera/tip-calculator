@@ -9,7 +9,6 @@
 #import "SettingsViewController.h"
 #import "ControllerConstants.h"
 #import "CheckData.h"
-#import "FlurryAnalytics.h"
 
 @interface SettingsViewController (Private)
 
@@ -26,7 +25,6 @@
 {
     self = [super initWithNibName:@"SettingsViewController" bundle:nil];
     if (self) {
-		[FlurryAnalytics logPageView];
         settings_ = [Settings sharedSettings];
     }
     return self;

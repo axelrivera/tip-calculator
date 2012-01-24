@@ -35,8 +35,6 @@
 		163BF17B14844A4B00F8C038 /* button_question_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 163BF17914844A4B00F8C038 /* button_question_pressed@2x.png */; };
 		163DA35B14647B400007727F /* RLInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 163DA35A14647B400007727F /* RLInputLabel.m */; };
 		163FBAD41450628800906BB5 /* CheckHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 163FBAD31450628800906BB5 /* CheckHelper.m */; };
-		1643AFB914C884AD0085E17E /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */; };
-		1643AFBB14C884F60085E17E /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */; };
 		164D724C14C5FF1C00DB9954 /* button_back_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D724A14C5FF1C00DB9954 /* button_back_light.png */; };
 		164D724D14C5FF1C00DB9954 /* button_back_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D724A14C5FF1C00DB9954 /* button_back_light.png */; };
 		164D724E14C5FF1C00DB9954 /* buttun_back_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D724B14C5FF1C00DB9954 /* buttun_back_light@2x.png */; };
@@ -223,6 +221,16 @@
 		16C9ECB2148D5192000C026F /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 16C9ECAD148D5192000C026F /* Icon-Small.png */; };
 		16C9ECB3148D5192000C026F /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16C9ECAE148D5192000C026F /* Icon-Small@2x.png */; };
 		16CE4CBA143DEEF80075342C /* Adjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CE4CB9143DEEF80075342C /* Adjustment.m */; };
+		16D102DB14CF078600923177 /* LocalyticsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D102D514CF078600923177 /* LocalyticsDatabase.m */; };
+		16D102DC14CF078600923177 /* LocalyticsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D102D514CF078600923177 /* LocalyticsDatabase.m */; };
+		16D102DD14CF078600923177 /* LocalyticsSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D102D714CF078600923177 /* LocalyticsSession.m */; };
+		16D102DE14CF078600923177 /* LocalyticsSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D102D714CF078600923177 /* LocalyticsSession.m */; };
+		16D102DF14CF078600923177 /* UploaderThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D102D914CF078600923177 /* UploaderThread.m */; };
+		16D102E014CF078600923177 /* UploaderThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D102D914CF078600923177 /* UploaderThread.m */; };
+		16D102E214CF0AD100923177 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D102E114CF0AD100923177 /* libsqlite3.dylib */; };
+		16D102E414CF0AE100923177 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D102E314CF0AE100923177 /* libz.dylib */; };
+		16D102E514CF0FE800923177 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D102E114CF0AD100923177 /* libsqlite3.dylib */; };
+		16D102E614CF0FF000923177 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D102E314CF0AE100923177 /* libz.dylib */; };
 		16DB2814147DA1A800DE8785 /* button_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2812147DA1A800DE8785 /* button_yellow.png */; };
 		16DB2815147DA1A800DE8785 /* button_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2813147DA1A800DE8785 /* button_yellow@2x.png */; };
 		16DB2818147DA5D700DE8785 /* mainscreen_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 16DB2816147DA5D700DE8785 /* mainscreen_background.png */; };
@@ -272,8 +280,6 @@
 		163DA35A14647B400007727F /* RLInputLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLInputLabel.m; sourceTree = "<group>"; };
 		163FBAD21450628800906BB5 /* CheckHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckHelper.h; sourceTree = "<group>"; };
 		163FBAD31450628800906BB5 /* CheckHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckHelper.m; sourceTree = "<group>"; };
-		1643AFB714C884AD0085E17E /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
-		1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		1643AFBF14C88C560085E17E /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		164D724A14C5FF1C00DB9954 /* button_back_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_back_light.png; sourceTree = "<group>"; };
 		164D724B14C5FF1C00DB9954 /* buttun_back_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttun_back_light@2x.png"; sourceTree = "<group>"; };
@@ -379,6 +385,15 @@
 		16C9ECAE148D5192000C026F /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		16CE4CB8143DEEF80075342C /* Adjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjustment.h; sourceTree = "<group>"; };
 		16CE4CB9143DEEF80075342C /* Adjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjustment.m; sourceTree = "<group>"; };
+		16D102D414CF078600923177 /* LocalyticsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsDatabase.h; sourceTree = "<group>"; };
+		16D102D514CF078600923177 /* LocalyticsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsDatabase.m; sourceTree = "<group>"; };
+		16D102D614CF078600923177 /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
+		16D102D714CF078600923177 /* LocalyticsSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsSession.m; sourceTree = "<group>"; };
+		16D102D814CF078600923177 /* UploaderThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploaderThread.h; sourceTree = "<group>"; };
+		16D102D914CF078600923177 /* UploaderThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploaderThread.m; sourceTree = "<group>"; };
+		16D102DA14CF078600923177 /* WebserviceConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebserviceConstants.h; sourceTree = "<group>"; };
+		16D102E114CF0AD100923177 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		16D102E314CF0AE100923177 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		16DB2812147DA1A800DE8785 /* button_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_yellow.png; sourceTree = "<group>"; };
 		16DB2813147DA1A800DE8785 /* button_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_yellow@2x.png"; sourceTree = "<group>"; };
 		16DB2816147DA5D700DE8785 /* mainscreen_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainscreen_background.png; sourceTree = "<group>"; };
@@ -402,11 +417,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16D102E414CF0AE100923177 /* libz.dylib in Frameworks */,
+				16D102E214CF0AD100923177 /* libsqlite3.dylib in Frameworks */,
 				16741D5014C9CD5600E08BC4 /* AudioToolbox.framework in Frameworks */,
 				166257221434BAA4006CA328 /* UIKit.framework in Frameworks */,
 				166257241434BAA4006CA328 /* Foundation.framework in Frameworks */,
 				166257261434BAA4006CA328 /* CoreGraphics.framework in Frameworks */,
-				1643AFB914C884AD0085E17E /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,11 +430,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16D102E614CF0FF000923177 /* libz.dylib in Frameworks */,
+				16D102E514CF0FE800923177 /* libsqlite3.dylib in Frameworks */,
 				16741D5214C9CD5F00E08BC4 /* AudioToolbox.framework in Frameworks */,
 				1677637F14C4FD0500B147BA /* UIKit.framework in Frameworks */,
 				1677638014C4FD0500B147BA /* Foundation.framework in Frameworks */,
 				1677638114C4FD0500B147BA /* CoreGraphics.framework in Frameworks */,
-				1643AFBB14C884F60085E17E /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,15 +454,6 @@
 				16357BC514C5C109001DCA77 /* iTunesArtwork */,
 			);
 			path = "Free Version";
-			sourceTree = "<group>";
-		};
-		1643AFB614C884AD0085E17E /* FlurryAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				1643AFB714C884AD0085E17E /* FlurryAnalytics.h */,
-				1643AFB814C884AD0085E17E /* libFlurryAnalytics.a */,
-			);
-			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
 		1643AFBC14C88BD30085E17E /* Helpers */ = {
@@ -585,8 +593,8 @@
 			isa = PBXGroup;
 			children = (
 				166257271434BAA4006CA328 /* TipCalculator */,
+				16D102D314CF078600923177 /* Localytics */,
 				166257201434BAA4006CA328 /* Frameworks */,
-				1643AFB614C884AD0085E17E /* FlurryAnalytics */,
 				1662571E1434BAA4006CA328 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -603,6 +611,8 @@
 		166257201434BAA4006CA328 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				16D102E314CF0AE100923177 /* libz.dylib */,
+				16D102E114CF0AD100923177 /* libsqlite3.dylib */,
 				16741D4F14C9CD5600E08BC4 /* AudioToolbox.framework */,
 				168DEFA91486700B00FA958E /* QuartzCore.framework */,
 				166257211434BAA4006CA328 /* UIKit.framework */,
@@ -696,6 +706,20 @@
 				166F5D581461B188000742F2 /* Settings.m */,
 			);
 			name = "Model + Data";
+			sourceTree = "<group>";
+		};
+		16D102D314CF078600923177 /* Localytics */ = {
+			isa = PBXGroup;
+			children = (
+				16D102D414CF078600923177 /* LocalyticsDatabase.h */,
+				16D102D514CF078600923177 /* LocalyticsDatabase.m */,
+				16D102D614CF078600923177 /* LocalyticsSession.h */,
+				16D102D714CF078600923177 /* LocalyticsSession.m */,
+				16D102D814CF078600923177 /* UploaderThread.h */,
+				16D102D914CF078600923177 /* UploaderThread.m */,
+				16D102DA14CF078600923177 /* WebserviceConstants.h */,
+			);
+			path = Localytics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -979,6 +1003,9 @@
 				1638C5B214840A910055CF64 /* AdjustmentViewCell.m in Sources */,
 				16181D75148877B2004251BC /* FileHelpers.m in Sources */,
 				16FC13B314C59EEA0071F30C /* FullVersionViewController.m in Sources */,
+				16D102DB14CF078600923177 /* LocalyticsDatabase.m in Sources */,
+				16D102DD14CF078600923177 /* LocalyticsSession.m in Sources */,
+				16D102DF14CF078600923177 /* UploaderThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,6 +1037,9 @@
 				1677637A14C4FD0500B147BA /* UIButton+TipCalculator.m in Sources */,
 				1677637D14C4FD0500B147BA /* FileHelpers.m in Sources */,
 				16FC13B414C59EEA0071F30C /* FullVersionViewController.m in Sources */,
+				16D102DC14CF078600923177 /* LocalyticsDatabase.m in Sources */,
+				16D102DE14CF078600923177 /* LocalyticsSession.m in Sources */,
+				16D102E014CF078600923177 /* UploaderThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1065,13 +1095,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1130,13 +1157,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1152,13 +1176,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1179,13 +1200,10 @@
 					"$(inherited)",
 					LITE_VERSION,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TipCalculatorFree;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1202,13 +1220,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = LITE_VERSION;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TipCalculatorFree;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1226,13 +1241,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = LITE_VERSION;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/FlurryAnalytics\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = TipCalculatorFree;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
