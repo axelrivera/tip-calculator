@@ -354,7 +354,7 @@
 		16710ACF14C5EF8E006E27D6 /* button_green_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_green_default@2x.png"; sourceTree = "<group>"; };
 		16741D4F14C9CD5600E08BC4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		167763D314C4FD0500B147BA /* TipCalculatorFree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculatorFree.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TipCalculatorFree-Info.plist"; sourceTree = "<group>"; };
+		167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TipCalculatorFree-Info.plist"; path = "../TipCalculatorFree-Info.plist"; sourceTree = "<group>"; };
 		167FB56D1464236300967E4F /* TaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxViewController.h; sourceTree = "<group>"; };
 		167FB56E1464236300967E4F /* TaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxViewController.m; sourceTree = "<group>"; };
 		167FB56F1464236300967E4F /* TaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaxViewController.xib; sourceTree = "<group>"; };
@@ -445,13 +445,14 @@
 		16357BBE14C5C109001DCA77 /* Free Version */ = {
 			isa = PBXGroup;
 			children = (
+				167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */,
+				16357BC514C5C109001DCA77 /* iTunesArtwork */,
 				16357BBF14C5C109001DCA77 /* Icon-72.png */,
 				16357BC014C5C109001DCA77 /* Icon-Small-50.png */,
 				16357BC114C5C109001DCA77 /* Icon-Small.png */,
 				16357BC214C5C109001DCA77 /* Icon-Small@2x.png */,
 				16357BC314C5C109001DCA77 /* Icon.png */,
 				16357BC414C5C109001DCA77 /* Icon@2x.png */,
-				16357BC514C5C109001DCA77 /* iTunesArtwork */,
 			);
 			path = "Free Version";
 			sourceTree = "<group>";
@@ -640,19 +641,11 @@
 		166257281434BAA4006CA328 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				16DEB77814CF4D1C00307C1A /* Full Version */,
 				16357BBE14C5C109001DCA77 /* Free Version */,
-				167763D714C4FE6C00B147BA /* TipCalculatorFree-Info.plist */,
-				16215252149798BC00B403CC /* iTunesArtwork */,
+				164794621436A0390095C658 /* images */,
 				16190FFC148D4F0400FD7CA0 /* Default.png */,
 				16190FFD148D4F0400FD7CA0 /* Default@2x.png */,
-				16C9ECAB148D5192000C026F /* Icon-72.png */,
-				16C9ECAC148D5192000C026F /* Icon-Small-50.png */,
-				16C9ECAD148D5192000C026F /* Icon-Small.png */,
-				16C9ECAE148D5192000C026F /* Icon-Small@2x.png */,
-				1690E0D5148D313100D7ECD3 /* Icon.png */,
-				1690E0D6148D313100D7ECD3 /* Icon@2x.png */,
-				164794621436A0390095C658 /* images */,
-				166257291434BAA4006CA328 /* TipCalculator-Info.plist */,
 				1662572A1434BAA4006CA328 /* InfoPlist.strings */,
 				1662572D1434BAA4006CA328 /* main.m */,
 				1662572F1434BAA4006CA328 /* TipCalculator-Prefix.pch */,
@@ -720,6 +713,21 @@
 				16D102DA14CF078600923177 /* WebserviceConstants.h */,
 			);
 			path = Localytics;
+			sourceTree = "<group>";
+		};
+		16DEB77814CF4D1C00307C1A /* Full Version */ = {
+			isa = PBXGroup;
+			children = (
+				166257291434BAA4006CA328 /* TipCalculator-Info.plist */,
+				16215252149798BC00B403CC /* iTunesArtwork */,
+				16C9ECAB148D5192000C026F /* Icon-72.png */,
+				16C9ECAC148D5192000C026F /* Icon-Small-50.png */,
+				16C9ECAD148D5192000C026F /* Icon-Small.png */,
+				16C9ECAE148D5192000C026F /* Icon-Small@2x.png */,
+				1690E0D5148D313100D7ECD3 /* Icon.png */,
+				1690E0D6148D313100D7ECD3 /* Icon@2x.png */,
+			);
+			name = "Full Version";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
