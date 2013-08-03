@@ -773,7 +773,7 @@
 		166257141434BAA4006CA328 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 166257171434BAA4006CA328 /* Build configuration list for PBXProject "TipCalculator" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1103,6 +1103,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1165,6 +1166,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1184,6 +1186,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1208,6 +1211,7 @@
 					"$(inherited)",
 					LITE_VERSION,
 				);
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1228,6 +1232,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = LITE_VERSION;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1249,6 +1254,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TipCalculator/TipCalculator-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = LITE_VERSION;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "TipCalculator/TipCalculatorFree-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
